@@ -17,7 +17,7 @@
       <nav>
         <!-- 대학 안내 -->
         <div class="center-menu">
-          <a class="intro" @click="navigateTo('intro')" style="cursor: pointer"
+          <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer"
             >대학 안내</a
           >
           <div class="divider"></div>
@@ -148,7 +148,7 @@
           <tr v-for="(notice, index) in filteredNotices" :key="index">
             <td>{{ notice.id }}</td>
             <td>
-              <a href="#">{{ notice.title }}</a>
+              <a href="">{{ notice.title }}</a>
             </td>
             <td>{{ notice.author }}</td>
             <td>{{ notice.date }}</td>
@@ -167,8 +167,17 @@ export default {
   name: 'NoticePage',
   data() {
     return {
+      showChat: false,
       activeDropdown: null, // 마우스가 어디에 올라가있는지 체크...
       navHovered: false, // nav바에 마우스가 올라갔는지 boolean으로 체크함
+      allItems: [
+        { title: '홈페이지' },
+        { title: '캔버스' },
+        { title: '수강신청사이트' },
+        { title: '포털' },
+      ],
+      slideIndex: 0,
+      showDepartments: false,
       departments: [
         {
           name: '컴퓨터학부',
@@ -222,20 +231,19 @@ export default {
     };
   },
   computed: {
+    visibleItems() {
+      return this.allItems.slice(this.slideIndex, this.slideIndex + 4);
+    },
+  },
+  methods: {
     filteredNotices() {
       return this.notices
-        .filter(
-          (n) =>
-            this.selectCategory === 'all_annonce' ||
-            n.category === this.selectCategory
-        )
+        .filter((n) => this.selectCategory === "all_annonce" || n.category === this.selectCategory)
         .filter((n) => {
           const field = this.searchColumn;
           return n[field].toLowerCase().includes(this.searchTerm.toLowerCase());
         });
     },
-  },
-  methods: {
     navigateTo(routeName) {
       this.$router.push({ name: routeName }).catch((err) => {
         if (err.name !== 'NavigationDuplicated') {
@@ -271,6 +279,9 @@ export default {
 </script>
 
 <style scoped>
+* {
+  font-family: 'Nanum Gothic', sans-serif;
+}
 .notice-container {
   font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
   background-color: #f7f7f7;
@@ -348,28 +359,16 @@ nav {
   /* transform: translateX(-50%); */
   top: 100%;
   width: 100vw;
-  background-color: #2c2d4f;
+  background-color: #2c2d4fee;
   display: flex;
   gap: 3rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   color: white;
-  opacity: 0.8;
+  
   border-radius: 4px;
   z-index: 1000;
   height: 120px;
-  /* position: absolute;
-  top: 100%;  header 바로 아래
-  left: 0;
-  width: 100vw;
-  background-color: #2c2d4f;
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  color: white;
-  opacity: 0.8;
-  border-radius: 4px;
-  z-index: 1000; */
+  
 }
 
 .dropdown-info {

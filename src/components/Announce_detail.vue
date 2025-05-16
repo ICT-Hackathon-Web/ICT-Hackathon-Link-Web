@@ -15,7 +15,7 @@
       <nav>
         <!-- 대학 안내 -->
         <div class="center-menu">
-          <a class="intro" @click="navigateTo('intro')" style="cursor: pointer"
+          <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer"
             >대학 안내</a
           >
           <div class="divider"></div>
@@ -68,9 +68,9 @@
             >
               <div class="department-block">
                 <ul style="font-weight: bold">
-                  <li>학사일정</li>
-                  <li>동아리</li>
-                  <li>분실물</li>
+                  <li @click="navigateTo('schedulePage')">학사일정</li>
+                  <li @click="navigateTo('ClubPage')">동아리</li>
+                  <li @click="navigateTo('lostArticle')">분실물</li>
                 </ul>
               </div>
             </div>
@@ -164,8 +164,16 @@ export default {
   name: 'NoticeDetailPage',
   data() {
     return {
+      showChat: false,
       activeDropdown: null, // 마우스가 어디에 올라가있는지 체크...
       navHovered: false, // nav바에 마우스가 올라갔는지 boolean으로 체크함
+      allItems: [
+        { title: '홈페이지' },
+        { title: '캔버스' },
+        { title: '수강신청사이트' },
+        { title: '포털' },
+      ],
+      slideIndex: 0,
       showDepartments: false,
       departments: [
         {
@@ -201,7 +209,20 @@ export default {
       nextNotice: null,
     };
   },
+  computed: {
+    visibleItems() {
+      return this.allItems.slice(this.slideIndex, this.slideIndex + 4);
+    },
+  },
   methods: {
+    filteredNotices() {
+      return this.notices
+        .filter((n) => this.selectCategory === "all_annonce" || n.category === this.selectCategory)
+        .filter((n) => {
+          const field = this.searchColumn;
+          return n[field].toLowerCase().includes(this.searchTerm.toLowerCase());
+        });
+    },
     navigateTo(routeName) {
       this.$router.push({ name: routeName }).catch((err) => {
         if (err.name !== 'NavigationDuplicated') {
@@ -219,7 +240,6 @@ export default {
         정보통신학과: 'infoCommunicationCollege',
         정보보호학과: 'infoSecurity',
         데이터과학부: 'dataScience',
-        클라우드융복합: 'cloud',
       };
       const route = routeMap[majorName];
       if (route) {
@@ -228,6 +248,7 @@ export default {
         console.warn(`No route found for major: ${majorName}`);
       }
     },
+
     hideAllDropdowns() {
       this.activeDropdown = null;
       this.navHovered = false;
@@ -240,6 +261,9 @@ export default {
 </script>
 
 <style scoped>
+* {
+  font-family: 'Nanum Gothic', sans-serif;
+}
 .main-container {
   background-image: url('@/assets/background1.png');
   background-size: cover;

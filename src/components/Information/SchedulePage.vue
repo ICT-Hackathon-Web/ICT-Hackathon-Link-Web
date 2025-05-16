@@ -15,7 +15,7 @@
       <nav>
         <!-- 대학 안내 -->
         <div class="center-menu">
-          <a class="intro" @click="navigateTo('intro')" style="cursor: pointer"
+          <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer"
             >대학 안내</a
           >
           <div class="divider"></div>
@@ -67,14 +67,15 @@
               @mouseleave="hideAllDropdowns"
             >
               <div class="department-block">
-                <ul style="font-weight: bold">
-                  <li>학사일정</li>
-                  <li>동아리</li>
-                  <li>분실물</li>
+                <ul>
+                  <li @click="navigateTo('schedulePage')">학사일정</li>
+                  <li @click="navigateTo('ClubPage')">동아리</li>
+                  <li @click="navigateTo('lostArticle')">분실물</li>
                 </ul>
               </div>
             </div>
           </div>
+
 
           <div class="divider"></div>
 
@@ -95,7 +96,7 @@
         >
         <img
           class="searchBar"
-          src="../../assets/SearchBarIcon.png"
+          src="@/assets/SearchBarIcon.png"
           @click="navigateTo('search')"
           alt="SearchBar"
           style="cursor: pointer"
@@ -143,34 +144,53 @@
         </div>
       </div>
     </div>
+    <img class="chatbot-icon"  src="@/assets/chatbot-icon.png" alt="chatbot" @click="showChat = !showChat"/>
+    
+    <ChatBot v-if="showChat" @close="showChat = false" />
+    <footer>
+      <div class="container">
+      <!-- <div class="fnb">
+        <ul class="inGuideFnb"><li><a href="" title="새창" target="_blank" class="a_1">개인정보처리방침</a></li><li><a href="https://www.konkuk.ac.kr/konkuk/13291/subview.do" title="새창" target="_blank">개인정보제공내역공지</a></li><li><a href="https://www.konkuk.ac.kr/konkuk/13292/subview.do" title="새창" target="_blank">정보공개</a></li><li><a href="https://www.konkuk.ac.kr/konkuk/2263/subview.do" title="새창" target="_blank">예결산공고</a></li><li><a href="https://www.academyinfo.go.kr/pubinfo/pubinfo1600/doInit.do?schlId=0000052" title="새창" target="_blank">대학정보공시</a></li><li><a href="https://www.konkuk.ac.kr/konkuk/13293/subview.do" title="새창" target="_blank">이메일주소 무단수집거부</a></li><li><a href="https://www.konkuk.ac.kr/konkuk/2063/subview.do" title="새창" target="_blank">찾아오시는길</a></li></ul>
+      </div> -->
+      <div class="wrap">
+        <div class="foot_info">
+        <address>
+          18323 경기도 화성시 봉담읍 와우안길 17   <span>Tel :  031-220-2114</span>
+        </address>
+        <p><span>Copyright (C) THE UNIVERSITY OF SUWON. </span>All rights reserved.</p>
+        </div>
+        <div class="foot_sns">
+        <ul>
+              <li class="n_blog"><a title="수원대학교 블로그" href="https://blog.naver.com/usw1982" target="_blank"><img src="@/assets/blog.png"></a></li>
+              <li class="facebook"><a title="수원대학교 페이스북" href="https://www.facebook.com/SuwonUniv/" target="_blank"><img src="@/assets/facebook.png"></a></li>
+              <li class="instagram"><a title="수원대학교 인스타그램" href="https://www.instagram.com/usw1982/" target="_blank"><img src="@/assets/insta.png"></a></li>
+              <li class="youtube"><a title="수원대학교 유튜브" href="https://www.youtube.com/channel/UC4JfyRGKu5AfBjvaFMCj3cg" target="_blank"><img src="@/assets/youtube.png"></a></li>
+        </ul>
+        </div>
+      </div>
+      </div>
+   </footer>
   </div>
 </template>
 
 <script>
+import ChatBot from '@/components/ChatBot.vue'
 export default {
-  name: 'ScheduleInfo',
+  name: 'schedulePage',
+  components: {
+    ChatBot
+  },
   data() {
     return {
-      activeDropdown: null, // 마우스가 어디에 올라가있는지 체크...
-      navHovered: false, // nav바에 마우스가 올라갔는지 boolean으로 체크함
       showDepartments: false,
+      showChat: false,
+      activeDropdown: null,
+      navHovered: false,
       departments: [
-        {
-          name: '컴퓨터학부',
-          majors: ['컴퓨터SW', '미디어SW'],
-        },
-        {
-          name: '정보통신학부',
-          majors: ['정보통신학과', '정보보호학과'],
-        },
-        {
-          name: '데이터과학부',
-          majors: [],
-        },
-        {
-          name: '클라우드융복합',
-          majors: [],
-        },
+        { name: '컴퓨터학부', majors: ['컴퓨터SW', '미디어SW'] },
+        { name: '정보통신학부', majors: ['정보통신학과', '정보보호학과'] },
+        { name: '데이터과학부', majors: [] },
+        { name: '클라우드융복합', majors: [] },
       ],
       selectedYear: '2025',
       availableYears: ['2025', '2024', '2023', '2022', '2021', '2020', '2019'],
@@ -276,14 +296,14 @@ export default {
     },
     navigateToMajor(majorName) {
       const routeMap = {
-        컴퓨터학부: 'computer',
-        컴퓨터SW: 'computerSW',
-        미디어SW: 'mediaSW',
-        정보통신학부: 'infoCommunication',
-        정보통신학과: 'infoCommunicationCollege',
-        정보보호학과: 'infoSecurity',
-        데이터과학부: 'dataScience',
-        클라우드융복합: 'cloud',
+        컴퓨터학부: "computer",
+        컴퓨터SW: "computerSW",
+        미디어SW: "mediaSW",
+        정보통신학부: "infoCommunication",
+        정보통신학과: "infoCommunicationCollege",
+        정보보호학과: "infoSecurity",
+        데이터과학부: "dataScience",
+        클라우드융복합: "CloudPage",
       };
       const route = routeMap[majorName];
       if (route) {
@@ -304,6 +324,19 @@ export default {
 </script>
 
 <style scoped>
+* {
+  font-family: 'Nanum Gothic', sans-serif;
+}
+.chatbot-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 10%; /* ✅ 기존보다 가로폭 확대 */
+  height: auto; /* ✅ 높이 자동으로 비율 유지 */
+  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
+  z-index: 10; 
+}
+
 .main-container {
   background-image: url('@/assets/background1.png');
   background-size: cover;
@@ -382,29 +415,17 @@ nav {
   /* transform: translateX(-50%); */
   top: 100%;
   width: 100vw;
-  background-color: #2c2d4f;
+  background-color: #2c2d4fee;
   display: flex;
   gap: 3rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   color: white;
-  opacity: 0.8;
   border-radius: 4px;
   z-index: 1000;
   height: 120px;
-  /* position: absolute;
-  top: 100%;  header 바로 아래
-  left: 0;
-  width: 100vw;
-  background-color: #2c2d4f;
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  color: white;
-  opacity: 0.8;
-  border-radius: 4px;
-  z-index: 1000; */
+  
 }
+
 
 .dropdown-info {
   display: flex;
@@ -615,4 +636,60 @@ nav a {
     font-size: 1.6rem;
   }
 }
+/*하단창*/
+footer {
+  background-color: #343539;
+  color: #ccc;
+  padding: 1rem 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.6
+}
+
+footer .container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+footer .wrap {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2rem;
+}
+
+footer .foot_info address {
+  font-style: normal;
+  color: #ccc;
+}
+
+footer .foot_info span {
+  margin-left: 0.5rem;
+}
+
+footer .foot_info p {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #999;
+}
+
+footer .foot_sns ul {
+  list-style: none;
+  padding: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 100px;
+}
+
+footer .foot_sns li a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+footer .foot_sns li a:hover {
+  text-decoration: underline;
+}
+
 </style>

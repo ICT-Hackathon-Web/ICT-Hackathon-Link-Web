@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-     <header
+    <header
       class="header"
       @mouseleave="hideAllDropdowns"
       @mouseenter="navHovered = true"
@@ -112,99 +112,111 @@
           </div>
         </div>
     </section>
+    <div class="sub-nav">
+      <button
+        :class="[$route.name === 'infoSecurity' ? 'yellow-button' : 'blue-button']"
+        @click="navigateTo('infoSecurity')"
+      >
+        학과소개
+      </button>
+      <button
+        :class="[$route.name === 'infoSecuritySub' ? 'yellow-button' : 'blue-button']"
+        @click="navigateTo('infoSecuritySub')"
+      >
+        교과과정
+      </button>
+    </div>
 
-    <!-- 상단 학과소개 / 교과과정 버튼 -->
-     <div class="sub-nav">
-  <button
-    :class="[$route.name === 'infoSecurity' ? 'yellow-button' : 'blue-button']"
-    @click="navigateTo('infoSecurity')"
-  >
-    학과소개
-  </button>
-  <button
-    :class="[$route.name === 'infoSecuritySub' ? 'yellow-button' : 'blue-button']"
-    @click="navigateTo('infoSecuritySub')"
-  >
-    교과과정
-  </button>
-</div>
 
-    <!-- 본문 영역 -->
-    <section class="info-section">
-      <div class="info-box">
-        <h2>학과소개</h2>
-        <p>학과위치: 지능형SW융합대학 3층(303호)</p>
-        <p>대표전화: 031-229-8284</p>
-        <p>업무시간: 오전 9시 ~ 오후 5:30</p>
-      </div>
+    <div class="info-box">
+      <h2>교과과정</h2>
+      <table class="course-table">
+      <thead>
+        <tr>
+          <th>학년</th>
+          <th>학기</th>
+          <th>학수번호</th>
+          <th>이수구분</th>
+          <th>교과목명</th>
+          <th>학점</th>
+          <th>이론</th>
+          <th>실습</th>
+          <th>과목구분</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="14">2</td>
+          <td>1</td>
+          <td>04895</td>
+          <td>전선</td>
+          <td>이산구조론 (Discrete Structure)</td>
+          <td>3</td>
+          <td>3</td>
+          <td>0</td>
+          <td>이론</td>
+        </tr>
+        <tr><td>1</td><td>03498</td><td>전선</td><td>선형대수학 (Linear Algebra)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>1</td><td>02053</td><td>전선</td><td>디지털논리설계 (Digital Logic Design)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>1</td><td>07892</td><td>전선</td><td>웹프로그래밍 (Web Programming)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>1</td><td>10639</td><td>전선</td><td>자바 (Java Programming)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>1</td><td>10058</td><td>전선</td><td>리눅스기초 (linux basic)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>1</td><td>10484</td><td>전핵</td><td>현대암호론 (cryptology)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>1</td><td>10638</td><td>전선</td><td>C++ (C++ Programming)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>1</td><td>09634</td><td>전선</td><td>정보보호개론 (Information Security Overview)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>2</td><td>09635</td><td>전선</td><td>현대암호응용 (Application of the contemporary cryptography)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>2</td><td>07806</td><td>전선</td><td>확률과통계 (Probabilities & Statistics)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>2</td><td>01762</td><td>전선</td><td>데이터베이스 (Database)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>2</td><td>09639</td><td>전선</td><td>고급자바프로그래밍 (Advanced JAVA Programming)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>2</td><td>09658</td><td>전선</td><td>웹기반응용과보안 (Web-Based Applications and Security)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td rowspan="26">3</td>
+          <td>1</td><td>06547</td><td>전선</td><td>컴퓨터네트워크 (Computer Network)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>1</td><td>09640</td><td>전선</td><td>컨텐츠관리 (Contents Management)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>1</td><td>09642</td><td>전선</td><td>데이터베이스보안 (Database System Security)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>1</td><td>09643</td><td>전선</td><td>모바일프로그래밍 (Mobile Programming)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>1</td><td>09657</td><td>전선</td><td>시스템프로그래밍 (System Programming)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>1</td><td>10642</td><td>전선</td><td>임베디드시스템응용및프로그래밍 (Applied Embedded System Programming)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>1</td><td>10488</td><td>전선</td><td>악성코드분석 (Reverse Engineering)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>1</td><td>10629</td><td>전선</td><td>디지털논리설계실험 (Digital Logic Circuit Lab)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>1</td><td>10640</td><td>전선</td><td>정보보안관리1 (Security Management 1)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>1</td><td>10641</td><td>전선</td><td>리눅스응용 (Applied Linux)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>1</td><td>10486</td><td>전선</td><td>데이터베이스설계및관리 (Database)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>2</td><td>08371</td><td>전선</td><td>시스템보안 (System Security)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>2</td><td>08893</td><td>전선</td><td>소프트웨어설계 (Software Design)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>2</td><td>10645</td><td>전선</td><td>시스템보안프로젝트 (System Security Project)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>2</td><td>10644</td><td>전선</td><td>정보보안산학협력특론1 (Special Topics on Security for I-U Cooperation 1)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>2</td><td>10643</td><td>전선</td><td>정보보안관리2 (Security Management 2)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>2</td><td>10497</td><td>전선</td><td>모바일보안프로젝트 (Mobile Security Project)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>2</td><td>10496</td><td>전선</td><td>데이터베이스보안프로젝트 (Database Security Project)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>2</td><td>10495</td><td>전선</td><td>인터넷보안프로젝트 (Internet Security Project)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>2</td><td>10487</td><td>전선</td><td>침해사고대응 (Security Penetration Test)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>2</td><td>09659</td><td>전선</td><td>모바일컴퓨팅및보안 (Security in Mobile Computing Environment)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>2</td><td>09650</td><td>전선</td><td>무선네트워크 (Wireless Networks)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>2</td><td>09649</td><td>전선</td><td>크라우드컴퓨팅 (Cloud Computing)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>2</td><td>09646</td><td>전선</td><td>네트워크보안솔루션 프로젝트 (Network Security Solution Project)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>2</td><td>09645</td><td>전선</td><td>IT응용서비스보안 프로젝트 (Project for IT Application Service Security)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>2</td><td>08894</td><td>전핵</td><td>알고리즘 (Algorithm)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+            <tr>
+          <td rowspan="13">4</td>
+          <td>1</td><td>10493</td><td>전선</td><td>보안프로그래밍 (Secure Coding)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td>
+        </tr>
+        <tr><td>1</td><td>08677</td><td>전선</td><td>네트워크보안 (Network Security System)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>1</td><td>10221</td><td>전선</td><td>정보보안산학협력특론2 (Special Topics on Security for I-U Cooperation 2)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>1</td><td>10490</td><td>전선</td><td>ICT학점이수인턴제1 (ICT Internship 1)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>1</td><td>10647</td><td>전선</td><td>모바일운영체제 (Mobile Operating System)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>1</td><td>10646</td><td>전선</td><td>사물인터넷보안 (The Securing the Internet of Things)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>1</td><td>10585</td><td>전선</td><td>네트워크프로그래밍 (Network Programming)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>1</td><td>10576</td><td>전선</td><td>캡스톤디자인1 (Capstone Design 1)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>1</td><td>10492</td><td>전선</td><td>디지털포렌직스 (Digital Forensics)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+        <tr><td>2</td><td>10577</td><td>전선</td><td>캡스톤디자인2 (Capstone Design 2)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>2</td><td>10648</td><td>전선</td><td>지적재산의보호와관리 (Intellectual Property Rights Protects and Management)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>2</td><td>10429</td><td>전선</td><td>기술과창업 (Technology and Entrepreneurship)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+        <tr><td>2</td><td>10494</td><td>전선</td><td>ICT학점이수인턴제2 (ICT Internship 2)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+      </tbody>
 
-      <div class="info-box">
-        <h2>전공소개</h2>
-        <p>정보보호 전공은 미래의 정보, 지식사회에 필수 기반 기술인 정보보호 기술 분야에서 전문 지식과 현장 능력을 갖춘 정보보호 전문가 양성을 목적으로 한다.</p>
-        <p>정보보호는 컴퓨터 시스템 상의 개인, 시스템, 서비스 정보에 대한 비밀성, 무결성 및 가용성을 보장하기 위한 이론과 실무를 배우는 학문이다.</p>
-        <p>정보보호 전공은 암호학, 접근통제 이론, 시스템 보안, 네트워크 보안, 물리 보안 등 다양한 이론을 학습하고, 실무 중심 교육을 통해 실전 인재 양성에 힘쓰고 있다.</p>
-      </div>
 
-      <div class="info-box">
-        <h2>관련자격 및 시험</h2>
-        <p>- IT 공통 : 정보처리기사/산업기사, 리눅스 마스터, PMP(Project Management Professional), CIA(Certified Internal Auditor)</p>
-
-        <p>- 컴퓨터 보안 : LPIC(Linux Professional Institute Certification), MCITP(Microsoft Certified IT Professional)</p>
-
-        <p>- 네트워크 보안 : CCNA(Cisco Certified Network Associate), CCNP(Cisco Certified Network Professional), CCIE(Cisco Certified Internetwork Expert), CCSP(Certified Cloud Security Professional)</p>
-
-        <p>- 보안 : 정보보호 기사/산업기사, CISSP(Certified Information Systems Security Professionals), CISA(Certified Information System Auditor), CISM(Certified Information Security Manager), CEH(Certified Ethical Hacker)</p>
-      </div>
-      <div class="info-box">
-  <h2>학과시설</h2>
-  <table class="facility-table">
-    <thead>
-      <tr>
-        <th>구분</th>
-        <th>위치 및 설명</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>학과사무실</strong></td>
-        <td>303호 – 학과의 전반적인 행정업무가 이루어지는 곳이다.</td>
-      </tr>
-      <tr>
-        <td><strong>강의실</strong></td>
-        <td>106호, 412호 – 각 교과목들의 이론 수업이 이루어지는 곳이다. 106호에는 전자교탁이 구비되어 있어 시청각 자료 수업이 가능하다.</td>
-      </tr>
-      <tr>
-        <td><strong>실습실</strong></td>
-        <td>205호, 306호, 410호 – 컴퓨터가 비치되어 있는 실습실이다. 실습 과목 수업이 이루어진다.</td>
-      </tr>
-      <tr>
-        <td><strong>학생회의실</strong></td>
-        <td>218호 – 정보보호학과 학생들의 전용 공간으로, 학습과 친교가 자율적으로 이루어지는 곳이다.</td>
-      </tr>
-      <tr>
-        <td><strong>교수연구실</strong></td>
-        <td>지능형SW융합대학 5층 – 학과에 재직 중인 선생님들의 연구실이다.</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-      <div class="info-box">
-        <h2>교수 소개</h2>
-        <div class="professor-grid">
-          <div class="professor-card" v-for="(prof, index) in professors" :key="index">
-            <h3>
-                <a :href="prof.link" target="_blank" rel="noopener noreferrer">{{ prof.name }}</a>
-            </h3>
-            <p class="dept">{{ prof.dept }}</p>
-            <p><strong>전공 : </strong> {{ prof.major }}</p>
-            <p><strong>이메일 : </strong> {{ prof.email }}</p>
-            <p><strong>연구실 : </strong> {{ prof.lab }}</p>
-            <p><strong>연락처 : </strong> {{ prof.phone }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    </table>
+    </div>
     <img class="chatbot-icon"  src="@/assets/chatbot-icon.png" alt="chatbot" @click="showChat = !showChat"/>
     
     <ChatBot v-if="showChat" @close="showChat = false" />
@@ -244,7 +256,6 @@ export default {
   },
   data() {
     return {
-      isIntro: true,
       showChat: false,
       activeDropdown: null,
       navHovered: false,
@@ -253,23 +264,17 @@ export default {
         { name: '정보통신학부', majors: ['정보통신학과', '정보보호학과'] },
         { name: '데이터과학부', majors: [] },
         { name: '클라우드융복합', majors: [] },
-      ],
-            professors: [
-        { name: '양수미', dept: '정보보호', major: '정보 보호', email: 'smyang@suwon.ac.kr', lab: 'IT대학 504호', phone: '031-229-8138', link: 'https://www.suwon.ac.kr/mainHp/prointro/detail.html?eno=1043806'},
-        { name: '김대엽', dept: '정보보호', major: '대수학 & 암호학', email: '없음', lab: 'IT 대학 525호실', phone: '031-229-8352', link: 'https://www.suwon.ac.kr/mainHp/prointro/detail.html?eno=1120129' },
-        { name: '박두식', dept: '정보보호', major: '정보통신', email: 'dspark@suwon.ac.kr', lab: 'IT대학 523호', phone: '031-229-8650', link: 'https://www.suwon.ac.kr/mainHp/prointro/detail.html?eno=1224742' },
-        { name: '김아람', dept: '정보보호', major: '정보보호', email: 'aramkim@suwon.ac.kr', lab: 'IT대학 527호', phone: '031-229-8219', link: 'https://www.suwon.ac.kr/mainHp/prointro/detail.html?eno=1234913'},
-        { name: '전상훈', dept: '정보보호', major: '웨어러블컴퓨팅, 의료인공지능, CPS보안', email: 'shjeon.usw@gmail.com', lab: 'IT대학 528호', phone: '031-229-8069', link: 'https://www.suwon.ac.kr/mainHp/prointro/detail.html?eno=1234912'},
-        { name: '고승철', dept: '정보보호', major: '정보보호', email: '-', lab: 'IT대학 520호', phone: '031-229-8284', link: 'https://www.suwon.ac.kr/mainHp/prointro/detail.html?eno=1110145'},
       ]
     };
   },
   methods: {
     navigateTo(routeName) {
-      this.isIntro = routeName === 'infoSecurityIntro';
       this.$router.push({ name: routeName }).catch((err) => {
-        if (err.name !== "NavigationDuplicated") throw err;
+        if (err.name !== 'NavigationDuplicated') throw err;
       });
+    },
+    getButtonClass(targetRoute) {
+        return this.$route.name === targetRoute ? 'active-button' : 'inactive-button';
     },
     navigateToMajor(majorName) {
       const routeMap = {
@@ -521,7 +526,6 @@ nav a {
   text-shadow: 0 0 5px white;
 }
 
-
 .sub-nav {
   display: flex;
   justify-content: center;
@@ -548,10 +552,20 @@ nav a {
   background-color: #1b1d53; /* 파란색 */
   color: white;
 }
+/* 선택된 버튼 (노란색) */
+.active-button {
+  background-color: #e6c445;
+  color: white;
+}
 
-.sub-nav button.active {
+/* 선택 안 된 버튼 (파란색) */
+.inactive-button {
   background-color: #1b1d53;
   color: white;
+}
+.sub-nav button.active {
+  background-color: #e6c445;
+  color: black;
 }
 
 .info-section {
@@ -567,7 +581,7 @@ nav a {
   color: white;
   font-weight: bold;
   font-size: 1.1rem;
-  border-radius: 10px;
+  
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -583,77 +597,25 @@ nav a {
   margin-bottom: 0.8rem;
 }
 
-.facility-table {
+.course-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
+  background-color: white;
   color: black;
-  background-color: rgba(255, 255, 255);
 }
 
-.facility-table th,
-.facility-table td {
-  border: 1px solid black;
-  padding: 1rem;
-  text-align: left;
-  vertical-align: top;
-  font-size: 1rem;
-}
-
-.facility-table th {
-  background-color: #c9c9c9;
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.professor-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3개씩 배치 */
-  gap: 2rem; /* 카드 간 간격 */
-  padding: 1rem;
-}
-
-.professor-card a {
-    color: white;
-    text-decoration: underline;
-    text-underline-offset: 4px;
-}
-
-.professor-card {
-  background: rgba(0, 0, 0, 0.5);
+.course-table th,
+.course-table td {
   border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 1rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  color: white;
+  padding: 0.75rem;
+  text-align: center;
+  font-size: 0.95rem;
 }
 
-.professor-card h3 {
-  margin: 0;
-  font-size: 1.7rem;
-  color: white;
-}
-
-.professor-card .dept {
-  font-size: 0.9rem;
-  color: white;
-  margin-bottom: 0.5rem;
-}
-
-
-.chair-card {
-  border: 2px solid #ddd;
-  padding: 1rem 1.5rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  row-gap: 0.8rem;
-  column-gap: 1.5rem;
-}
-
-.chair-item {
-  display: flex;
-  align-items: center;
-  font-size: 1rem;
+.course-table th {
+  background-color: #e6e6e6;
+  font-weight: bold;
 }
 /*하단창*/
 footer {

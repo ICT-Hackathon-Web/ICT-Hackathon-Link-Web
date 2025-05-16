@@ -17,7 +17,7 @@
           class="search-input"
         />
 
-        <button type="submit" class="search-icon">🔍</button>
+        <button type="submit" class="search-icon"><img src="@/assets/SearchBarIcon.png"></button>
       </form>
     </div>
   </div>
@@ -50,13 +50,17 @@ export default {
 </script>
 
 <style scoped>
+* {
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
 .search-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-image: url('../assets/background.png');
+  background-image: url('@/assets/background.png');
   background-size: cover;
   display: flex;
   align-items: center;

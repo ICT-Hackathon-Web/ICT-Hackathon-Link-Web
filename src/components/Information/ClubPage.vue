@@ -102,55 +102,23 @@
         />
       </div>
     </header>
-    <!-- 여기까지 -->
+    <section class="title-section">
+        <div class="wrap_sub_visual">
+          <div class="container center-only">
+            <p class="visual_intro"><strong>동아리</strong></p>
 
-    <section class="top-section">
-      <img
-        class="calendar"
-        src="@/assets/calender_may.png"
-        @click="navigateTo('schedulePage')"
-        alt="Calendar"
-      />
-
-      <div class="cards">
-        <div class="card computerSW-card" @click="navigateTo('computerPage')">
-          <h2>컴퓨터학부</h2>
-          <hr />
-          <p>지능형SW융합대학<br />컴퓨터학부를 안내드립니다.</p>
+          </div>
         </div>
-        <div class="card DataScience-card" @click="navigateTo('dataScience')">
-          <h2>데이터과학부</h2>
-          <hr />
-          <p>지능형SW융합대학<br />데이터과학부를 안내드립니다.</p>
-        </div>
-        <div
-          class="card InfoCommunication-card"
-          @click="navigateTo('infoCommunication')"
-        >
-          <h2>정보통신학부</h2>
-          <hr />
-          <p>지능형SW융합대학<br />정보통신학부를 안내드립니다.</p>
+    </section>
+    <section class="club-section">
+      <div class="club-list">
+        <div class="club-card" v-for="(club, index) in clubs" :key="index">
+          <img :src="club.image" alt="club image" class="club-image" />
+          <h3>{{ club.name }}</h3>
+          <p>{{ club.description }}</p>
         </div>
       </div>
     </section>
-
-    <div class="slider-container">
-      <div class="slider-items">
-        <div
-          v-for="(item, index) in visibleItems"
-          :key="index"
-          class="slider-item"
-        >
-          <h3
-            class="schoolSite"
-            @click="navigateToSite(item.title)"
-            navigateToSite
-          >
-            {{ item.title }}
-          </h3>
-        </div>
-      </div>
-    </div>
     <img class="chatbot-icon"  src="@/assets/chatbot-icon.png" alt="chatbot" @click="showChat = !showChat"/>
     
     <ChatBot v-if="showChat" @close="showChat = false" />
@@ -183,109 +151,69 @@
 <script>
 import ChatBot from '@/components/ChatBot.vue'
 export default {
-  
-  name: 'MainPage',
+  name: 'ClubPage',
   components: {
     ChatBot
   },
   data() {
     return {
-      // 여기부터..
-      activeDropdown: null, // 마우스가 어디에 올라가있는지 체크...
-      navHovered: false, // nav바에 마우스가 올라갔는지 boolean으로 체크함
-      showDepartments: false,
       showChat: false,
+      activeDropdown: null,
+      navHovered: false,
       departments: [
-        {
-          name: '컴퓨터학부',
-          majors: ['컴퓨터SW', '미디어SW'],
-        },
-        {
-          name: '정보통신학부',
-          majors: ['정보통신학과', '정보보호학과'],
-        },
-        {
-          name: '데이터과학부',
-          majors: [],
-        },
-        {
-          name: '클라우드융복합',
-          majors: [],
-        },
+        { name: '컴퓨터학부', majors: ['컴퓨터SW', '미디어SW'] },
+        { name: '정보통신학부', majors: ['정보통신학과', '정보보호학과'] },
+        { name: '데이터과학부', majors: [] },
+        { name: '클라우드융복합', majors: [] },
       ],
-      // 여기까지..
-
-      slideIndex: 0,
-      allItems: [
-        { title: '홈페이지' },
-        { title: '캔버스' },
-        { title: '수강신청사이트' },
-        { title: '포털' },
+      clubs: [
+        {
+          name: 'FLAG',
+          description: '각자의 목표를 향해 나아가며\n성장하는 IT 프로젝트 동아리',
+          image: require('@/assets/Flag.png'),
+        },
+        {
+          name: 'DNA',
+          description: 'AI 및 데이터 사이언스 분야에서\n실질적인 성장과 성과를 추구하는\n학술 동아리',
+          image: require('@/assets/DNA.jpg'),
+        },
+        {
+          name: 'Semicolon;',
+          description: '다양한 IT분야의 사람들이 모여 \n함께 성장해나가는\n코딩 동아리',
+          image: require('@/assets/semicolon.png'),
+        },
+        {
+          name: 'WriteUp',
+          description: '함께 성장하며 \n다양한 경험을 쌓을 수 있는 \n유일한 보안(해킹) 동아리',
+          image: require('@/assets/writeup.png'),
+        },
       ],
     };
   },
-  computed: {
-    visibleItems() {
-      return this.allItems.slice(this.slideIndex, this.slideIndex + 4);
-    },
-  },
-  
   methods: {
-
-    
-    //여기부터
     navigateTo(routeName) {
+      this.isIntro = routeName === 'infoSecurityIntro';
       this.$router.push({ name: routeName }).catch((err) => {
-        if (err.name !== 'NavigationDuplicated') {
-          //동일한 경로일x 때, 오류 무시하기
-          throw err;
-        }
+        if (err.name !== "NavigationDuplicated") throw err;
       });
     },
     navigateToMajor(majorName) {
       const routeMap = {
-        컴퓨터학부: 'computerPage',
-        컴퓨터SW: 'computerSW',
-        미디어SW: 'mediaSW',
-        정보통신학부: 'infoCommunication',
-        정보통신학과: 'infoCommunicationCollege',
-        정보보호학과: 'infoSecurity',
-        데이터과학부: 'dataScience',
-        클라우드융복합: 'CloudPage',
+        컴퓨터학부: "computerPage",
+        컴퓨터SW: "computerSW",
+        미디어SW: "mediaSW",
+        정보통신학부: "infoCommunication",
+        정보통신학과: "infoCommunicationCollege",
+        정보보호학과: "infoSecurity",
+        데이터과학부: "dataScience",
+        클라우드융복합: "CloudPage",
       };
       const route = routeMap[majorName];
-      if (route) {
-        this.navigateTo(route);
-      } else {
-        console.warn(`No route found for major: ${majorName}`);
-      }
+      if (route) this.navigateTo(route);
     },
     hideAllDropdowns() {
       this.activeDropdown = null;
       this.navHovered = false;
-    },
-    //여기까지
-
-    navigateToSite(siteName) {
-      const site = {
-        홈페이지: 'https://www.suwon.ac.kr/',
-        캔버스: 'https://canvas.suwon.ac.kr/',
-        수강신청사이트: 'https://sugang.suwon.ac.kr/sugang/login.jsp',
-        포털: 'https://portal.suwon.ac.kr/enview/index.html',
-      };
-      const url = site[siteName];
-      if (url) {
-        window.open(url, '_blank');
-      } else {
-        console.warn(`URL Error`);
-      }
-    },
-
-    next() {
-      if (this.slideIndex + 4 < this.allItems.length) this.slideIndex++;
-    },
-    prev() {
-      if (this.slideIndex > 0) this.slideIndex--;
     },
   },
 };
@@ -296,7 +224,36 @@ export default {
   font-family: 'Nanum Gothic', sans-serif;
 }
 
-/* 여기부터 */
+
+.wrap_sub_visual {
+  background-image: url('@/assets/background1.png');
+  background-size: cover;
+  background-position: center;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrap_sub_visual .container.center-only {
+  justify-content: center;
+}
+
+.visual_intro {
+  font-size: 2.2rem;
+  font-weight: 3px bold;
+  text-align: center;
+  flex: 1;
+  color: white;
+}
+
+.subtitle.a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
+  color: white;
+}
 .main-container {
   background-image: url('@/assets/background1.png');
   background-size: cover;
@@ -317,7 +274,7 @@ export default {
 
 .logo {
   height: 40px;
-  margin-right: 5rem;
+  margin-right: 2rem;
   cursor: pointer;
 }
 
@@ -367,7 +324,15 @@ nav {
   background-color: white;
   opacity: 0.6;
 }
-
+.chatbot-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 10%; /* ✅ 기존보다 가로폭 확대 */
+  height: auto; /* ✅ 높이 자동으로 비율 유지 */
+  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
+  z-index: 10; 
+}
 .dropdown {
   position: absolute;
   justify-content: center;
@@ -478,122 +443,48 @@ nav a {
 .login:hover {
   text-shadow: 0 0 5px white;
 }
-
-/* 여기까지가 header CSS임. css는 여기까지 가져가면 됨. */
-
-.calendar {
-  width: 30%;
-  margin-top: 15px;
-  margin-left: 5%;
-  opacity: 0.9;
+.club-section {
+  padding: 2rem;
+  text-align: center;
 }
 
-.top-section {
+
+.club-list {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin-top: 9rem;
+  gap: 3rem;
+  flex-wrap: wrap;
 }
 
-.cards {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  margin-right: 3rem;
-  margin-top: 0;
-}
-.card {
-  position: relative;
-  width: 270px;
-  height: 270px;
+.club-card {
+  width: 280px;
+  text-align: center;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  font-size: 2rem;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 1.5rem;
-  box-sizing: border-box;
-}
-
-.computerSW-card {
-  background-color: rgba(0, 112, 198, 0.8); /* #0070c6 */
-  color: white;
-  padding-top: 2rem;
-}
-
-.DataScience-card {
-  background-color: rgba(0, 62, 148, 0.8); /* #003E94 */
-  color: white;
-  padding-top: 2rem;
-}
-
-.InfoCommunication-card {
-  background-color: #1b1d53;
-  color: white;
-  padding-top: 2rem;
-}
-
-.card h2 {
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-.card hr {
-  width: 30px;
-  border: 2px solid white;
-  margin: 1rem 0;
-}
-
-.card p {
-  font-size: 1rem;
-  margin-bottom: 2rem;
-}
-
-.chatbot-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 10%; /* ✅ 기존보다 가로폭 확대 */
-  height: auto; /* ✅ 높이 자동으로 비율 유지 */
-  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
-  z-index: 10; 
-}
-
-.slider-container {
-  margin-top: 11rem;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 5rem;
-  padding: 1rem;
-  padding-left: 0;
-  padding-right: 0;
-  border-top: 2px solid white;
+  
 }
-
-.slider-items {
-  display: flex;
-  gap: 1rem;
+.club-image {
+  width: 250px;
+  height: 400px;
+  object-fit: contain;
 }
-
-.slider-item {
-  padding: 1rem;
-  color: white;
-  border-radius: 8px;
-  min-width: 300px;
-  text-align: center;
-  z-index: 1000;
+.club-card h3 {
+  margin: 0.8rem 0 0.3rem;
+  font-weight: bold;
+  font-size: 2rem;
 }
-
-.schoolSite {
-  cursor: pointer;
+.club-card p {
+  margin: 1rem 1rem 3rem;
+  font-size: 1rem;
+  color: #333;
+  white-space: pre-line;
 }
-
 /*하단창*/
-/* Footer 스타일 */
 footer {
   background-color: #343539;
   color: #ccc;

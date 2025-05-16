@@ -102,56 +102,75 @@
         />
       </div>
     </header>
-    <!-- 여기까지 -->
 
-    <section class="top-section">
-      <img
-        class="calendar"
-        src="@/assets/calender_may.png"
-        @click="navigateTo('schedulePage')"
-        alt="Calendar"
-      />
-
-      <div class="cards">
-        <div class="card computerSW-card" @click="navigateTo('computerPage')">
-          <h2>컴퓨터학부</h2>
-          <hr />
-          <p>지능형SW융합대학<br />컴퓨터학부를 안내드립니다.</p>
+    <section class="title-section">
+        <div class="wrap_sub_visual">
+          <div class="container center-only">
+            <p class="visual_intro"><strong>클라우드융복합전공</strong></p>
+            <p class="subtitle a">CloudConvergence</p>
+            
+          </div>
         </div>
-        <div class="card DataScience-card" @click="navigateTo('dataScience')">
-          <h2>데이터과학부</h2>
-          <hr />
-          <p>지능형SW융합대학<br />데이터과학부를 안내드립니다.</p>
-        </div>
-        <div
-          class="card InfoCommunication-card"
-          @click="navigateTo('infoCommunication')"
-        >
-          <h2>정보통신학부</h2>
-          <hr />
-          <p>지능형SW융합대학<br />정보통신학부를 안내드립니다.</p>
-        </div>
-      </div>
     </section>
+    <div class="sub-nav">
+  <button
+    :class="[$route.name === 'CloudPage' ? 'yellow-button' : 'blue-button']"
+    @click="navigateTo('CloudPage')"
+  >
+    학과소개
+  </button>
+  <button
+    :class="[$route.name === 'CloudSub' ? 'yellow-button' : 'blue-button']"
+    @click="navigateTo('CloudSub')"
+  >
+    교과과정
+  </button>
+</div>
 
-    <div class="slider-container">
-      <div class="slider-items">
-        <div
-          v-for="(item, index) in visibleItems"
-          :key="index"
-          class="slider-item"
-        >
-          <h3
-            class="schoolSite"
-            @click="navigateToSite(item.title)"
-            navigateToSite
-          >
-            {{ item.title }}
-          </h3>
-        </div>
-      </div>
-    </div>
-    <img class="chatbot-icon"  src="@/assets/chatbot-icon.png" alt="chatbot" @click="showChat = !showChat"/>
+
+    <div class="info-box">
+  <h2>교과과정</h2>
+  <table class="course-table">
+  <thead>
+    <tr>
+      <th>학년</th>
+      <th>학기</th>
+      <th>학수번호</th>
+      <th>이수구분</th>
+      <th>교과목명</th>
+      <th>학점</th>
+      <th>이론</th>
+      <th>실습</th>
+      <th>과목구분</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+  <td rowspan="5">2</td>
+  <td>1</td><td>11479</td><td>전핵</td><td>클라우드 컴퓨팅 개론 (Introduction to Cloud Computing)</td><td>3</td><td>3</td><td>0</td><td>이론</td>
+  </tr>
+  <tr><td>1</td><td>11481</td><td>전핵</td><td>파이썬 프로그래밍 (Python Programming)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+  <tr><td>2</td><td>11480</td><td>전핵</td><td>클라우드 핵심 서비스 (Core Cloud Services)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+  <tr><td>2</td><td>11483</td><td>전핵</td><td>스토리지 구조 (Storage Architecture)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+  <tr><td>2</td><td>11484</td><td>전핵</td><td>No-SQL 구조 (No-SQL Architecture)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+  <tr>
+  <td rowspan="5">3</td>
+  <td>1</td><td>11482</td><td>전핵</td><td>클라우드 네트워크 (Cloud Network)</td><td>3</td><td>3</td><td>0</td><td>이론</td>
+  </tr>
+  <tr><td>1</td><td>11486</td><td>전핵</td><td>클라우드 아키텍트 구조 (Cloud Architect Architecture)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+  <tr><td>2</td><td>11485</td><td>전핵</td><td>ICT와 클라우드 컴퓨팅 (ICT and Cloud Computing)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+  <tr><td>2</td><td>11487</td><td>전핵</td><td>클라우드 인프라 운영 (Cloud Infrastructure Operation)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+  <tr><td>2</td><td>11488</td><td>전핵</td><td>클라우드 기반 개발 (Cloud-based Development)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+  <tr>
+  <td rowspan="3">4</td>
+  <td>1</td><td>11490</td><td>전핵</td><td>클라우드 기반 데이터레이크 및 분석 (Cloud-based Data Lake & Analytics)</td><td>3</td><td>3</td><td>0</td><td>이론</td>
+  </tr>
+  <tr><td>1</td><td>11491</td><td>전핵</td><td>클라우드 기반 DevOps 자동화 (Cloud-based DevOps Automation)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+  <tr><td>1</td><td>11489</td><td>전핵</td><td>클라우드 인프라 보안 (Cloud Infrastructure Security)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+  </tbody>
+</table>
+</div>
+<img class="chatbot-icon"  src="@/assets/chatbot-icon.png" alt="chatbot" @click="showChat = !showChat"/>
     
     <ChatBot v-if="showChat" @close="showChat = false" />
     <footer>
@@ -176,127 +195,96 @@
         </div>
       </div>
       </div>
-	</footer>
+   </footer>
   </div>
 </template>
 
 <script>
 import ChatBot from '@/components/ChatBot.vue'
 export default {
-  
-  name: 'MainPage',
+  name: 'CloudSub',
   components: {
     ChatBot
   },
   data() {
     return {
-      // 여기부터..
-      activeDropdown: null, // 마우스가 어디에 올라가있는지 체크...
-      navHovered: false, // nav바에 마우스가 올라갔는지 boolean으로 체크함
-      showDepartments: false,
       showChat: false,
+      activeDropdown: null,
+      navHovered: false,
       departments: [
-        {
-          name: '컴퓨터학부',
-          majors: ['컴퓨터SW', '미디어SW'],
-        },
-        {
-          name: '정보통신학부',
-          majors: ['정보통신학과', '정보보호학과'],
-        },
-        {
-          name: '데이터과학부',
-          majors: [],
-        },
-        {
-          name: '클라우드융복합',
-          majors: [],
-        },
-      ],
-      // 여기까지..
-
-      slideIndex: 0,
-      allItems: [
-        { title: '홈페이지' },
-        { title: '캔버스' },
-        { title: '수강신청사이트' },
-        { title: '포털' },
+        { name: '컴퓨터학부', majors: ['컴퓨터SW', '미디어SW'] },
+        { name: '정보통신학부', majors: ['정보통신학과', '정보보호학과'] },
+        { name: '데이터과학부', majors: [] },
+        { name: '클라우드융복합', majors: [] },
       ],
     };
   },
-  computed: {
-    visibleItems() {
-      return this.allItems.slice(this.slideIndex, this.slideIndex + 4);
-    },
-  },
-  
   methods: {
-
-    
-    //여기부터
     navigateTo(routeName) {
+      this.isIntro = routeName === 'infoSecurityIntro';
       this.$router.push({ name: routeName }).catch((err) => {
-        if (err.name !== 'NavigationDuplicated') {
-          //동일한 경로일x 때, 오류 무시하기
-          throw err;
-        }
+        if (err.name !== "NavigationDuplicated") throw err;
       });
     },
     navigateToMajor(majorName) {
       const routeMap = {
-        컴퓨터학부: 'computerPage',
-        컴퓨터SW: 'computerSW',
-        미디어SW: 'mediaSW',
-        정보통신학부: 'infoCommunication',
-        정보통신학과: 'infoCommunicationCollege',
-        정보보호학과: 'infoSecurity',
-        데이터과학부: 'dataScience',
-        클라우드융복합: 'CloudPage',
+        컴퓨터학부: "computer",
+        컴퓨터SW: "computerSW",
+        미디어SW: "mediaSW",
+        정보통신학부: "infoCommunication",
+        정보통신학과: "infoCommunicationCollege",
+        정보보호학과: "infoSecurity",
+        데이터과학부: "dataScience",
+        클라우드융복합: "CloudPage",
       };
       const route = routeMap[majorName];
-      if (route) {
-        this.navigateTo(route);
-      } else {
-        console.warn(`No route found for major: ${majorName}`);
-      }
+      if (route) this.navigateTo(route);
     },
     hideAllDropdowns() {
       this.activeDropdown = null;
       this.navHovered = false;
     },
-    //여기까지
-
-    navigateToSite(siteName) {
-      const site = {
-        홈페이지: 'https://www.suwon.ac.kr/',
-        캔버스: 'https://canvas.suwon.ac.kr/',
-        수강신청사이트: 'https://sugang.suwon.ac.kr/sugang/login.jsp',
-        포털: 'https://portal.suwon.ac.kr/enview/index.html',
-      };
-      const url = site[siteName];
-      if (url) {
-        window.open(url, '_blank');
-      } else {
-        console.warn(`URL Error`);
-      }
-    },
-
-    next() {
-      if (this.slideIndex + 4 < this.allItems.length) this.slideIndex++;
-    },
-    prev() {
-      if (this.slideIndex > 0) this.slideIndex--;
-    },
   },
 };
 </script>
+
+
 
 <style scoped>
 * {
   font-family: 'Nanum Gothic', sans-serif;
 }
 
-/* 여기부터 */
+
+.wrap_sub_visual {
+  background-image: url('@/assets/background1.png');
+  background-size: cover;
+  background-position: center;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrap_sub_visual .container.center-only {
+  justify-content: center;
+}
+
+.visual_intro {
+  font-size: 2.2rem;
+  font-weight: 3px bold;
+  text-align: center;
+  flex: 1;
+  color: white;
+}
+
+.subtitle.a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
+  color: white;
+}
 .main-container {
   background-image: url('@/assets/background1.png');
   background-size: cover;
@@ -317,7 +305,7 @@ export default {
 
 .logo {
   height: 40px;
-  margin-right: 5rem;
+  margin-right: 2rem;
   cursor: pointer;
 }
 
@@ -367,7 +355,15 @@ nav {
   background-color: white;
   opacity: 0.6;
 }
-
+.chatbot-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 10%; /* ✅ 기존보다 가로폭 확대 */
+  height: auto; /* ✅ 높이 자동으로 비율 유지 */
+  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
+  z-index: 10; 
+}
 .dropdown {
   position: absolute;
   justify-content: center;
@@ -478,122 +474,98 @@ nav a {
 .login:hover {
   text-shadow: 0 0 5px white;
 }
-
-/* 여기까지가 header CSS임. css는 여기까지 가져가면 됨. */
-
-.calendar {
-  width: 30%;
-  margin-top: 15px;
-  margin-left: 5%;
-  opacity: 0.9;
-}
-
-.top-section {
+.sub-nav {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin-top: 9rem;
+  margin: 2rem auto;
 }
 
-.cards {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  margin-right: 3rem;
-  margin-top: 0;
-}
-.card {
-  position: relative;
-  width: 270px;
-  height: 270px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  font-size: 2rem;
+.sub-nav button {
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
   font-weight: bold;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  padding: 1.5rem;
-  box-sizing: border-box;
+  transition: background-color 0.2s ease;
 }
 
-.computerSW-card {
-  background-color: rgba(0, 112, 198, 0.8); /* #0070c6 */
+.yellow-button {
+  background-color: #e6c445; /* 노란색 */
+  color: black;
+}
+
+.blue-button {
+  background-color: #1b1d53; /* 파란색 */
   color: white;
-  padding-top: 2rem;
 }
-
-.DataScience-card {
-  background-color: rgba(0, 62, 148, 0.8); /* #003E94 */
+/* 선택된 버튼 (노란색) */
+.active-button {
+  background-color: #e6c445;
   color: white;
-  padding-top: 2rem;
 }
 
-.InfoCommunication-card {
+/* 선택 안 된 버튼 (파란색) */
+.inactive-button {
   background-color: #1b1d53;
   color: white;
-  padding-top: 2rem;
+}
+.sub-nav button.active {
+  background-color: #e6c445;
+  color: black;
 }
 
-.card h2 {
-  font-size: 2rem;
+.info-section {
+  padding: 2rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.info-box {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  color: white;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.info-box h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.5rem;
+}
+
+.info-box p {
+  line-height: 1.8;
+  margin-bottom: 0.8rem;
+}
+
+.course-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: white;
+  color: black;
+}
+
+.course-table th,
+.course-table td {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.course-table th {
+  background-color: #e6e6e6;
   font-weight: bold;
 }
-
-.card hr {
-  width: 30px;
-  border: 2px solid white;
-  margin: 1rem 0;
-}
-
-.card p {
-  font-size: 1rem;
-  margin-bottom: 2rem;
-}
-
-.chatbot-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 10%; /* ✅ 기존보다 가로폭 확대 */
-  height: auto; /* ✅ 높이 자동으로 비율 유지 */
-  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
-  z-index: 10; 
-}
-
-.slider-container {
-  margin-top: 11rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5rem;
-  padding: 1rem;
-  padding-left: 0;
-  padding-right: 0;
-  border-top: 2px solid white;
-}
-
-.slider-items {
-  display: flex;
-  gap: 1rem;
-}
-
-.slider-item {
-  padding: 1rem;
-  color: white;
-  border-radius: 8px;
-  min-width: 300px;
-  text-align: center;
-  z-index: 1000;
-}
-
-.schoolSite {
-  cursor: pointer;
-}
-
 /*하단창*/
-/* Footer 스타일 */
 footer {
   background-color: #343539;
   color: #ccc;

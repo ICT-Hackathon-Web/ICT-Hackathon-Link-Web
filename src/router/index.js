@@ -34,8 +34,8 @@ const routes = [
   },
   {
     path: '/club',
-    name: 'club',
-    component: () => import('@/components/Information/Club.vue'),
+    name: 'ClubPage',
+    component: () => import('@/components/Information/ClubPage.vue'),
   },
   // {
   //   path: '/lostArticle',
@@ -44,60 +44,82 @@ const routes = [
   // },
   {
     path: '/schedule',
-    name: 'schedule',
-    component: () => import('@/components/Information/Schedule.vue'),
+    name: 'schedulePage',
+    component: () => import('@/components/Information/SchedulePage.vue'),
   },
-  // {
-  //   path: '/computer', //컴퓨터학부
-  //   name: 'computer',
-  //   component: () => import('@/components/IntroDepartments/Computer.vue'),
-  // },
-  // {
-  //   path: '/dataScience', //데이터과학부
-  //   name: 'dataScience',
-  //   component: () => import('@/components/IntroDepartments/DataScience.vue'),
-  // },
+  {
+    path: '/computer', //컴퓨터학부
+    name: 'computerPage',
+    component: () => import('@/components/IntroDepartments/ComputerPage.vue'),
+  },
+  {
+    path: '/dataScience', //데이터과학부
+    name: 'dataScience',
+    component: () => import('@/components/IntroDepartments/DataScience.vue'),
+  },
   {
     path: '/infoCommunication', //정보통신학부
     name: 'infoCommunication',
     component: () =>
       import('@/components/IntroDepartments/InfoCommunication.vue'),
   },
-  // {
-  //   path: '/computerSW', //컴퓨터SW
-  //   name: 'computerSW',
-  //   component: () =>
-  //     import('@/components/IntroDepartments/Computer/ComputerSW.vue'),
-  // },
-  // {
-  //   path: '/mediaSW', //미디어SW
-  //   name: 'mediaSW',
-  //   component: () =>
-  //     import('@/components/IntroDepartments/Computer/MediaSW.vue'),
-  // },
-  // {
-  //   path: '/infoCommunicationCollege', //정보통신학과
-  //   name: 'infoCommunicationCollege',
-  //   component: () =>
-  //     import(
-  //       '@/components/IntroDepartments/InfoCommunication/InfoCommunicationCollege.vue'
-  //     ),
-  // },
-  // {
-  //   path: '/infoSecurity', //정보보호학과
-  //   name: 'infoSecurity',
-  //   component: () =>
-  //     import(
-  //       '@/components/IntroDepartments/InfoCommunication/InfoSecurity.vue'
-  //     ),
-  // {
-  //   path: '/cloud', //클라우드융복합
-  //   name: 'cloud',
-  //   component: () =>
-  //     import(
-  //       '@/components/IntroDepartments/InfoCommunication/InfoSecurity.vue'
-  //     ),
-  // },
+  {
+    path: '/mediaSW', //미디어SW
+    name: 'mediaSW',
+    component: () =>
+      import('@/components/IntroDepartments/Computer/MediaSW.vue'),
+  },
+
+  {
+    path: '/mediaSW-Sub',
+    name: 'mediaSWSub',
+    component: () =>
+      import('@/components/IntroDepartments/Computer/MediaSWSub.vue')
+  },
+
+  {
+     path: '/computerSW', //컴퓨터SW
+    name: 'computerSW',
+    component: () =>
+      import('@/components/IntroDepartments/Computer/ComputerSW.vue'),
+  },
+  {
+    path: '/computerSW-Sub',
+    name: 'computerSWSub',
+    component: () =>
+      import('@/components/IntroDepartments/Computer/ComputerSWSub'),
+  },
+  {
+    path: '/infoCommunicationCollege', //정보통신학과
+    name: 'infoCommunicationCollege',
+    component: () =>import('@/components/IntroDepartments/InfoCommunication/InfoCommunicationCollege.vue'),
+  },
+  {
+    path: '/infoCommunicationCollegesub', 
+    name: 'infoCommunicationCollegeSub',
+    component: () =>import('@/components/IntroDepartments/InfoCommunication/InfoCommunicationCollegeSub.vue'),
+  },
+  {
+    path: '/InfoSecurity',
+    name: 'infoSecurity',
+    component: () => import('@/components/IntroDepartments/InfoCommunication/InfoSecurity.vue')
+  },
+
+ {
+    path: '/InfoSecurity/sub',
+    name: 'infoSecuritySub',
+    component: () => import('@/components/IntroDepartments/InfoCommunication/InfoSecuritySub.vue')
+  }, 
+  {
+    path: '/cloud', //클라우드융복합
+    name: 'CloudPage',
+    component: () =>import('@/components/IntroDepartments/Cloud/CloudPage.vue'),
+  },
+  {
+    path: '/cloud-sub', //클라우드융복합
+    name: 'CloudSub',
+    component: () =>import('@/components/IntroDepartments/Cloud/CloudSub.vue'),
+  },
   // {
   //   path: '/privacyPolicy',
   //   name: 'privacyPolicy',

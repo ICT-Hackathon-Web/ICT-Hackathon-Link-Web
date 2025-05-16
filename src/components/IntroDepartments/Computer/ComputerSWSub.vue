@@ -1,6 +1,5 @@
 <template>
   <div class="main-container">
-    <!-- ✅ 헤더 -->
     <header
       class="header"
       @mouseleave="hideAllDropdowns"
@@ -92,7 +91,8 @@
           class="login"
           @click="navigateTo('LoginPage')"
           style="cursor: pointer"
-          >login</a>
+          >login</a
+        >
         <img
           class="searchBar"
           src="@/assets/SearchBarIcon.png"
@@ -105,72 +105,98 @@
     <section class="title-section">
         <div class="wrap_sub_visual">
           <div class="container center-only">
-            <p class="visual_intro"><strong>지능형SW융합대학</strong></p>
-            <p class="subtitle a">COLLEGE OF INTELLIGENT SOFTWARE CONVERGENCE</p>
-            <p class="subtitle b">제4차 산업혁명, 수원대학교 지능형SW융합대학이 주도합니다.</p>
+            <p class="visual_intro"><strong>컴퓨터SW학과</strong></p>
+            <p class="subtitle a">ComputerSoftware</p>
+            
           </div>
         </div>
     </section>
+    <div class="sub-nav">
+  <button
+    :class="[$route.name === 'computerSW' ? 'yellow-button' : 'blue-button']"
+    @click="navigateTo('computerSW')"
+  >
+    학과소개
+  </button>
+  <button
+    :class="[$route.name === 'computerSWSub' ? 'yellow-button' : 'blue-button']"
+    @click="navigateTo('computerSWSub')"
+  >
+    교과과정
+  </button>
+</div>
 
-    <section class="main-section">
-      <div class="intro">
-        <h2>지능형SW융합대학 소개</h2>
-        <p class="intro-text">
-          ICT 융합대학은 4차 산업혁명 시대, 사물인터넷 시대를 선도할 정보보안, 사물인터넷, 빅데이터, 스마트 제조 등 ICT 분야의 하드웨어 및 소프트웨어, ICT 융합 분야의 전문가가 될 수 있도록 관련 이론과 현장에서 요구하는 기술, 협업 능력을 첨단 실습 기자재를 통해 배양함과 동시에 ICT 관련 분야를 주도할 글로벌 ICT 인재 양성을 목표로 하고 있다. 이를 위해 HW·SW융합 STEAM 교육, 코딩, 3D모델링, 컴퓨터가공, 빅데이터/머신러닝 등의 실습 환경을 제공하고 Digital Fabrication Center(DFC), 3D Printer Center, Smart Factory Center, VR/AR Center 등을 통한 최첨단 교육/실습 환경을 제공하고 있다. ICT 융합대학은 단순 ICT 융합 교육이 아닌 학생 개개인의 성취 능력 향상과 실무 교육을 바탕으로 언제 어디서나 실무에 참여하여 핵심 인재로서 발돋움할 수 있는 교육에 중점을 두고 있다.
-        </p>
-      </div>
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-value">31</div>
-          <div class="stat-label">교수진 수(전임 포함)</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">1,539</div>
-          <div class="stat-label">학생 수</div>
-          <div class="stat-label">(2020.07 재학생 및 휴학생)</div>
-        </div>
-      </div>
-      <div class="informbox">   
-        <div class="info-box">
-          <h2>학장 소개</h2>
-          <div class="chair-card">
-              <div class="chair-item">
-                <span class="icon">👤</span> 성명 : 김대엽
-              </div>
-              <div class="chair-item">
-                <span class="icon">🏫</span> 소속 : 정보통신학부
-              </div>
-              <div class="chair-item">
-                <span class="icon">📍</span> 위치 : 지능형SW융합대학 525호
-              </div>
-              <div class="chair-item">
-                <span class="icon">📞</span> 대표전화 : 031-229-8352
-              </div>
-          </div>
-        </div>
-        <div class="majors">
-          <div class="major">
-            <a  @click="navigateTo('infoCommunication')" style="cursor: pointer">정보통신학부</a>
-            <a  @click="navigateTo('infoCommunicationCollege')" style="cursor: pointer">정보통신학과</a>
-            <a  @click="navigateTo('infoSecurity')" style="cursor: pointer">정보보호학과</a>
-          </div>
-          <div class="major">
-            <a  @click="navigateTo('computerPage')" style="cursor: pointer">컴퓨터학부</a>
-            <a  @click="navigateTo('computerSW')" style="cursor: pointer">컴퓨터SW</a>
-            <a  @click="navigateTo('mediaSW')" style="cursor: pointer">미디어SW</a>
-          </div>
-          <div class="major">
-            <a  @click="navigateTo('dataScience')" style="cursor: pointer">데이터과학부</a>
-          </div>
-          <div class="major a">
-            <a  @click="navigateTo('CloudPage')" style="cursor: pointer">클라우드융복합전공</a>
-          </div>   
-        </div>
-      </div>
-    </section>
 
-    <img class="chatbot-icon"  src="@/assets/chatbot-icon.png" alt="chatbot" @click="showChat = !showChat"/>
-
+    <div class="info-box">
+  <h2>교과과정</h2>
+  <table class="course-table">
+  <thead>
+    <tr>
+      <th>학년</th>
+      <th>학기</th>
+      <th>학수번호</th>
+      <th>이수구분</th>
+      <th>교과목명</th>
+      <th>학점</th>
+      <th>이론</th>
+      <th>실습</th>
+      <th>과목구분</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+  <td rowspan="10">2</td>
+  <td>1</td><td>01765</td><td>전선</td><td>데이터통신 (Data Communication)</td><td>3</td><td>3</td><td>0</td><td>이론</td>
+    </tr>
+    <tr><td>1</td><td>02048</td><td>전선</td><td>디지털시스템응용및실험 (Digital System Application & Experiment)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+    <tr><td>1</td><td>03498</td><td>전선</td><td>선형대수학 (Linear Algebra)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>1</td><td>06994</td><td>전선</td><td>프로그래밍언어및실습 (Programming Languaue and Practice)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+    <tr><td>1</td><td>09040</td><td>전선</td><td>디지털영상처리 (Digital Image Processing)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>1</td><td>09657</td><td>전선</td><td>시스템프로그래밍 (System Programming)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>2</td><td>04152</td><td>전선</td><td>어셈블리어 (Assembly Language)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>2</td><td>03098</td><td>전선</td><td>비주얼언어및실습 (Visual Language and Practice)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+    <tr><td>2</td><td>08683</td><td>전선</td><td>리눅스시스템 (Linux Systems)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>2</td><td>09372</td><td>전선</td><td>컴퓨터교과교재연구및지도법 (Advanced Introduction Method in Computer Education)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr>
+  <td rowspan="16">3</td>
+  <td>1</td><td>00191</td><td>전선</td><td>JAVA (JAVA)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td>
+</tr>
+    <tr><td>1</td><td>02176</td><td>전선</td><td>마이크로프로세서응용 (Microprocessor Applications)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>1</td><td>03650</td><td>전선</td><td>소프트웨어공학 (Software Engineering)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>1</td><td>06993</td><td>전선</td><td>프로그래밍언어론 (Programming Language)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>1</td><td>08870</td><td>전선</td><td>임베디드하드웨어설계 (Embedded Hardware Design)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+    <tr><td>1</td><td>09371</td><td>전선</td><td>컴퓨터교육론 (Education Theory of Computer)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>1</td><td>10612</td><td>전선</td><td>임베디드소프트웨어실습 (Embedded Software Design and Experiment)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+    <tr><td>2</td><td>04115</td><td>전선</td><td>알고리즘분석 (Analysis of Algorithms)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>2</td><td>01762</td><td>전선</td><td>데이터베이스 (Database)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>2</td><td>04963</td><td>전선</td><td>인터넷컴퓨팅 (Internet Computing)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>2</td><td>10615</td><td>전선</td><td>IOT 설계실습 (IOT Design and Experiment)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+    <tr><td>2</td><td>10614</td><td>전선</td><td>창업실무 (Entrepreneurship and Practice)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>2</td><td>10613</td><td>전선</td><td>오토마타 (Automata)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>2</td><td>10576</td><td>전선</td><td>캡스톤디자인1 (Capstone Design 1)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>2</td><td>09373</td><td>전선</td><td>컴퓨터교과논리및논술 (Computer Logic and Writing Skill)</td><td>2</td><td>2</td><td>0</td><td>이론</td></tr>
+    <tr><td>2</td><td>05778</td><td>전선</td><td>정보처리기술 (Information Processing)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr>
+  <td rowspan="13">4</td>
+  <td>1</td><td>10577</td><td>전선</td><td>캡스톤디자인2 (Capstone Design 2)</td><td>3</td><td>3</td><td>0</td><td>이론</td>
+    </tr>
+    <tr><td>1</td><td>10616</td><td>전선</td><td>캡스톤설계1 (Capstone Design 1)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+    <tr><td>1</td><td>07922</td><td>전선</td><td>분산컴퓨팅 (Distributed Computing)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>1</td><td>06522</td><td>전선</td><td>컴파일러구성 (Compiler Construction)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>1</td><td>08872</td><td>전선</td><td>네트워크컴퓨팅 (Network Computing)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>1</td><td>09633</td><td>전선</td><td>졸업프로젝트 (Graduation Project)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>1</td><td>03855</td><td>전선</td><td>시스템분석및설계 (System Analysis and Design)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>1</td><td>04931</td><td>전선</td><td>인공지능 (Artificial Intelligence)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>2</td><td>06532</td><td>전선</td><td>컴퓨터과학특강 (Special Topics in Computer Science)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>2</td><td>08866</td><td>전선</td><td>자유전공 (Special Topics in Chemical and Biochemical Engineering)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+    <tr><td>2</td><td>08877</td><td>전선</td><td>모바일소프트웨어설계 (Mobile Software Design)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+    <tr><td>2</td><td>10617</td><td>전선</td><td>캡스톤설계2 (Capstone Design 2)</td><td>3</td><td>2</td><td>2</td><td>이론/실습</td></tr>
+    <tr><td>2</td><td>10468</td><td>전선</td><td>빅데이터정보검색 (Information Retrieval)</td><td>3</td><td>3</td><td>0</td><td>이론</td></tr>
+  </tbody>
+</table>
+</div>
+<img class="chatbot-icon"  src="@/assets/chatbot-icon.png" alt="chatbot" @click="showChat = !showChat"/>
+    
     <ChatBot v-if="showChat" @close="showChat = false" />
     <footer>
       <div class="container">
@@ -201,63 +227,28 @@
 <script>
 import ChatBot from '@/components/ChatBot.vue'
 export default {
-  name: 'introCollege',
+  name: 'InfoSecurityIntro',
   components: {
     ChatBot
   },
-   data() {
+  data() {
     return {
       showChat: false,
-      activeDropdown: null, // 마우스가 어디에 올라가있는지 체크...
-      navHovered: false, // nav바에 마우스가 올라갔는지 boolean으로 체크함
-      allItems: [
-        { title: '홈페이지' },
-        { title: '캔버스' },
-        { title: '수강신청사이트' },
-        { title: '포털' },
-      ],
-      slideIndex: 0,
-      showDepartments: false,
+      activeDropdown: null,
+      navHovered: false,
       departments: [
-        {
-          name: '컴퓨터학부',
-          majors: ['컴퓨터SW', '미디어SW'],
-        },
-        {
-          name: '정보통신학부',
-          majors: ['정보통신학과', '정보보호학과'],
-        },
-        {
-          name: '데이터과학부',
-          majors: [],
-        },
-        {
-          name: '클라우드융복합',
-          majors: [],
-        },
+        { name: '컴퓨터학부', majors: ['컴퓨터SW', '미디어SW'] },
+        { name: '정보통신학부', majors: ['정보통신학과', '정보보호학과'] },
+        { name: '데이터과학부', majors: [] },
+        { name: '클라우드융복합', majors: [] },
       ],
     };
   },
-  computed: {
-    visibleItems() {
-      return this.allItems.slice(this.slideIndex, this.slideIndex + 4);
-    },
-  },
   methods: {
-    filteredNotices() {
-      return this.notices
-        .filter((n) => this.selectCategory === "all_annonce" || n.category === this.selectCategory)
-        .filter((n) => {
-          const field = this.searchColumn;
-          return n[field].toLowerCase().includes(this.searchTerm.toLowerCase());
-        });
-    },
     navigateTo(routeName) {
+      this.isIntro = routeName === 'infoSecurityIntro';
       this.$router.push({ name: routeName }).catch((err) => {
-        if (err.name !== 'NavigationDuplicated') {
-          //동일한 경로일x 때, 오류 무시하기
-          throw err;
-        }
+        if (err.name !== "NavigationDuplicated") throw err;
       });
     },
     navigateToMajor(majorName) {
@@ -273,13 +264,8 @@ export default {
 
       };
       const route = routeMap[majorName];
-      if (route) {
-        this.navigateTo(route);
-      } else {
-        console.warn(`No route found for major: ${majorName}`);
-      }
+      if (route) this.navigateTo(route);
     },
-
     hideAllDropdowns() {
       this.activeDropdown = null;
       this.navHovered = false;
@@ -288,18 +274,49 @@ export default {
 };
 </script>
 
+
+
 <style scoped>
 * {
   font-family: 'Nanum Gothic', sans-serif;
 }
 
+
+.wrap_sub_visual {
+  background-image: url('@/assets/background1.png');
+  background-size: cover;
+  background-position: center;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrap_sub_visual .container.center-only {
+  justify-content: center;
+}
+
+.visual_intro {
+  font-size: 2.2rem;
+  font-weight: 3px bold;
+  text-align: center;
+  flex: 1;
+  color: white;
+}
+
+.subtitle.a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
+  color: white;
+}
 .main-container {
-  background-image: url('@/assets/background.png');
+  background-image: url('@/assets/background1.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   min-height: 100vh;
-  overflow-x: hidden;
 }
 
 .header {
@@ -364,7 +381,15 @@ nav {
   background-color: white;
   opacity: 0.6;
 }
-
+.chatbot-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 10%; /* ✅ 기존보다 가로폭 확대 */
+  height: auto; /* ✅ 높이 자동으로 비율 유지 */
+  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
+  z-index: 10; 
+}
 .dropdown {
   position: absolute;
   justify-content: center;
@@ -475,213 +500,96 @@ nav a {
 .login:hover {
   text-shadow: 0 0 5px white;
 }
-
-/* 서브 비주얼 */
-.wrap_sub_visual {
-  background-image: url('@/assets/background1.png');
-  background-size: cover;
-  background-position: center;
-  height: 220px;
+.sub-nav {
   display: flex;
-  align-items: center;
   justify-content: center;
+  gap: 1rem;
+  margin: 2rem auto;
 }
 
-.wrap_sub_visual .container.center-only {
-  justify-content: center;
-}
-
-.visual_intro {
-  font-size: 2.2rem;
-  font-weight: bold;
-  text-align: center;
-  flex: 1;
-  color: white;
-}
-.subtitle.a{
+.sub-nav button {
+  padding: 0.7rem 1.5rem;
   font-size: 1rem;
   font-weight: bold;
-  text-align: center;
-  flex: 1;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.yellow-button {
+  background-color: #e6c445; /* 노란색 */
+  color: black;
+}
+
+.blue-button {
+  background-color: #1b1d53; /* 파란색 */
+  color: white;
+}
+/* 선택된 버튼 (노란색) */
+.active-button {
+  background-color: #e6c445;
   color: white;
 }
 
-.subtitle.b{
-  font-size: 0.8rem;
-  font-weight: bold;
-  text-align: center;
-  flex: 1;
+/* 선택 안 된 버튼 (파란색) */
+.inactive-button {
+  background-color: #1b1d53;
   color: white;
 }
-
-.content {
-  color: white;
+.sub-nav button.active {
+  background-color: #e6c445;
+  color: black;
 }
 
-.main-section {
-  min-height: 100vh;
-  
-  padding: 2rem 2rem;
-  z-index: 1;
-  position: relative;
-  
-}
-
-.intro h2 {
-  font-size: 1.5rem;
-  margin-left: 1rem ;
-  margin-bottom: 2rem;
-  font-weight: bold;
-  color: white;
-}
-
-.intro-text {
-  font-size: 20px;
-  font-weight: bold;
-  color: white;
-  padding: 1rem;
-  font-weight: 500;
-}
-
-.stats {
-  display: flex;
-  justify-content: center;
-  gap: 5rem;
-  margin-top: 4rem;
-}
-
-.stat {
-  text-align: center;
-  padding: 1rem 2rem;
-}
-
-.stat-value {
-  font-size: 3rem;
-  font-weight: bold;
-  color: white;
-}
-
-.stat-label {
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-  color: white;
-}
-/* ✅ 공통 컨테이너 */
-.informbox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.info-section {
+  padding: 2rem;
+  max-width: 1300px;
   margin: 0 auto;
-  max-width: 100%;
 }
 
-/* ✅ 학장 소개 박스 */
 .info-box {
-  background-color: rgba(0, 0, 0, 0.6); 
+  background-color: rgba(0, 0, 0, 0.6);
   padding: 1.5rem;
   margin-bottom: 2rem;
   color: white;
-  font-weight: bold; /* 매우 중요한 코드 */
+  font-weight: bold;
   font-size: 1.1rem;
   border-radius: 10px;
-  width: 82%;
-  margin: 3rem;
-}
-.chair-card {
-  border: 2px solid #ddd;
-  padding: 1rem 1.5rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  row-gap: 0.8rem;
-  column-gap: 1.5rem;
-  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.chair-item {
-  display: flex;
-  align-items: center;
-  font-size: 1rem;
-}
-
-/* ✅ 전공 전체 묶음 */
-.majors {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 3.5rem;
-  width: 100%;
-  margin-top: 3rem;
-}
-
-/* ✅ 각 전공 박스 */
-.major {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 2rem 1rem;
-  border-radius: 10px;
-  width: 230px;
-  height: 240px;
-  box-sizing: border-box;
-}
-
-.major.a {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 2rem 1rem;
-  border-radius: 10px;
-  width: 300px;
-  height: 240px;
-  box-sizing: border-box;
-}
-
-.major a:first-child {
-  font-size: 30px; /* 학부 */
-  color: white;
-  font-weight: bold;
+.info-box h2 {
+  font-size: 1.6rem;
   margin-bottom: 1rem;
-  text-decoration: none;
-  
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.5rem;
 }
 
-.major a:not(:first-child) {
-  font-size: 20px; /* 학과 */
-  color: white;
-  margin-bottom: 0.5rem;
-  text-decoration: none;
+.info-box p {
+  line-height: 1.8;
+  margin-bottom: 0.8rem;
 }
 
-.major-a {
-  font-size: 30px;
-  color: white;
-  font-weight: bold;
+.course-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: white;
+  color: black;
+}
+
+.course-table th,
+.course-table td {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
   text-align: center;
+  font-size: 0.95rem;
 }
 
-.dy-title{
-  color: white;
-  font-size: 35px;
-}
-
-.inform {
-  color: white;
-  font-size: 30px;
-}
-
-
-.chatbot-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 10%; /* ✅ 기존보다 가로폭 확대 */
-  height: auto; /* ✅ 높이 자동으로 비율 유지 */
-  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
-  z-index: 10; 
+.course-table th {
+  background-color: #e6e6e6;
+  font-weight: bold;
 }
 /*하단창*/
 footer {
