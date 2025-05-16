@@ -24,12 +24,12 @@ const routes = [
   },
   {
     path: '/announcement',
-    name: 'announcement',
-    component: () => import('@/components/Announcement.vue'),
+    name: 'announcePage',
+    component: () => import('@/components/AnnouncePage.vue'),
   },
   {
     path: '/announce_detail',
-    name: 'announce_detail',
+    name: 'announceDetail',
     component: () => import('@/components/Announce_detail.vue'),
   },
   {
@@ -37,11 +37,16 @@ const routes = [
     name: 'ClubPage',
     component: () => import('@/components/Information/ClubPage.vue'),
   },
-  // {
-  //   path: '/lostArticle',
-  //   name: 'lostArticle',
-  //   component: () => import('@/components/Information/LostArticle.vue'),
-  // },
+  {
+    path: '/lostArticle',
+    name: 'lostArticle',
+    component: () => import('@/components/Information/LostArticle.vue'),
+  },
+  {
+    path: '/lostArticle',
+    name: 'lostArticleDetail',
+    component: () => import('@/components/Information/LostArticleDetail.vue'),
+  },
   {
     path: '/schedule',
     name: 'schedulePage',
@@ -120,11 +125,11 @@ const routes = [
     name: 'CloudSub',
     component: () =>import('@/components/IntroDepartments/Cloud/CloudSub.vue'),
   },
-  // {
-  //   path: '/privacyPolicy',
-  //   name: 'privacyPolicy',
-  //   component: () => import('@/components/PrivacyPolicy.vue'),
-  // },
+  {
+    path: '/privacyPolicy',
+    name: 'PrivacyPolicy',
+    component: () => import('@/components/PrivacyPolicy.vue'),
+  },
   {
     path: '/search',
     name: 'search',

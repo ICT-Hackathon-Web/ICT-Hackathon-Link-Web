@@ -81,7 +81,7 @@
 
           <a
             class="announcememt"
-            @click="navigateTo('announcement')"
+            @click="navigateTo('announcePage')"
             style="cursor: pointer"
             >공지</a
           >
@@ -179,7 +179,7 @@
             <div class="fnb">
               <ul class="inGuideFnb">
                 <li>
-                  <a href="#" target="_blank">개인정보처리방침</a>
+                  <a @click="showPrivacy = true" style="cursor: pointer">개인정보처리방침</a>
                 </li>
               </ul>
             </div>
@@ -219,54 +219,32 @@
         </div>
       </div>
   </footer>
-
+  <PrivacyPolicy v-if="showPrivacy" @close="showPrivacy = false" />
   </div>
 </template>
 
 <script>
 import ChatBot from '@/components/ChatBot.vue'
+import PrivacyPolicy from '@/components/PrivacyPolicy.vue'
 export default {
   name: 'introCollege',
   components: {
-    ChatBot
+    ChatBot,
+    PrivacyPolicy
   },
    data() {
     return {
+      showPrivacy: false,
       showChat: false,
-      activeDropdown: null, // 마우스가 어디에 올라가있는지 체크...
-      navHovered: false, // nav바에 마우스가 올라갔는지 boolean으로 체크함
-      allItems: [
-        { title: '홈페이지' },
-        { title: '캔버스' },
-        { title: '수강신청사이트' },
-        { title: '포털' },
-      ],
-      slideIndex: 0,
-      showDepartments: false,
+      activeDropdown: null,
+      navHovered: false,
       departments: [
-        {
-          name: '컴퓨터학부',
-          majors: ['컴퓨터SW', '미디어SW'],
-        },
-        {
-          name: '정보통신학부',
-          majors: ['정보통신학과', '정보보호학과'],
-        },
-        {
-          name: '데이터과학부',
-          majors: [],
-        },
-        {
-          name: '클라우드융복합',
-          majors: [],
-        },
+        { name: '컴퓨터학부', majors: ['컴퓨터SW', '미디어SW'] },
+        { name: '정보통신학부', majors: ['정보통신학과', '정보보호학과'] },
+        { name: '데이터과학부', majors: [] },
+        { name: '클라우드융복합', majors: [] },
       ],
     };
-  },
-  computed: {
-    visibleItems() {
-      return this.allItems.slice(this.slideIndex, this.slideIndex + 4);
-    },
   },
   methods: {
     filteredNotices() {
@@ -745,6 +723,8 @@ footer .foot_info p {
   color: #999;
 }
 
+
+
 footer .foot_sns ul {
   list-style: none;
   padding: 0.5rem;
@@ -763,5 +743,8 @@ footer .foot_sns li a {
 footer .foot_sns li a:hover {
   text-decoration: underline;
 }
-
+footer .inGuideFnb{
+  margin-bottom: 40px;
+  color: white;
+}
 </style>
