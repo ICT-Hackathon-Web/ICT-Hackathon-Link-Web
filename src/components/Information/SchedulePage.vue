@@ -296,7 +296,7 @@ export default {
     },
     navigateToMajor(majorName) {
       const routeMap = {
-        컴퓨터학부: "computer",
+        컴퓨터학부: "computerPage",
         컴퓨터SW: "computerSW",
         미디어SW: "mediaSW",
         정보통신학부: "infoCommunication",

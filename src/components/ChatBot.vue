@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name:'ChatBot',
   emits: ['close'], 
@@ -43,38 +45,26 @@ export default {
     },
     sendMessage() {
       if (this.input.trim()) {
-        this.messages.push({ sender: 'user', text: this.input });
+        const userText = this.input;
+        this.messages.push({ sender: 'user', text: userText });
         this.input = '';
+        this.sendToServer(userText); // ✅ 여기서 자동으로 서버에 전송!
       }
     },
-
     async sendToServer(userMessage) {
-  try {
-    // 사용자 메시지 전송
-    const response = await fetch('http://localhost:5000/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ message: userMessage }),
-    });
+      try {
+        const response = await axios.post('http://localhost:5000/chat', {
+          message: userMessage,
+        });
 
-    if (!response.ok) {
-      throw new Error('서버 응답 오류');
+        this.messages.push({ sender: 'bot', text: response.data.reply });
+      } catch (error) {
+        this.messages.push({ sender: 'bot', text: '죄송합니다. 오류가 발생했어요.' });
+        console.error('서버 통신 오류:', error);
+      }
     }
+  },
 
-    const data = await response.json();
-
-    // 서버로부터 받은 메시지를 채팅창에 추가
-    this.messages.push({ sender: 'bot', text: data.reply });
-  } catch (error) {
-    // 오류 발생 시 메시지 추가
-    this.messages.push({ sender: 'bot', text: '죄송합니다. 오류가 발생했어요.' });
-    console.error('서버 통신 오류:', error);
-  }
-}
-
-  }
 };
 </script>
 
