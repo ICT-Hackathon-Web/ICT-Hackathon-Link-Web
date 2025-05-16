@@ -593,7 +593,6 @@ nav a {
 }
 
 /*하단창*/
-/* Footer 스타일 */
 footer {
   background-color: #343539;
   color: #ccc;

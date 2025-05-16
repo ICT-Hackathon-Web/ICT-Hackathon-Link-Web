@@ -96,7 +96,7 @@
         >
         <img
           class="searchBar"
-          src="@/assets/SearchBarIcon.png"
+          :src="require('@/assets/SearchBarIcon.png')"
           @click="navigateTo('search')"
           alt="SearchBar"
           style="cursor: pointer"
@@ -114,7 +114,7 @@
     <!-- ✅ 본문: 이미지(left) + 표(right) -->
     <div class="wrap-content">
       <div class="left">
-        <img src="@/assets/calender_may.png" alt="학사일정 이미지" />
+        <img :src="require('@/assets/calender_may.png')" alt="학사일정 이미지" />
       </div>
       <div class="right">
         <div class="select-year">
@@ -144,7 +144,7 @@
         </div>
       </div>
     </div>
-    <img class="chatbot-icon"  src="@/assets/chatbot-icon.png" alt="chatbot" @click="showChat = !showChat"/>
+    <img class="chatbot-icon"  :src="require('@/assets/chatbot-icon.png')" alt="chatbot" @click="showChat = !showChat"/>
     
     <ChatBot v-if="showChat" @close="showChat = false" />
     <footer>
@@ -161,10 +161,10 @@
         </div>
         <div class="foot_sns">
         <ul>
-              <li class="n_blog"><a title="수원대학교 블로그" href="https://blog.naver.com/usw1982" target="_blank"><img src="@/assets/blog.png"></a></li>
-              <li class="facebook"><a title="수원대학교 페이스북" href="https://www.facebook.com/SuwonUniv/" target="_blank"><img src="@/assets/facebook.png"></a></li>
-              <li class="instagram"><a title="수원대학교 인스타그램" href="https://www.instagram.com/usw1982/" target="_blank"><img src="@/assets/insta.png"></a></li>
-              <li class="youtube"><a title="수원대학교 유튜브" href="https://www.youtube.com/channel/UC4JfyRGKu5AfBjvaFMCj3cg" target="_blank"><img src="@/assets/youtube.png"></a></li>
+              <li class="n_blog"><a title="수원대학교 블로그" href="https://blog.naver.com/usw1982" target="_blank"><img :src="require('@/assets/blog.png')"></a></li>
+              <li class="facebook"><a title="수원대학교 페이스북" href="https://www.facebook.com/SuwonUniv/" target="_blank"><img :src="require('@/assets/facebook.png')"></a></li>
+              <li class="instagram"><a title="수원대학교 인스타그램" href="https://www.instagram.com/usw1982/" target="_blank"><img :src="require('@/assets/insta.png')"></a></li>
+              <li class="youtube"><a title="수원대학교 유튜브" href="https://www.youtube.com/channel/UC4JfyRGKu5AfBjvaFMCj3cg" target="_blank"><img :src="require('@/assets/youtube.png')"></a></li>
         </ul>
         </div>
       </div>
