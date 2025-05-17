@@ -13,146 +13,131 @@
         style="padding: 1.3rem 2rem"
       />
 
-      <nav>
-        <!-- 대학 안내 -->
-        <div class="center-menu">
-          <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer"
-            >대학 안내</a
-          >
-          <div class="divider"></div>
-
-          <!-- 학과 안내 -->
-          <div
-            class="department-wrapper"
-            @mouseenter="activeDropdown = 'department'"
-          >
-            <a class="department" style="cursor: default">학과 안내</a>
-            <div
-              class="dropdown"
-              v-show="activeDropdown === 'department'"
-              @mouseenter="navHovered = true"
-              @mouseleave="hideAllDropdowns"
-            >
+       <div class="menu">
+        <nav>
+          <!-- 대학 안내 -->
+          <div class="center-menu">
+            <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer">대학 안내</a>
+            <div class="divider"></div>
+            <div class="department-wrapper" @mouseenter="activeDropdown = 'department'">
+              <a class="department" style="cursor: default">학과 안내</a>
               <div
-                class="department-block"
-                v-for="(dept, index) in departments"
-                :key="index"
+                class="dropdown"
+                v-show="activeDropdown === 'department'"
+                @mouseenter="navHovered = true"
+                @mouseleave="hideAllDropdowns"
               >
-                <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
-                  {{ dept.name }}
-                </h4>
-
-                <ul v-if="dept.majors.length">
-                  <li
-                    v-for="(major, idx) in dept.majors"
-                    :key="idx"
-                    @click="navigateToMajor(major)"
-                    style="cursor: pointer"
-                  >
-                    {{ major }}
-                  </li>
-                </ul>
+                <div
+                  class="department-block"
+                  v-for="(dept, index) in departments"
+                  :key="index"
+                >
+                  <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
+                    {{ dept.name }}
+                  </h4>
+                  <ul v-if="dept.majors.length">
+                    <li
+                      v-for="(major, idx) in dept.majors"
+                      :key="idx"
+                      @click="navigateToMajor(major)"
+                      style="cursor: pointer"
+                    >
+                      {{ major }}
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="divider"></div>
-
-          <!-- 정보 광장 -->
-          <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
-            <a class="information" style="cursor: default">정보 광장</a>
-            <div
-              class="dropdown dropdown-info"
-              v-show="activeDropdown === 'info'"
-              @mouseenter="navHovered = true"
-              @mouseleave="hideAllDropdowns"
-            >
-              <div class="department-block">
-                <ul>
-                  <li @click="navigateTo('schedulePage')">학사일정</li>
-                  <li @click="navigateTo('ClubPage')">동아리</li>
-                  <li @click="navigateTo('lostArticle')">분실물</li>
-                </ul>
+            <div class="divider"></div>
+            <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
+              <a class="information" style="cursor: default">정보 광장</a>
+              <div
+                class="dropdown dropdown-info"
+                v-show="activeDropdown === 'info'"
+                @mouseenter="navHovered = true"
+                @mouseleave="hideAllDropdowns"
+              >
+                <div class="department-block">
+                  <ul>
+                    <li @click="navigateTo('schedulePage')">학사일정</li>
+                    <li @click="navigateTo('ClubPage')">동아리</li>
+                    <li @click="navigateTo('lostArticle')">분실물</li>
+                  </ul>
+                </div>
               </div>
             </div>
+            <div class="divider"></div>
+            <a class="announcememt" @click="navigateTo('announcePage')" style="cursor: pointer">공지</a>
           </div>
-
-          <div class="divider"></div>
-
-          <a
-            class="announcememt"
-            @click="navigateTo('announcePage')"
-            style="cursor: pointer"
-            >공지</a
-          >
-        </div>
-      </nav>
+        </nav>
+      </div>
       <div class="right-menu">
         <a
+          v-if="!isLoggedIn"
           class="login"
-          @click="navigateTo('LoginPage')"
+          @click="login"
           style="cursor: pointer"
-          >login</a>
-        <img
-          class="searchBar"
-          src="@/assets/SearchBarIcon.png"
-          @click="navigateTo('search')"
-          alt="SearchBar"
+        >로그인</a>
+
+        <a
+          v-else
+          class="login"
+          @click="logout"
           style="cursor: pointer"
-        />
+        >로그아웃</a>
       </div>
     </header>
     <!-- ✅ 서브 비주얼 영역 -->
-    <section class="title-section">
-        <div class="wrap_sub_visual">
-          <div class="container center-only">
-            <p class="visual_intro"><strong>공지사항</strong></p>
+    <div class="content-wrapper">
+      <section class="title-section">
+          <div class="wrap_sub_visual">
+            <div class="container center-only">
+              <p class="visual_intro"><strong>공지사항</strong></p>
+            </div>
           </div>
-        </div>
-    </section>
-    
+      </section>
+      
 
-    <!-- ✅ 글쓰기 버튼 -->
-    <div style="text-align: right; margin: 1rem 2rem 0 0">
-      <button @click="navigateToWrite" class="write-button">글쓰기</button>
-    </div>
-
-    <!-- ✅ 공지사항 목록 -->
-    <section class="notice-section">
-      <div class="notice-header">
-        <p>총 <strong>{{ notices.length }}</strong>개의 게시물이 있습니다.</p>
+      <!-- ✅ 글쓰기 버튼 -->
+      <div style="text-align: right; margin: 1rem 2rem 0 0">
+        <button @click="navigateToWrite" class="write-button">글쓰기</button>
       </div>
 
-      <table class="notice-table">
-        <thead>
-          <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-            <th>첨부</th>
-          </tr>
-        </thead>
-        <tbody v-if="notices.length">
-          <tr v-for="notice in notices" :key="notice.notice_id">
-            <td>{{ notice.notice_id }}</td>
-            <td>
-              <a @click="goToDetail(notice.notice_id)" style="cursor: pointer;">{{ notice.title }}</a>
-            </td>
-            <td>{{ notice.publisher }}</td>
-            <td>{{ formatDate(notice.created_at) }}</td>
-            <td><span v-if="notice.attachments">📎</span></td>
-          </tr>
-        </tbody>
-        <tbody v-else>
-          <tr>
-            <td colspan="5">공지사항이 없습니다.</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-    <img class="chatbot-icon"  src="@/assets/chatbot-icon.png" alt="chatbot" @click="showChat = !showChat"/>
+      <!-- ✅ 공지사항 목록 -->
+      <section class="notice-section">
+        <div class="notice-header">
+          <p>총 <strong>{{ notices.length }}</strong>개의 게시물이 있습니다.</p>
+        </div>
 
+        <table class="notice-table">
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>작성일</th>
+              <th>첨부</th>
+            </tr>
+          </thead>
+          <tbody v-if="notices.length">
+            <tr v-for="notice in notices" :key="notice.notice_id">
+              <td>{{ notice.notice_id }}</td>
+              <td>
+                <a @click="goToDetail(notice.notice_id)" style="cursor: pointer;">{{ notice.title }}</a>
+              </td>
+              <td>{{ notice.publisher }}</td>
+              <td>{{ formatDate(notice.created_at) }}</td>
+              <td><span v-if="notice.attachments">📎</span></td>
+            </tr>
+          </tbody>
+          <tbody v-else>
+            <tr>
+              <td colspan="5">공지사항이 없습니다.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
     <ChatBot v-if="showChat" @close="showChat = false" />
     <footer>
       <div class="container">
@@ -217,6 +202,7 @@ export default {
   },
   data() {
     return {
+       isLoggedIn: false,
       notices: [],
       showPrivacy: false,
       showChat: false,
@@ -231,6 +217,14 @@ export default {
     };
   },
   methods: {
+    login() {
+      this.navigateTo('LoginPage');
+    },
+    logout() {
+      this.isLoggedIn = false;
+      localStorage.removeItem('token');
+      alert('로그아웃 되었습니다.');
+    },
     async fetchNotices() {
       try {
         const res = await axios.get('http://localhost:5050/api/notices');
@@ -299,17 +293,21 @@ export default {
 
 <style scoped>
 .main-container {
-  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
-  background-color: #f7f7f7;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
 }
 
+.content-wrapper {
+  flex: 1;
+}
 * {
   font-family: 'Nanum Gothic', sans-serif;
 }
 
 
 .header {
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -456,9 +454,6 @@ nav {
   text-decoration: none;
 }
 
-.searchBar {
-  margin-right: 10px;
-}
 
 nav a {
   margin: 0 10px;
@@ -466,11 +461,11 @@ nav a {
   text-decoration: none;
 }
 
-.login .searchBar {
+.menu{
   display: flex;
+  flex: 1;
   justify-content: center;
-  gap: 5rem;
-  margin-top: 2rem;
+  align-items: center;
 }
 
 .login {
@@ -629,11 +624,12 @@ nav a {
 }
 /*하단창*/
 footer {
+  margin-top: auto;          /* ✅ 남는 공간 아래로 밀어줌 */
   background-color: #343539;
   color: #ccc;
   padding: 1rem 0.5rem;
   font-size: 0.9rem;
-  line-height: 1.6
+  line-height: 1.6;
 }
 
 footer .container {

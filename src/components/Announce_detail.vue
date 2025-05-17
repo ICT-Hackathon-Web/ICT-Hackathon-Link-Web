@@ -89,17 +89,19 @@
       </nav>
       <div class="right-menu">
         <a
+          v-if="!isLoggedIn"
           class="login"
-          @click="navigateTo('LoginPage')"
+          @click="login"
           style="cursor: pointer"
-          >login</a>
-        <img
-          class="searchBar"
-          src="@/assets/SearchBarIcon.png"
-          @click="navigateTo('search')"
-          alt="SearchBar"
+        >로그인</a>
+
+        <a
+          v-else
+          class="login"
+          @click="logout"
           style="cursor: pointer"
-        />
+        >로그아웃</a>
+      
       </div>
     </header>
 
@@ -179,6 +181,7 @@ export default {
   },
   data() {
     return {
+      isLoggedIn: false,
       notice: {},
       showPrivacy: false,
       showChat: false,
@@ -193,6 +196,14 @@ export default {
     };
   },
   methods: {
+    login() {
+      this.navigateTo('LoginPage');
+    },
+    logout() {
+      this.isLoggedIn = false;
+      localStorage.removeItem('token');
+      alert('로그아웃 되었습니다.');
+    },
         filteredNotices() {
       return this.notices
         .filter((n) => this.selectCategory === "all_annonce" || n.category === this.selectCategory)
@@ -412,9 +423,7 @@ nav {
   text-decoration: none;
 }
 
-.searchBar {
-  margin-right: 10px;
-}
+
 
 nav a {
   margin: 0 10px;
@@ -422,12 +431,7 @@ nav a {
   text-decoration: none;
 }
 
-.login .searchBar {
-  display: flex;
-  justify-content: center;
-  gap: 5rem;
-  margin-top: 2rem;
-}
+
 
 .login {
   margin-right: 15%;

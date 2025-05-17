@@ -13,94 +13,79 @@
         style="padding: 1.3rem 2rem"
       />
 
-      <nav>
-        <!-- 대학 안내 -->
-        <div class="center-menu">
-          <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer"
-            >대학 안내</a
-          >
-          <div class="divider"></div>
-
-          <!-- 학과 안내 -->
-          <div
-            class="department-wrapper"
-            @mouseenter="activeDropdown = 'department'"
-          >
-            <a class="department" style="cursor: default">학과 안내</a>
-            <div
-              class="dropdown"
-              v-show="activeDropdown === 'department'"
-              @mouseenter="navHovered = true"
-              @mouseleave="hideAllDropdowns"
-            >
+       <div class="menu">
+        <nav>
+          <!-- 대학 안내 -->
+          <div class="center-menu">
+            <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer">대학 안내</a>
+            <div class="divider"></div>
+            <div class="department-wrapper" @mouseenter="activeDropdown = 'department'">
+              <a class="department" style="cursor: default">학과 안내</a>
               <div
-                class="department-block"
-                v-for="(dept, index) in departments"
-                :key="index"
+                class="dropdown"
+                v-show="activeDropdown === 'department'"
+                @mouseenter="navHovered = true"
+                @mouseleave="hideAllDropdowns"
               >
-                <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
-                  {{ dept.name }}
-                </h4>
-
-                <ul v-if="dept.majors.length">
-                  <li
-                    v-for="(major, idx) in dept.majors"
-                    :key="idx"
-                    @click="navigateToMajor(major)"
-                    style="cursor: pointer"
-                  >
-                    {{ major }}
-                  </li>
-                </ul>
+                <div
+                  class="department-block"
+                  v-for="(dept, index) in departments"
+                  :key="index"
+                >
+                  <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
+                    {{ dept.name }}
+                  </h4>
+                  <ul v-if="dept.majors.length">
+                    <li
+                      v-for="(major, idx) in dept.majors"
+                      :key="idx"
+                      @click="navigateToMajor(major)"
+                      style="cursor: pointer"
+                    >
+                      {{ major }}
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="divider"></div>
-
-          <!-- 정보 광장 -->
-          <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
-            <a class="information" style="cursor: default">정보 광장</a>
-            <div
-              class="dropdown dropdown-info"
-              v-show="activeDropdown === 'info'"
-              @mouseenter="navHovered = true"
-              @mouseleave="hideAllDropdowns"
-            >
-              <div class="department-block">
-                <ul>
-                  <li @click="navigateTo('schedulePage')">학사일정</li>
-                  <li @click="navigateTo('ClubPage')">동아리</li>
-                  <li @click="navigateTo('lostArticle')">분실물</li>
-                </ul>
+            <div class="divider"></div>
+            <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
+              <a class="information" style="cursor: default">정보 광장</a>
+              <div
+                class="dropdown dropdown-info"
+                v-show="activeDropdown === 'info'"
+                @mouseenter="navHovered = true"
+                @mouseleave="hideAllDropdowns"
+              >
+                <div class="department-block">
+                  <ul>
+                    <li @click="navigateTo('schedulePage')">학사일정</li>
+                    <li @click="navigateTo('ClubPage')">동아리</li>
+                    <li @click="navigateTo('lostArticle')">분실물</li>
+                  </ul>
+                </div>
               </div>
             </div>
+            <div class="divider"></div>
+            <a class="announcememt" @click="navigateTo('announcePage')" style="cursor: pointer">공지</a>
           </div>
-
-          <div class="divider"></div>
-
-          <a
-            class="announcememt"
-            @click="navigateTo('announcePage')"
-            style="cursor: pointer"
-            >공지</a
-          >
-        </div>
-      </nav>
+        </nav>
+      </div>
       <div class="right-menu">
         <a
+          v-if="!isLoggedIn"
           class="login"
-          @click="navigateTo('LoginPage')"
+          @click="login"
           style="cursor: pointer"
-          >login</a
-        >
-        <img
-          class="searchBar"
-          src="@/assets/SearchBarIcon.png"
-          @click="navigateTo('search')"
-          alt="SearchBar"
+        >로그인</a>
+
+        <a
+          v-else
+          class="login"
+          @click="logout"
           style="cursor: pointer"
-        />
+        >로그아웃</a>
+        
       </div>
     </header>
     <section class="title-section">
@@ -112,55 +97,57 @@
           </div>
         </div>
     </section>
-    <section class="info-section">
-
-      <div class="info-box">
-        <h2>학부 소개</h2>
+     <section class="info-section">
+      <section class="info-box">
+        <h2 class="section-title">학부 소개</h2>
         <p>데이터과학부는 제4차 산업혁명의 필요한 전문인 양성을 적합한 교육과정을 제공한다. 이에 따라 데이터 분석에서부터 인공지능 알고리즘 개발 및 실행에 필요한 전문 지식을 익히도록 한다.</p>
-
         <p>데이터과학 전공에서는 데이터 처리를 위한 IT 기술과 데이터의 분석 및 의사결정, 빅데이터 처리 및 응용력 습득, 머신러닝을 위한 알고리즘, 딥러닝의 구조와 원리 및 인공지능의 알고리즘 구현 등을 가능하도록 하며, 이에 필요한 수학, 통계학 이론 및 소프트웨어 교육과정을 제공하며, 캡스톤 디자인을 통하여 사회 및 산업계에 필요한 지식 등을 학습하여 데이터 과학자로 성장할 수 있도록 한다.</p>
-
         <p>본 학부에서는 R과 Python 등 다양한 프로그램 언어를 실습할 수 있는 컴퓨터실을 제공하며, 머신러닝 랩을 활용할 수 있도록 하고, 산업계와의 협업으로 현장에 필요한 교육을 제공하여, 학생 스스로 데이터분석 전문가로서 비전을 설계하고 만들어 가도록 협력을 한다.</p>
-
         <p>본 학부의 교과과정은 새로운 문제를 도출하고 해결 능력을 갖춘 창의적 데이터 과학자를 양성하는 것이다.</p>
-      </div>
+      </section>
 
-      <div class="info-box">
-        <h2>학과장 소개</h2>
-        <div class="chair-card">
-            <div class="chair-item">
-            <span class="icon">👤</span> 성명 : 정진명
-            </div>
-            <div class="chair-item">
-            <span class="icon">🏫</span> 소속 : 데이터과학부 데이터과학
-            </div>
-            <div class="chair-item">
-            <span class="icon">📍</span> 위치 : 경상대학 918호
-            </div>
-            <div class="chair-item">
-            <span class="icon">📞</span> 대표전화 : 031-220-2521
-            </div>
-            <div class="chair-item">
-            <span class="icon">📠</span> FAX :
-            </div>
-            <div class="chair-item">
-            <span class="icon">@</span> E-mail : jmjung@suwon.ac.kr
-            </div>
-    </div>
-</div>
+      <section>
+        <h2 class="section-title">학과장 소개</h2>
+        <div class="profile">
+          <div>
+            <p><strong>성명:</strong> 정진명</p>
+            <p><strong>위치:</strong> 경상대학 918호</p>
+          </div>
+          <div>
+            <p><strong>소속:</strong> 데이터과학부 데이터과학</p>
+            <p><strong>연락처:</strong> 031-220-2521</p>
+            <p><strong>Email:</strong> jmjung@suwon.ac.kr</p>
+          </div>
+        </div>
+      </section>
 
-      <div class="info-box">
-        <h2>전공 및 학위 과정</h2>
-        <img src="@/assets/DataScienceMajor.png" alt="DataScienceMajor">
-      </div>
+      <section class="degree-table">
+        <h2 class="section-title">전공 및 학위 과정</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>전공</th>
+              <th>학사과정</th>
+              <th>석사과정</th>
+              <th>박사과정</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>데이터과학</td>
+              <td>○</td>
+              <td>○</td>
+              <td>○</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
 
-      <div class="info-box">
-        <h2>교수 소개</h2>
+      <div class="infobox">
+        <h2 class="section-title">교수 소개</h2>
         <div class="professor-grid">
           <div class="professor-card" v-for="(prof, index) in professors" :key="index">
-            <h3>
-                <a :href="prof.link" target="_blank" rel="noopener noreferrer">{{ prof.name }}</a>
-            </h3>
+            <h3><a :href="prof.link" target="_blank" rel="noopener noreferrer">{{ prof.name }}</a></h3>
             <p class="dept">{{ prof.dept }}</p>
             <p><strong>전공 : </strong> {{ prof.major }}</p>
             <p><strong>이메일 : </strong> {{ prof.email }}</p>
@@ -237,6 +224,7 @@ export default {
   },
   data() {
     return {
+      isLoggedIn: false,
       showPrivacy: false,
       showChat: false,
       activeDropdown: null,
@@ -269,6 +257,14 @@ export default {
     };
   },
   methods: {
+    login() {
+      this.navigateTo('LoginPage');
+    },
+    logout() {
+      this.isLoggedIn = false;
+      localStorage.removeItem('token');
+      alert('로그아웃 되었습니다.');
+    },
     navigateTo(routeName) {
       this.isIntro = routeName === 'infoSecurityIntro';
       this.$router.push({ name: routeName }).catch((err) => {
@@ -333,7 +329,7 @@ export default {
   color: white;
 }
 .main-container {
-  background-image: url('@/assets/background1.png');
+  background-color: white;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -402,15 +398,7 @@ nav {
   background-color: white;
   opacity: 0.6;
 }
-.chatbot-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 10%; /* ✅ 기존보다 가로폭 확대 */
-  height: auto; /* ✅ 높이 자동으로 비율 유지 */
-  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
-  z-index: 10; 
-}
+
 .dropdown {
   position: absolute;
   justify-content: center;
@@ -495,22 +483,19 @@ nav {
   text-decoration: none;
 }
 
-.searchBar {
-  margin-right: 10px;
+.menu{
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 }
-
 nav a {
   margin: 0 10px;
   color: white;
   text-decoration: none;
 }
 
-.login .searchBar {
-  display: flex;
-  justify-content: center;
-  gap: 5rem;
-  margin-top: 2rem;
-}
+
 
 .login {
   margin-right: 15%;
@@ -524,63 +509,50 @@ nav a {
 
 .info-section {
   background-color: transparent;
+  padding: 4% 10% ;
+  border-radius: 5px;
+  line-height: 1.8;
+  font-weight: 500;
+
 }
 
-.title-box {
-  padding: 1rem;
-  font-size: 1.8rem;
-  font-weight: bold;
-  border-bottom: 2px solid white;
-  margin-bottom: 2rem;
+.section-title {
+  font-size: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #1b1d53;
+  display: inline-block;
 }
 
-.title-box h1 {
-    color: white;
-}
 
 .info-box {
-  background-color: rgba(0, 0, 0, 0.6); 
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  color: white;
-  font-weight: bold; /* 매우 중요한 코드 */
-  font-size: 1.1rem;
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-left: 5px solid #1b1d53;
+  margin: 1rem 0;
 }
-
-.info-box p {
-  line-height: 1.8;
-  margin-bottom: 0.8rem;
+.infobox{
+  background-color: #f5f5f5;
+  padding: 1rem;
+  
+  margin: 1rem 0;
 
 }
-
-.info-box img {
-  display: block;         /* block 요소로 만들어야 margin auto가 적용됨 */
-  margin: 1.5rem auto;    /* 상하 여백 + 가로 중앙 정렬 */
-  max-width: 80%;         /* 최대 가로 너비 제한 */
-  height: auto;           /* 세로 비율 유지 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 그림자 효과 (선택) */
-}
-
-.info-box h2{
-    font-size: 2rem;
-}
-
-
 .professor-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3개씩 배치 */
   gap: 2rem; /* 카드 간 간격 */
-  padding: 1rem;
+  
 }
 
 .professor-card a {
-    color: white;
-    text-decoration: underline;
-    text-underline-offset: 4px;
+  color: white;
+  text-decoration: underline;
+  text-underline-offset: 7px;
 }
 
 .professor-card {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.596);
   border: 1px solid #ccc;
   border-radius: 6px;
   padding: 1rem;
@@ -600,19 +572,42 @@ nav a {
   margin-bottom: 0.5rem;
 }
 
-.chair-card {
-  border: 2px solid #ddd;
-  padding: 1rem 1.5rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  row-gap: 0.8rem;
-  column-gap: 1.5rem;
+.profile {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1.1rem;
 }
 
-.chair-item {
+.profile div {
+  width: 48%;
+}
+
+.programs {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.programs button {
+  flex: 1;
+  margin: 0 0.5rem;
+  padding: 1rem;
+  background-color: #1b1d53;
+  color: white;
+  border: none;
   font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.programs button:hover {
+  background-color: #3a3c7d;
 }
 
 .icon {
@@ -623,6 +618,39 @@ nav a {
   margin-right: 0.6rem;
   font-size: 0.9rem;
 }
+.degree-table {
+  margin-top: 2rem;
+}
+
+.degree-table h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #14213d;
+  padding-bottom: 0.5rem;
+  color: #14213d;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+}
+
+th,
+td {
+  padding: 0.8rem;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+th {
+  background-color: #14213d;
+  color: white;
+}
+
 
 @media (max-width: 1000px) {
   .professor-grid {

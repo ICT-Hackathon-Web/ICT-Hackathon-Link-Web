@@ -37,12 +37,13 @@ export default {
 .chatbot-icon {
   cursor: pointer;
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 8rem; /* ✅ 기존보다 가로폭 확대 */
+  bottom: 30px;
+  right: 50px;
+  width: 150px; /* ✅ 기존보다 가로폭 확대 */
   height: auto; /* ✅ 높이 자동으로 비율 유지 */
   object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
   z-index: 10; 
+  flex-shrink: 0;
 }
 html, body, #app {
   margin: 0;

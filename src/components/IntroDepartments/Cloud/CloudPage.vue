@@ -13,94 +13,78 @@
         style="padding: 1.3rem 2rem"
       />
 
-      <nav>
-        <!-- 대학 안내 -->
-        <div class="center-menu">
-          <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer"
-            >대학 안내</a
-          >
-          <div class="divider"></div>
-
-          <!-- 학과 안내 -->
-          <div
-            class="department-wrapper"
-            @mouseenter="activeDropdown = 'department'"
-          >
-            <a class="department" style="cursor: default">학과 안내</a>
-            <div
-              class="dropdown"
-              v-show="activeDropdown === 'department'"
-              @mouseenter="navHovered = true"
-              @mouseleave="hideAllDropdowns"
-            >
+       <div class="menu">
+        <nav>
+          <!-- 대학 안내 -->
+          <div class="center-menu">
+            <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer">대학 안내</a>
+            <div class="divider"></div>
+            <div class="department-wrapper" @mouseenter="activeDropdown = 'department'">
+              <a class="department" style="cursor: default">학과 안내</a>
               <div
-                class="department-block"
-                v-for="(dept, index) in departments"
-                :key="index"
+                class="dropdown"
+                v-show="activeDropdown === 'department'"
+                @mouseenter="navHovered = true"
+                @mouseleave="hideAllDropdowns"
               >
-                <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
-                  {{ dept.name }}
-                </h4>
-
-                <ul v-if="dept.majors.length">
-                  <li
-                    v-for="(major, idx) in dept.majors"
-                    :key="idx"
-                    @click="navigateToMajor(major)"
-                    style="cursor: pointer"
-                  >
-                    {{ major }}
-                  </li>
-                </ul>
+                <div
+                  class="department-block"
+                  v-for="(dept, index) in departments"
+                  :key="index"
+                >
+                  <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
+                    {{ dept.name }}
+                  </h4>
+                  <ul v-if="dept.majors.length">
+                    <li
+                      v-for="(major, idx) in dept.majors"
+                      :key="idx"
+                      @click="navigateToMajor(major)"
+                      style="cursor: pointer"
+                    >
+                      {{ major }}
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="divider"></div>
-
-          <!-- 정보 광장 -->
-          <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
-            <a class="information" style="cursor: default">정보 광장</a>
-            <div
-              class="dropdown dropdown-info"
-              v-show="activeDropdown === 'info'"
-              @mouseenter="navHovered = true"
-              @mouseleave="hideAllDropdowns"
-            >
-              <div class="department-block">
-                <ul>
-                  <li @click="navigateTo('schedulePage')">학사일정</li>
-                  <li @click="navigateTo('ClubPage')">동아리</li>
-                  <li @click="navigateTo('lostArticle')">분실물</li>
-                </ul>
+            <div class="divider"></div>
+            <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
+              <a class="information" style="cursor: default">정보 광장</a>
+              <div
+                class="dropdown dropdown-info"
+                v-show="activeDropdown === 'info'"
+                @mouseenter="navHovered = true"
+                @mouseleave="hideAllDropdowns"
+              >
+                <div class="department-block">
+                  <ul>
+                    <li @click="navigateTo('schedulePage')">학사일정</li>
+                    <li @click="navigateTo('ClubPage')">동아리</li>
+                    <li @click="navigateTo('lostArticle')">분실물</li>
+                  </ul>
+                </div>
               </div>
             </div>
+            <div class="divider"></div>
+            <a class="announcememt" @click="navigateTo('announcePage')" style="cursor: pointer">공지</a>
           </div>
-
-          <div class="divider"></div>
-
-          <a
-            class="announcememt"
-            @click="navigateTo('announcePage')"
-            style="cursor: pointer"
-            >공지</a
-          >
-        </div>
-      </nav>
+        </nav>
+      </div>
       <div class="right-menu">
         <a
+          v-if="!isLoggedIn"
           class="login"
-          @click="navigateTo('LoginPage')"
+          @click="login"
           style="cursor: pointer"
-          >login</a
-        >
-        <img
-          class="searchBar"
-          src="@/assets/SearchBarIcon.png"
-          @click="navigateTo('search')"
-          alt="SearchBar"
+        >로그인</a>
+
+        <a
+          v-else
+          class="login"
+          @click="logout"
           style="cursor: pointer"
-        />
+        >로그아웃</a>
       </div>
     </header>
 
@@ -156,7 +140,7 @@
 
 
     </section>
-    <img class="chatbot-icon"  src="@/assets/chatbot-icon.png" alt="chatbot" @click="showChat = !showChat"/>
+    
     
     <ChatBot v-if="showChat" @close="showChat = false" />
     <footer>
@@ -222,6 +206,7 @@ export default {
   },
   data() {
     return {
+       isLoggedIn: false,
       showPrivacy: false,
       isIntro: true,
       showChat: false,
@@ -236,6 +221,14 @@ export default {
     };
   },
  methods: {
+    login() {
+      this.navigateTo('LoginPage');
+    },
+    logout() {
+      this.isLoggedIn = false;
+      localStorage.removeItem('token');
+      alert('로그아웃 되었습니다.');
+    },
     navigateTo(routeName) {
       this.isIntro = routeName === 'infoSecurityIntro';
       this.$router.push({ name: routeName }).catch((err) => {
@@ -302,11 +295,13 @@ export default {
   color: white;
 }
 .main-container {
-  background-image: url('@/assets/background1.png');
+  background-color: white;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  min-height: 100vh;
+  /* 이 두 줄이 핵심 */
+  height: auto;         /* 자동으로 콘텐츠에 맞춤 */
+  min-height: 0;        /* 필요시 강제 최소 높이 제거 */
 }
 
 .header {
@@ -371,15 +366,7 @@ nav {
   background-color: white;
   opacity: 0.6;
 }
-.chatbot-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 10%; /* ✅ 기존보다 가로폭 확대 */
-  height: auto; /* ✅ 높이 자동으로 비율 유지 */
-  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
-  z-index: 10; 
-}
+
 .dropdown {
   position: absolute;
   justify-content: center;
@@ -464,22 +451,18 @@ nav {
   text-decoration: none;
 }
 
-.searchBar {
-  margin-right: 10px;
+.menu{
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 }
-
 nav a {
   margin: 0 10px;
   color: white;
   text-decoration: none;
 }
 
-.login .searchBar {
-  display: flex;
-  justify-content: center;
-  gap: 5rem;
-  margin-top: 2rem;
-}
 
 .login {
   margin-right: 15%;
@@ -530,14 +513,14 @@ nav a {
 }
 
 .info-box {
-  background-color: rgba(0, 0, 0, 0.6);
+  
   padding: 1.5rem;
   margin-bottom: 2rem;
-  color: white;
+  color: rgb(0, 0, 0);
   font-weight: bold;
   font-size: 1.1rem;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.627);
 }
 
 .info-box h2 {
@@ -575,55 +558,8 @@ nav a {
   font-weight: bold;
 }
 
-.professor-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3개씩 배치 */
-  gap: 2rem; /* 카드 간 간격 */
-  padding: 1rem;
-}
-
-.professor-card a {
-    color: white;
-    text-decoration: underline;
-    text-underline-offset: 4px;
-}
-
-.professor-card {
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 1rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  color: white;
-}
-
-.professor-card h3 {
-  margin: 0;
-  font-size: 1.7rem;
-  color: white;
-}
-
-.professor-card .dept {
-  font-size: 0.9rem;
-  color: white;
-  margin-bottom: 0.5rem;
-}
 
 
-.chair-card {
-  border: 2px solid #ddd;
-  padding: 1rem 1.5rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  row-gap: 0.8rem;
-  column-gap: 1.5rem;
-}
-
-.chair-item {
-  display: flex;
-  align-items: center;
-  font-size: 1rem;
-}
 /*하단창*/
 footer {
   background-color: #343539;

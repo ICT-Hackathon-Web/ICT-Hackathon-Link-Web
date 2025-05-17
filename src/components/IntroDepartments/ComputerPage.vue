@@ -13,94 +13,79 @@
         style="padding: 1.3rem 2rem"
       />
 
-      <nav>
-        <!-- 대학 안내 -->
-        <div class="center-menu">
-          <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer"
-            >대학 안내</a
-          >
-          <div class="divider"></div>
-
-          <!-- 학과 안내 -->
-          <div
-            class="department-wrapper"
-            @mouseenter="activeDropdown = 'department'"
-          >
-            <a class="department" style="cursor: default">학과 안내</a>
-            <div
-              class="dropdown"
-              v-show="activeDropdown === 'department'"
-              @mouseenter="navHovered = true"
-              @mouseleave="hideAllDropdowns"
-            >
+       <div class="menu">
+        <nav>
+          <!-- 대학 안내 -->
+          <div class="center-menu">
+            <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer">대학 안내</a>
+            <div class="divider"></div>
+            <div class="department-wrapper" @mouseenter="activeDropdown = 'department'">
+              <a class="department" style="cursor: default">학과 안내</a>
               <div
-                class="department-block"
-                v-for="(dept, index) in departments"
-                :key="index"
+                class="dropdown"
+                v-show="activeDropdown === 'department'"
+                @mouseenter="navHovered = true"
+                @mouseleave="hideAllDropdowns"
               >
-                <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
-                  {{ dept.name }}
-                </h4>
-
-                <ul v-if="dept.majors.length">
-                  <li
-                    v-for="(major, idx) in dept.majors"
-                    :key="idx"
-                    @click="navigateToMajor(major)"
-                    style="cursor: pointer"
-                  >
-                    {{ major }}
-                  </li>
-                </ul>
+                <div
+                  class="department-block"
+                  v-for="(dept, index) in departments"
+                  :key="index"
+                >
+                  <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
+                    {{ dept.name }}
+                  </h4>
+                  <ul v-if="dept.majors.length">
+                    <li
+                      v-for="(major, idx) in dept.majors"
+                      :key="idx"
+                      @click="navigateToMajor(major)"
+                      style="cursor: pointer"
+                    >
+                      {{ major }}
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="divider"></div>
-
-          <!-- 정보 광장 -->
-          <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
-            <a class="information" style="cursor: default">정보 광장</a>
-            <div
-              class="dropdown dropdown-info"
-              v-show="activeDropdown === 'info'"
-              @mouseenter="navHovered = true"
-              @mouseleave="hideAllDropdowns"
-            >
-              <div class="department-block">
+            <div class="divider"></div>
+            <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
+              <a class="information" style="cursor: default">정보 광장</a>
+              <div
+                class="dropdown dropdown-info"
+                v-show="activeDropdown === 'info'"
+                @mouseenter="navHovered = true"
+                @mouseleave="hideAllDropdowns"
+              >
+                <div class="department-block">
                   <ul>
-                  <li @click="navigateTo('schedulePage')">학사일정</li>
-                  <li @click="navigateTo('ClubPage')">동아리</li>
-                  <li @click="navigateTo('lostArticle')">분실물</li>
-                </ul>
+                    <li @click="navigateTo('schedulePage')">학사일정</li>
+                    <li @click="navigateTo('ClubPage')">동아리</li>
+                    <li @click="navigateTo('lostArticle')">분실물</li>
+                  </ul>
+                </div>
               </div>
             </div>
+            <div class="divider"></div>
+            <a class="announcememt" @click="navigateTo('announcePage')" style="cursor: pointer">공지</a>
           </div>
-
-          <div class="divider"></div>
-
-          <a
-            class="announcememt"
-            @click="navigateTo('announcePage')"
-            style="cursor: pointer"
-            >공지</a
-          >
-        </div>
-      </nav>
+        </nav>
+      </div>
       <div class="right-menu">
         <a
+          v-if="!isLoggedIn"
           class="login"
-          @click="navigateTo('LoginPage')"
+          @click="login"
           style="cursor: pointer"
-          >login</a
-        >
-        <img
-          class="searchBar"
-          src="@/assets/SearchBarIcon.png"
-          @click="navigateTo('search')"
-          alt="SearchBar"
+        >로그인</a>
+
+        <a
+          v-else
+          class="login"
+          @click="logout"
           style="cursor: pointer"
-        />
+        >로그아웃</a>
+        
       </div>
     </header>
     <section class="title-section">
@@ -113,57 +98,59 @@
         </div>
     </section>
     <section class="info-section">
-      <div class="info-box">
-        <h2>학부 소개</h2>
-        <p>수원대학교 컴퓨터학부는 국가와 국제 사회에서 컴퓨터 과학과 컴퓨터 공학 분야의 창의력과 경쟁력을 갖춘 컴퓨터 및 소프트웨어 전문가를 양성하는 것을 목표로 한다.</p>
+      <section class="info-box">
+        <h2 class="section-title">학부 소개</h2>
+        <p>수원대학교 컴퓨터학부는 국가와 국제 사회에서 컴퓨터 과학과 컴퓨터 공학 분야의 창의력과 경쟁력을 갖춘 컴퓨터 및 소프트웨어 전문가를 양성하는 것을 목표로 합니다.</p>
+        <p>ICT 정보 처리 기반 기술을 바탕으로 컴퓨터 시스템과 소프트웨어 기초, 응용, 개발 기술을 습득하여 사회에서 즉시 요구되는 컴퓨터 시스템 및 소프트웨어 개발 전문 지식인을 양성합니다.</p>
+        <p>컴퓨터소프트웨어 전공에서는 컴퓨터 시스템과 소프트웨어 기술을 중점으로 컴퓨터 기반 기술과 소프트웨어 응용 및 개발 기술을 습득하여 컴퓨터 소프트웨어 전문가를 배출합니다.</p>
+        <p>컴퓨터 소프트웨어 이론과 실습 교육을 바탕으로 하여 컴퓨터 시스템과 소프트웨어에 관한 ICT 기본 지식 습득과 함께 다양한 융합 분야에도 진출할 수 있도록 ICT 융합 소프트웨어 개발 능력도 갖춥니다.</p>
+        <p>미디어소프트웨어 전공에서는 컴퓨터 기반 기술을 바탕으로 컴퓨터그래픽스, 멀티미디어, 가상현실, 증강현실, 게임, 애니메이션 분야 소프트웨어 개발자를 양성하는 것을 목표로 합니다.</p>
+        <p>컴퓨터와 소프트웨어 기본 기술 습득을 기반으로 해서 각 미디어의 처리 기술을 이용한 소프트웨어 개발 및 응용 기술을 습득하여 고품질 멀티미디어 응용 서비스 소프트웨어 개발 전문가를 배출합니다.</p>
+      </section>
 
-        <p>ICT 정보 처리 기반 기술을 바탕으로 컴퓨터 시스템과 소프트웨어 기초, 응용, 개발 기술을 습득하여 사회에서 즉시 요구되는 컴퓨터 시스템 및 소프트웨어 개발 전문 지식인을 양성한다.</p>
+      <section>
+        <h2 class="section-title">학과장 소개</h2>
+        <div class="profile">
+          <div>
+            <p><strong>성명:</strong> 김장영</p>
+            <p><strong>위치:</strong> 지능형SW융합대학 522호</p>
+          </div>
+          <div>
+            <p><strong>소속:</strong> 컴퓨터학부</p>
+            <p><strong>연락처:</strong> 031-229-8345</p>
+            <p><strong>Email:</strong> jykim77@suwon.ac.kr</p>
+          </div>
+        </div>
+      </section>
 
-        <p>컴퓨터소프트웨어 전공에서는 컴퓨터 시스템과 소프트웨어 기술을 중점으로 컴퓨터 기반 기술과 소프트웨어 응용 및 개발 기술을 습득하여 컴퓨터 소프트웨어 전문가를 배출한다.</p>
-
-        <p>컴퓨터 소프트웨어 이론과 실습 교육을 바탕으로 하여 컴퓨터 시스템과 소프트웨어에 관한 ICT 기본 지식 습득과 함께 다양한 융합 분야에도 진출할 수 있도록 ICT 융합 소프트웨어 개발 능력도 갖춘다.</p>
-
-        <p>미디어소프트웨어 전공에서는 컴퓨터 기반 기술을 바탕으로 컴퓨터그래픽스, 멀티미디어, 가상현실, 증강현실, 게임, 애니메이션 분야 소프트웨어 개발자를 양성하는 것을 목표로 한다.</p>
-
-        <p>컴퓨터와 소프트웨어 기본 기술 습득을 기반으로 해서 각 미디어의 처리 기술을 이용한 소프트웨어 개발 및 응용 기술을 습득하여 고품질 멀티미디어 응용 서비스 소프트웨어 개발 전문가를 배출한다.</p>
-      </div>
-
-      <div class="info-box">
-        <h2>학과장 소개</h2>
-        <div class="chair-card">
-            <div class="chair-item">
-            <span class="icon">👤</span> 성명 : 김장영
-            </div>
-            <div class="chair-item">
-            <span class="icon">🏫</span> 소속 : 컴퓨터학부
-            </div>
-            <div class="chair-item">
-            <span class="icon">📍</span> 위치 : 지능형SW융합대학 522호
-            </div>
-            <div class="chair-item">
-            <span class="icon">📞</span> 대표전화 : 031-229-8345
-            </div>
-            <div class="chair-item">
-            <span class="icon">📠</span> FAX :
-            </div>
-            <div class="chair-item">
-            <span class="icon">@</span> E-mail : jykim77@suaon.ac.kr
-            </div>
-    </div>
-</div>
-
-      <div class="info-box">
+      <div class="degree-table">
         <h2>전공 및 학위 과정</h2>
-        <img src="@/assets/computerMajor.png" alt="ComputerCom">
+        <table>
+          <thead>
+            <tr>
+              <th>전공</th>
+              <th>학사과정</th>
+              <th>석사과정</th>
+              <th>박사과정</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(row, index) in degrees" :key="index">
+              <td>{{ row.major }}</td>
+              <td>{{ row.bachelor ? '○' : '' }}</td>
+              <td>{{ row.master ? '○' : '' }}</td>
+              <td>{{ row.phd ? '○' : '' }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="info-box">
-        <h2>교수 소개</h2>
+
+      <div class="infobox">
+        <h2 class="section-title">교수 소개</h2>
         <div class="professor-grid">
           <div class="professor-card" v-for="(prof, index) in professors" :key="index">
-            <h3>
-                <a :href="prof.link" target="_blank" rel="noopener noreferrer">{{ prof.name }}</a>
-            </h3>
+            <h3><a :href="prof.link" target="_blank" rel="noopener noreferrer">{{ prof.name }}</a></h3>
             <p class="dept">{{ prof.dept }}</p>
             <p><strong>전공 : </strong> {{ prof.major }}</p>
             <p><strong>이메일 : </strong> {{ prof.email }}</p>
@@ -239,6 +226,11 @@ export default {
   },
   data() {
     return {
+      degrees: [
+      { major: '컴퓨터SW', bachelor: true, master: true, phd: true },
+      { major: '미디어SW', bachelor: true, master: true, phd: false },
+    ],
+      isLoggedIn: false,
       showPrivacy: false,
       showChat: false,
       activeDropdown: null,
@@ -262,6 +254,15 @@ export default {
     };
   },
   methods: {
+    login() {
+      this.navigateTo('LoginPage');
+    },
+    logout() {
+      this.isLoggedIn = false;
+      localStorage.removeItem('token');
+      alert('로그아웃 되었습니다.');
+    },
+
     navigateTo(routeName) {
       this.isIntro = routeName === 'infoSecurityIntro';
       this.$router.push({ name: routeName }).catch((err) => {
@@ -326,7 +327,7 @@ export default {
   color: white;
 }
 .main-container {
-  background-image: url('@/assets/background1.png');
+  background-color: white;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -395,15 +396,7 @@ nav {
   background-color: white;
   opacity: 0.6;
 }
-.chatbot-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 10%; /* ✅ 기존보다 가로폭 확대 */
-  height: auto; /* ✅ 높이 자동으로 비율 유지 */
-  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
-  z-index: 10; 
-}
+
 .dropdown {
   position: absolute;
   justify-content: center;
@@ -488,8 +481,11 @@ nav {
   text-decoration: none;
 }
 
-.searchBar {
-  margin-right: 10px;
+.menu{
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 }
 
 nav a {
@@ -498,12 +494,7 @@ nav a {
   text-decoration: none;
 }
 
-.login .searchBar {
-  display: flex;
-  justify-content: center;
-  gap: 5rem;
-  margin-top: 2rem;
-}
+
 
 .login {
   margin-right: 15%;
@@ -514,53 +505,53 @@ nav a {
 .login:hover {
   text-shadow: 0 0 5px white;
 }
+
 .info-section {
   background-color: transparent;
+  padding: 4% 10% ;
+  border-radius: 5px;
+  line-height: 1.8;
+  font-weight: 500;
+
 }
+
+.section-title {
+  font-size: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #1b1d53;
+  display: inline-block;
+}
+
 
 .info-box {
-  background-color: rgba(0, 0, 0, 0.6); 
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  color: white;
-  font-weight: bold; /* 매우 중요한 코드 */
-  font-size: 1.1rem;
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-left: 5px solid #1b1d53;
+  margin: 1rem 0;
 }
-
-.info-box p {
-  line-height: 1.8;
-  margin-bottom: 0.8rem;
+.infobox{
+  background-color: #f5f5f5;
+  padding: 1rem;
+  
+  margin: 1rem 0;
 
 }
-
-.info-box img {
-  display: block;         /* block 요소로 만들어야 margin auto가 적용됨 */
-  margin: 1.5rem auto;    /* 상하 여백 + 가로 중앙 정렬 */
-  max-width: 80%;         /* 최대 가로 너비 제한 */
-  height: auto;           /* 세로 비율 유지 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 그림자 효과 (선택) */
-}
-
-.info-box h2{
-    font-size: 2rem;
-}
-
-
 .professor-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3개씩 배치 */
   gap: 2rem; /* 카드 간 간격 */
-  padding: 1rem;
+  
 }
 
 .professor-card a {
-    color: white;
-    text-decoration: underline;
-    text-underline-offset: 4px;
+  color: white;
+  text-decoration: underline;
+  text-underline-offset: 7px;
 }
 
 .professor-card {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.596);
   border: 1px solid #ccc;
   border-radius: 6px;
   padding: 1rem;
@@ -580,19 +571,42 @@ nav a {
   margin-bottom: 0.5rem;
 }
 
-.chair-card {
-  border: 2px solid #ddd;
-  padding: 1rem 1.5rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  row-gap: 0.8rem;
-  column-gap: 1.5rem;
+.profile {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1.1rem;
 }
 
-.chair-item {
+.profile div {
+  width: 48%;
+}
+
+.programs {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.programs button {
+  flex: 1;
+  margin: 0 0.5rem;
+  padding: 1rem;
+  background-color: #1b1d53;
+  color: white;
+  border: none;
   font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.programs button:hover {
+  background-color: #3a3c7d;
 }
 
 .icon {
@@ -603,6 +617,39 @@ nav a {
   margin-right: 0.6rem;
   font-size: 0.9rem;
 }
+.degree-table {
+  margin-top: 2rem;
+}
+
+.degree-table h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #14213d;
+  padding-bottom: 0.5rem;
+  color: #14213d;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+}
+
+th,
+td {
+  padding: 0.8rem;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+th {
+  background-color: #14213d;
+  color: white;
+}
+
 
 @media (max-width: 1000px) {
   .professor-grid {

@@ -13,77 +13,87 @@
         @click="navigateTo('Main')"
         style="padding: 1.3rem 2rem"
       />
-      <nav>
-        <!-- 대학 안내 -->
-        <div class="center-menu">
-          <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer">대학 안내</a>
-          <div class="divider"></div>
-          <div class="department-wrapper" @mouseenter="activeDropdown = 'department'">
-            <a class="department" style="cursor: default">학과 안내</a>
-            <div
-              class="dropdown"
-              v-show="activeDropdown === 'department'"
-              @mouseenter="navHovered = true"
-              @mouseleave="hideAllDropdowns"
-            >
+      <div class="menu">
+        <nav>
+          <!-- 대학 안내 -->
+          <div class="center-menu">
+            <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer">대학 안내</a>
+            <div class="divider"></div>
+            <div class="department-wrapper" @mouseenter="activeDropdown = 'department'">
+              <a class="department" style="cursor: default">학과 안내</a>
               <div
-                class="department-block"
-                v-for="(dept, index) in departments"
-                :key="index"
+                class="dropdown"
+                v-show="activeDropdown === 'department'"
+                @mouseenter="navHovered = true"
+                @mouseleave="hideAllDropdowns"
               >
-                <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
-                  {{ dept.name }}
-                </h4>
-                <ul v-if="dept.majors.length">
-                  <li
-                    v-for="(major, idx) in dept.majors"
-                    :key="idx"
-                    @click="navigateToMajor(major)"
-                    style="cursor: pointer"
-                  >
-                    {{ major }}
-                  </li>
-                </ul>
+                <div
+                  class="department-block"
+                  v-for="(dept, index) in departments"
+                  :key="index"
+                >
+                  <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
+                    {{ dept.name }}
+                  </h4>
+                  <ul v-if="dept.majors.length">
+                    <li
+                      v-for="(major, idx) in dept.majors"
+                      :key="idx"
+                      @click="navigateToMajor(major)"
+                      style="cursor: pointer"
+                    >
+                      {{ major }}
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="divider"></div>
-          <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
-            <a class="information" style="cursor: default">정보 광장</a>
-            <div
-              class="dropdown dropdown-info"
-              v-show="activeDropdown === 'info'"
-              @mouseenter="navHovered = true"
-              @mouseleave="hideAllDropdowns"
-            >
-              <div class="department-block">
-                <ul>
-                  <li @click="navigateTo('schedulePage')">학사일정</li>
-                  <li @click="navigateTo('ClubPage')">동아리</li>
-                  <li @click="navigateTo('lostArticle')">분실물</li>
-                </ul>
+            <div class="divider"></div>
+            <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
+              <a class="information" style="cursor: default">정보 광장</a>
+              <div
+                class="dropdown dropdown-info"
+                v-show="activeDropdown === 'info'"
+                @mouseenter="navHovered = true"
+                @mouseleave="hideAllDropdowns"
+              >
+                <div class="department-block">
+                  <ul>
+                    <li @click="navigateTo('schedulePage')">학사일정</li>
+                    <li @click="navigateTo('ClubPage')">동아리</li>
+                    <li @click="navigateTo('lostArticle')">분실물</li>
+                  </ul>
+                </div>
               </div>
             </div>
+            <div class="divider"></div>
+            <a class="announcememt" @click="navigateTo('announcePage')" style="cursor: pointer">공지</a>
           </div>
-          <div class="divider"></div>
-          <a class="announcememt" @click="navigateTo('announcePage')" style="cursor: pointer">공지</a>
-        </div>
-      </nav>
+        </nav>
+      </div>
       <div class="right-menu">
-        <a class="login" @click="navigateTo('LoginPage')" style="cursor: pointer">login</a>
-        <img
-          class="searchBar"
-          src="@/assets/SearchBarIcon.png"
-          @click="navigateTo('search')"
-          alt="SearchBar"
+        <a
+          v-if="!isLoggedIn"
+          class="login"
+          @click="login"
           style="cursor: pointer"
-        />
+        >로그인</a>
+
+        <a
+          v-else
+          class="login"
+          @click="logout"
+          style="cursor: pointer"
+        >로그아웃</a>
+        
       </div>
     </header>
     <section class="hero-section" ref="hero">
-      <video autoplay muted loop class="hero-video">
+      <video autoplay muted loop playsinline class="hero-video" preload="auto">
         <source src="@/assets/uswvideo.mp4" type="video/mp4" />
+        브라우저가 비디오를 지원하지 않습니다.
       </video>
+
       <div class="hero-text">
         <h1>지능형SW융합대학</h1>
         <p>COLLEGE OF INTELLIGENT SOFTWARE CONVERGENCE</p>
@@ -185,6 +195,7 @@ export default {
   components: { ChatBot, PrivacyPolicy },
   data() {
     return {
+      isLoggedIn: false,
       showPrivacy: false,
       activeDropdown: null,
       navHovered: false,
@@ -218,6 +229,14 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
+    login() {
+      this.navigateTo('LoginPage');
+    },
+    logout() {
+      this.isLoggedIn = false;
+      localStorage.removeItem('token');
+      alert('로그아웃 되었습니다.');
+    },
     handleScroll() {
       const currentScroll = window.scrollY;
       if (currentScroll > 100 && currentScroll > this.lastScrollY) {
@@ -273,6 +292,12 @@ export default {
 }
 </script>
 <style scoped>
+.menu{
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
 .hero-section {
   position: relative;
   height: 80vh;
@@ -292,6 +317,8 @@ export default {
   text-align: center;
   z-index: 10;
 }
+
+
 .hero-text h1 {
   font-size: 3rem;
 }
@@ -530,9 +557,6 @@ nav {
   text-decoration: none;
 }
 
-.searchBar {
-  margin-right: 10px;
-}
 
 nav a {
   margin: 0 10px;
@@ -540,12 +564,7 @@ nav a {
   text-decoration: none;
 }
 
-.login .searchBar {
-  display: flex;
-  justify-content: center;
-  gap: 5rem;
-  margin-top: 2rem;
-}
+
 
 .login {
   margin-right: 15%;
@@ -555,16 +574,6 @@ nav a {
 
 .login:hover {
   text-shadow: 0 0 5px white;
-}
-
-.chatbot-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 8rem; /* ✅ 기존보다 가로폭 확대 */
-  height: auto; /* ✅ 높이 자동으로 비율 유지 */
-  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
-  z-index: 10; 
 }
 
 
@@ -662,4 +671,5 @@ footer .inGuideFnb{
   margin-bottom: 40px;
   color: white;
 }
+
 </style>

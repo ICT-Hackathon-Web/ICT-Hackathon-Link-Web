@@ -13,93 +13,79 @@
         style="padding: 1.3rem 2rem"
       />
 
-      <nav>
-        <!-- 대학 안내 -->
-        <div class="center-menu">
-          <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer"
-            >대학 안내</a
-          >
-          <div class="divider"></div>
-
-          <!-- 학과 안내 -->
-          <div
-            class="department-wrapper"
-            @mouseenter="activeDropdown = 'department'"
-          >
-            <a class="department" style="cursor: default">학과 안내</a>
-            <div
-              class="dropdown"
-              v-show="activeDropdown === 'department'"
-              @mouseenter="navHovered = true"
-              @mouseleave="hideAllDropdowns"
-            >
+       <div class="menu">
+        <nav>
+          <!-- 대학 안내 -->
+          <div class="center-menu">
+            <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer">대학 안내</a>
+            <div class="divider"></div>
+            <div class="department-wrapper" @mouseenter="activeDropdown = 'department'">
+              <a class="department" style="cursor: default">학과 안내</a>
               <div
-                class="department-block"
-                v-for="(dept, index) in departments"
-                :key="index"
+                class="dropdown"
+                v-show="activeDropdown === 'department'"
+                @mouseenter="navHovered = true"
+                @mouseleave="hideAllDropdowns"
               >
-                <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
-                  {{ dept.name }}
-                </h4>
-
-                <ul v-if="dept.majors.length">
-                  <li
-                    v-for="(major, idx) in dept.majors"
-                    :key="idx"
-                    @click="navigateToMajor(major)"
-                    style="cursor: pointer"
-                  >
-                    {{ major }}
-                  </li>
-                </ul>
+                <div
+                  class="department-block"
+                  v-for="(dept, index) in departments"
+                  :key="index"
+                >
+                  <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
+                    {{ dept.name }}
+                  </h4>
+                  <ul v-if="dept.majors.length">
+                    <li
+                      v-for="(major, idx) in dept.majors"
+                      :key="idx"
+                      @click="navigateToMajor(major)"
+                      style="cursor: pointer"
+                    >
+                      {{ major }}
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="divider"></div>
-
-          <!-- 정보 광장 -->
-          <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
-            <a class="information" style="cursor: default">정보 광장</a>
-            <div
-              class="dropdown dropdown-info"
-              v-show="activeDropdown === 'info'"
-              @mouseenter="navHovered = true"
-              @mouseleave="hideAllDropdowns"
-            >
-              <div class="department-block">
-                <ul>
-                  <li @click="navigateTo('schedulePage')">학사일정</li>
-                  <li @click="navigateTo('ClubPage')">동아리</li>
-                  <li @click="navigateTo('lostArticle')">분실물</li>
-                </ul>
+            <div class="divider"></div>
+            <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
+              <a class="information" style="cursor: default">정보 광장</a>
+              <div
+                class="dropdown dropdown-info"
+                v-show="activeDropdown === 'info'"
+                @mouseenter="navHovered = true"
+                @mouseleave="hideAllDropdowns"
+              >
+                <div class="department-block">
+                  <ul>
+                    <li @click="navigateTo('schedulePage')">학사일정</li>
+                    <li @click="navigateTo('ClubPage')">동아리</li>
+                    <li @click="navigateTo('lostArticle')">분실물</li>
+                  </ul>
+                </div>
               </div>
             </div>
+            <div class="divider"></div>
+            <a class="announcememt" @click="navigateTo('announcePage')" style="cursor: pointer">공지</a>
           </div>
-
-          <div class="divider"></div>
-
-          <a
-            class="announcememt"
-            @click="navigateTo('announcePage')"
-            style="cursor: pointer"
-            >공지</a
-          >
-        </div>
-      </nav>
+        </nav>
+      </div>
       <div class="right-menu">
         <a
+          v-if="!isLoggedIn"
           class="login"
-          @click="navigateTo('LoginPage')"
+          @click="login"
           style="cursor: pointer"
-          >login</a>
-        <img
-          class="searchBar"
-          src="@/assets/SearchBarIcon.png"
-          @click="navigateTo('search')"
-          alt="SearchBar"
+        >로그인</a>
+
+        <a
+          v-else
+          class="login"
+          @click="logout"
           style="cursor: pointer"
-        />
+        >로그아웃</a>
+        
       </div>
     </header>
 
@@ -117,7 +103,7 @@
         <img :src="`http://localhost:5050/api/lost-item/${item.id}/file`" alt="첨부 이미지" style="max-width: 100%; border: 1px solid #ccc; border-radius: 4px;" />
       </div>
     </div>
-    <img class="chatbot-icon"  src="@/assets/chatbot-icon.png" alt="chatbot" @click="showChat = !showChat"/>
+    
 
     <ChatBot v-if="showChat" @close="showChat = false" />
     <footer>
@@ -183,6 +169,7 @@ export default {
   },
   data() {
     return {
+      isLoggedIn: false,
       item: {},
       showPrivacy: false,
       showChat: false,
@@ -197,6 +184,16 @@ export default {
     };
   },
   methods: {
+    login() {
+      this.navigateTo('LoginPage');
+    },
+    logout() {
+      this.isLoggedIn = false;
+      localStorage.removeItem('token');
+      alert('로그아웃 되었습니다.');
+    },
+
+
     async fetchItem() {
       try {
         const id = this.$route.params.id;
@@ -247,10 +244,18 @@ export default {
 </script>
 
 <style scoped>
+.menu{
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
 .notice-container {
   font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
   background-color: #f7f7f7;
-  min-height: 100vh;
+  /* 이 두 줄이 핵심 */
+  height: auto;         /* 자동으로 콘텐츠에 맞춤 */
+  min-height: 0;        /* 필요시 강제 최소 높이 제거 */
 }
 
 * {
@@ -478,15 +483,7 @@ p {
   white-space: pre-wrap;
   line-height: 1.6;
 }
-.chatbot-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 10%; /* ✅ 기존보다 가로폭 확대 */
-  height: auto; /* ✅ 높이 자동으로 비율 유지 */
-  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
-  z-index: 10; 
-}
+
 /*하단창*/
 footer {
   background-color: #343539;

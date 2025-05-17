@@ -13,11 +13,12 @@
           style="padding: 1.3rem 2rem"
         />
 
+      <div class="menu">
         <nav>
+          <!-- 대학 안내 -->
           <div class="center-menu">
             <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer">대학 안내</a>
             <div class="divider"></div>
-
             <div class="department-wrapper" @mouseenter="activeDropdown = 'department'">
               <a class="department" style="cursor: default">학과 안내</a>
               <div
@@ -26,17 +27,28 @@
                 @mouseenter="navHovered = true"
                 @mouseleave="hideAllDropdowns"
               >
-                <div class="department-block" v-for="(dept, index) in departments" :key="index">
-                  <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">{{ dept.name }}</h4>
+                <div
+                  class="department-block"
+                  v-for="(dept, index) in departments"
+                  :key="index"
+                >
+                  <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
+                    {{ dept.name }}
+                  </h4>
                   <ul v-if="dept.majors.length">
-                    <li v-for="(major, idx) in dept.majors" :key="idx" @click="navigateToMajor(major)" style="cursor: pointer">{{ major }}</li>
+                    <li
+                      v-for="(major, idx) in dept.majors"
+                      :key="idx"
+                      @click="navigateToMajor(major)"
+                      style="cursor: pointer"
+                    >
+                      {{ major }}
+                    </li>
                   </ul>
                 </div>
               </div>
             </div>
-
             <div class="divider"></div>
-
             <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
               <a class="information" style="cursor: default">정보 광장</a>
               <div
@@ -50,20 +62,31 @@
                     <li @click="navigateTo('schedulePage')">학사일정</li>
                     <li @click="navigateTo('ClubPage')">동아리</li>
                     <li @click="navigateTo('lostArticle')">분실물</li>
-                </ul>
+                  </ul>
                 </div>
               </div>
             </div>
-
             <div class="divider"></div>
-
             <a class="announcememt" @click="navigateTo('announcePage')" style="cursor: pointer">공지</a>
           </div>
         </nav>
+      </div>
 
         <div class="right-menu">
-          <a class="login" @click="navigateTo('LoginPage')" style="cursor: pointer">login</a>
-          <img class="searchBar" src="@/assets/SearchBarIcon.png" @click="navigateTo('search')" alt="SearchBar" style="cursor: pointer" />
+          <a
+          v-if="!isLoggedIn"
+          class="login"
+          @click="login"
+          style="cursor: pointer"
+        >로그인</a>
+
+        <a
+          v-else
+          class="login"
+          @click="logout"
+          style="cursor: pointer"
+        >로그아웃</a>
+          
         </div>
       </header>
 
@@ -75,100 +98,96 @@
               
             </div>
           </div>
-      </section>
-      <div class="sub-nav">
-        <button
-          :class="[$route.name === 'infoCommunicationCollege' ? 'yellow-button' : 'blue-button']"
-          @click="navigateTo('infoCommunicationCollege')"
-        >
-          학과소개
-        </button>
-        <button
-          :class="[$route.name === 'infoCommunicationCollegeSub' ? 'yellow-button' : 'blue-button']"
-          @click="navigateTo('infoCommunicationCollegeSub')"
-        >
-          교과과정
-        </button>
-      </div>
-
-          <!-- 본문 영역 -->
-          <section class="info-section">
-            <div class="info-box">
-              <h2>학과소개</h2>
-              <p>학과위치: 지능형SW융합대학 3층(303호)</p>
-              <p>대표전화: 031-220-2532</p>
-              <p>업무시간: 오전 9시 ~ 오후 5:30</p>
-            </div>
-
-            <div class="info-box">
-              <h2>전공소개</h2>
-              <p>정보통신 전공은 정보통신융합(ICT)과 사물인터넷(IoT) 시대에 부응하여 미래를 개척할 공학인을 양성하는 것을 교육비전으로 한다.</p>
-              <p>정보통신분야에서의 전문가적 지식, 현장을 기반으로한 실무 경험, 융합교과를 통한 창의력 배양을 실천전략으로 삼고 있다.</p>
-              <p>주요 교과 구성은 유무선 네트워크, 무선통신 및 모바일 프로그래밍, 멀티미디어 시스템 및 컴퓨터와 임베디드 시스템 프로그래밍 등으로 구성된다.</p>
-              <p>특히 융합교과로서 로봇을 특화하여 졸업작품 및 각종 경진대회 참가를 지원하고 있다.</p>
-            </div>
-
-            <div class="info-box">
-              <h2>관련자격 및 시험</h2>
-              <p>방송통신기사, 게임기획전문가, 게임프로그래밍 전문가, 정보처리기사 및 정보 통신기사, 무선설비 기사, 전자계산기제어 산업기사, 전자계산기조직 응용기사, 중등교사 정교사 2급, 각종 기능장 등</p>
-
-            </div>
-            <div class="info-box">
-        <h2>학과시설</h2>
-        <table class="facility-table">
-          <thead>
-            <tr>
-              <th>구분</th>
-              <th>위치 및 설명</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>학과사무실</strong></td>
-              <td>지능형SW융합대학 303호</td>
-            </tr>
-            <tr>
-              <td><strong>실험실</strong></td>
-              <td>각 교수님별로 총6개의 실험실을 운영중</td>
-            </tr>
-            <tr>
-              <td><strong>실습실</strong></td>
-              <td>216호(임베디드 실습실, 하드웨어 위주) / 307호, 408호(컴퓨터실, 소프트웨어 위주)</td>
-            </tr>
-            <tr>
-              <td><strong>학생회실</strong></td>
-              <td>지능형SW융합대학 218호</td>
-            </tr>
-            <tr>
-              <td><strong>교수연구실</strong></td>
-              <td>지능형SW융합대학 5층</td>
-            </tr>
-            <tr>
-              <td><strong>강사휴게실</strong></td>
-              <td>지능형SW융합대학 5층</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="info-box">
-        <h2>교수 소개</h2>
-        <div class="professor-grid">
-          <div class="professor-card" v-for="(prof, index) in professors" :key="index">
-            <h3>
-                <a :href="prof.link" target="_blank" rel="noopener noreferrer">{{ prof.name }}</a>
-            </h3>
-            <p class="dept">{{ prof.dept }}</p>
-            <p><strong>전공 : </strong> {{ prof.major }}</p>
-            <p><strong>이메일 : </strong> {{ prof.email }}</p>
-            <p><strong>연구실 : </strong> {{ prof.lab }}</p>
-            <p><strong>연락처 : </strong> {{ prof.phone }}</p>
-          </div>
+          <div class="sub-nav">
+          <button
+            :class="[$route.name === 'infoCommunicationCollege' ? 'yellow-button' : 'blue-button']"
+            @click="navigateTo('infoCommunicationCollege')"
+          >
+            학과소개
+          </button>
+          <button
+            :class="[$route.name === 'infoCommunicationCollegeSub' ? 'yellow-button' : 'blue-button']"
+            @click="navigateTo('infoCommunicationCollegeSub')"
+          >
+            교과과정
+          </button>
         </div>
-      </div>
+
+        <section class="info-section">
+          <div class="info-box">
+            <h2>학과소개</h2>
+            <p>학과위치: 지능형SW융합대학 3층(303호)</p>
+            <p>대표전화: 031-220-2532</p>
+            <p>업무시간: 오전 9시 ~ 오후 5:30</p>
+          </div>
+
+          <div class="info-box">
+            <h2>전공소개</h2>
+            <p>정보통신 전공은 정보통신융합(ICT)과 사물인터넷(IoT) 시대에 부응하여 미래를 개척할 공학인을 양성하는 것을 교육비전으로 한다.</p>
+            <p>정보통신분야에서의 전문가적 지식, 현장을 기반으로한 실무 경험, 융합교과를 통한 창의력 배양을 실천전략으로 삼고 있다.</p>
+            <p>주요 교과 구성은 유무선 네트워크, 무선통신 및 모바일 프로그래밍, 멀티미디어 시스템 및 컴퓨터와 임베디드 시스템 프로그래밍 등으로 구성된다.</p>
+            <p>특히 융합교과로서 로봇을 특화하여 졸업작품 및 각종 경진대회 참가를 지원하고 있다.</p>
+          </div>
+
+          <div class="info-box">
+            <h2>관련자격 및 시험</h2>
+            <p>방송통신기사, 게임기획전문가, 게임프로그래밍 전문가, 정보처리기사 및 정보 통신기사, 무선설비 기사, 전자계산기제어 산업기사, 전자계산기조직 응용기사, 중등교사 정교사 2급, 각종 기능장 등</p>
+          </div>
+
+          <div class="info-box">
+            <h2>학과시설</h2>
+            <table class="facility-table">
+              <thead>
+                <tr>
+                  <th>구분</th>
+                  <th>위치 및 설명</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>학과사무실</strong></td>
+                  <td>지능형SW융합대학 303호</td>
+                </tr>
+                <tr>
+                  <td><strong>실험실</strong></td>
+                  <td>각 교수님별로 총6개의 실험실을 운영중</td>
+                </tr>
+                <tr>
+                  <td><strong>실습실</strong></td>
+                  <td>216호(임베디드 실습실, 하드웨어 위주) / 307호, 408호(컴퓨터실, 소프트웨어 위주)</td>
+                </tr>
+                <tr>
+                  <td><strong>학생회실</strong></td>
+                  <td>지능형SW융합대학 218호</td>
+                </tr>
+                <tr>
+                  <td><strong>교수연구실</strong></td>
+                  <td>지능형SW융합대학 5층</td>
+                </tr>
+                <tr>
+                  <td><strong>강사휴게실</strong></td>
+                  <td>지능형SW융합대학 5층</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="info-box">
+            <h2>교수 소개</h2>
+            <div class="professor-grid">
+              <div class="professor-card" v-for="(prof, index) in professors" :key="index">
+                <h3><a :href="prof.link" target="_blank" rel="noopener noreferrer">{{ prof.name }}</a></h3>
+                <p class="dept">{{ prof.dept }}</p>
+                <p><strong>전공 : </strong> {{ prof.major }}</p>
+                <p><strong>이메일 : </strong> {{ prof.email }}</p>
+                <p><strong>연구실 : </strong> {{ prof.lab }}</p>
+                <p><strong>연락처 : </strong> {{ prof.phone }}</p>
+              </div>
+            </div>
+          </div>
+        </section>
     </section>
-    <img class="chatbot-icon"  src="@/assets/chatbot-icon.png" alt="chatbot" @click="showChat = !showChat"/>
-    
+   
     <ChatBot v-if="showChat" @close="showChat = false" />
     <footer>
       <div class="container">
@@ -233,6 +252,7 @@ export default {
   },
   data() {
     return {
+       isLoggedIn: false,
       showPrivacy: false,
       showChat: false,
       isIntro: true,
@@ -256,6 +276,15 @@ export default {
     };
   },
   methods: {
+    login() {
+      this.navigateTo('LoginPage');
+    },
+    logout() {
+      this.isLoggedIn = false;
+      localStorage.removeItem('token');
+      alert('로그아웃 되었습니다.');
+    },
+
     navigateTo(routeName) {
       this.isIntro = routeName === 'infoSecurityIntro';
       this.$router.push({ name: routeName }).catch((err) => {
@@ -477,8 +506,11 @@ nav {
   text-decoration: none;
 }
 
-.searchBar {
-  margin-right: 10px;
+.menu{
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 }
 
 nav a {
@@ -487,12 +519,7 @@ nav a {
   text-decoration: none;
 }
 
-.login .searchBar {
-  display: flex;
-  justify-content: center;
-  gap: 5rem;
-  margin-top: 2rem;
-}
+
 
 .login {
   margin-right: 15%;
@@ -544,14 +571,14 @@ nav a {
 }
 
 .info-box {
-  background-color: rgb(20, 14, 71);
+  background-color: rgb(255, 255, 255);
   padding: 1.5rem;
   margin-bottom: 2rem;
-  color: white;
+  color: rgb(0, 0, 0);
   font-weight: bold;
   font-size: 1.1rem;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.449);
 }
 
 .info-box h2 {
@@ -597,13 +624,13 @@ nav a {
 }
 
 .professor-card a {
-    color: white;
+    color: rgb(0, 0, 0);
     text-decoration: underline;
     text-underline-offset: 4px;
 }
 
 .professor-card {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(15, 4, 69, 0.5);
   border: 1px solid #ccc;
   border-radius: 6px;
   padding: 1rem;

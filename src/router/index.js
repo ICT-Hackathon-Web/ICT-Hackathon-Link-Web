@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Main from '@/components/Main.vue';
 
+
 const routes = [
   {
     path: '/',
@@ -130,16 +131,19 @@ const routes = [
     name: 'PrivacyPolicy',
     component: () => import('@/components/PrivacyPolicy.vue'),
   },
-  {
-    path: '/search',
-    name: 'search',
-    component: () => import('@/components/SearchBar.vue'),
-  },
+  
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+  scrollBehavior(to, from, savedPosition) {
+  if (savedPosition) {
+    return savedPosition; // 브라우저 '뒤로가기' 시 위치 복원
+  } else {
+    return { top: 0 }; // 새 페이지 진입 시 스크롤 맨 위로
+  }
+}
 });
 
 export default router;

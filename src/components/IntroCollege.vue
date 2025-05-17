@@ -13,93 +13,78 @@
         style="padding: 1.3rem 2rem"
       />
 
-      <nav>
-        <!-- 대학 안내 -->
-        <div class="center-menu">
-          <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer"
-            >대학 안내</a
-          >
-          <div class="divider"></div>
-
-          <!-- 학과 안내 -->
-          <div
-            class="department-wrapper"
-            @mouseenter="activeDropdown = 'department'"
-          >
-            <a class="department" style="cursor: default">학과 안내</a>
-            <div
-              class="dropdown"
-              v-show="activeDropdown === 'department'"
-              @mouseenter="navHovered = true"
-              @mouseleave="hideAllDropdowns"
-            >
+       <div class="menu">
+        <nav>
+          <!-- 대학 안내 -->
+          <div class="center-menu">
+            <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer">대학 안내</a>
+            <div class="divider"></div>
+            <div class="department-wrapper" @mouseenter="activeDropdown = 'department'">
+              <a class="department" style="cursor: default">학과 안내</a>
               <div
-                class="department-block"
-                v-for="(dept, index) in departments"
-                :key="index"
+                class="dropdown"
+                v-show="activeDropdown === 'department'"
+                @mouseenter="navHovered = true"
+                @mouseleave="hideAllDropdowns"
               >
-                <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
-                  {{ dept.name }}
-                </h4>
-
-                <ul v-if="dept.majors.length">
-                  <li
-                    v-for="(major, idx) in dept.majors"
-                    :key="idx"
-                    @click="navigateToMajor(major)"
-                    style="cursor: pointer"
-                  >
-                    {{ major }}
-                  </li>
-                </ul>
+                <div
+                  class="department-block"
+                  v-for="(dept, index) in departments"
+                  :key="index"
+                >
+                  <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
+                    {{ dept.name }}
+                  </h4>
+                  <ul v-if="dept.majors.length">
+                    <li
+                      v-for="(major, idx) in dept.majors"
+                      :key="idx"
+                      @click="navigateToMajor(major)"
+                      style="cursor: pointer"
+                    >
+                      {{ major }}
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="divider"></div>
-
-          <!-- 정보 광장 -->
-          <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
-            <a class="information" style="cursor: default">정보 광장</a>
-            <div
-              class="dropdown dropdown-info"
-              v-show="activeDropdown === 'info'"
-              @mouseenter="navHovered = true"
-              @mouseleave="hideAllDropdowns"
-            >
-              <div class="department-block">
-                <ul>
-                  <li @click="navigateTo('schedulePage')">학사일정</li>
-                  <li @click="navigateTo('ClubPage')">동아리</li>
-                  <li @click="navigateTo('lostArticle')">분실물</li>
-                </ul>
+            <div class="divider"></div>
+            <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
+              <a class="information" style="cursor: default">정보 광장</a>
+              <div
+                class="dropdown dropdown-info"
+                v-show="activeDropdown === 'info'"
+                @mouseenter="navHovered = true"
+                @mouseleave="hideAllDropdowns"
+              >
+                <div class="department-block">
+                  <ul>
+                    <li @click="navigateTo('schedulePage')">학사일정</li>
+                    <li @click="navigateTo('ClubPage')">동아리</li>
+                    <li @click="navigateTo('lostArticle')">분실물</li>
+                  </ul>
+                </div>
               </div>
             </div>
+            <div class="divider"></div>
+            <a class="announcememt" @click="navigateTo('announcePage')" style="cursor: pointer">공지</a>
           </div>
-
-          <div class="divider"></div>
-
-          <a
-            class="announcememt"
-            @click="navigateTo('announcePage')"
-            style="cursor: pointer"
-            >공지</a
-          >
-        </div>
-      </nav>
+        </nav>
+      </div>
       <div class="right-menu">
         <a
+          v-if="!isLoggedIn"
           class="login"
-          @click="navigateTo('LoginPage')"
+          @click="login"
           style="cursor: pointer"
-          >login</a>
-        <img
-          class="searchBar"
-          src="@/assets/SearchBarIcon.png"
-          @click="navigateTo('search')"
-          alt="SearchBar"
+        >로그인</a>
+
+        <a
+          v-else
+          class="login"
+          @click="logout"
           style="cursor: pointer"
-        />
+        >로그아웃</a>
       </div>
     </header>
     <section class="title-section">
@@ -130,24 +115,21 @@
           <div class="stat-label">(2020.07 재학생 및 휴학생)</div>
         </div>
       </div>
-      <div class="informbox">   
-        <div class="info-box">
-          <h2>학장 소개</h2>
-          <div class="chair-card">
-              <div class="chair-item">
-                <span class="icon">👤</span> 성명 : 김대엽
-              </div>
-              <div class="chair-item">
-                <span class="icon">🏫</span> 소속 : 정보통신학부
-              </div>
-              <div class="chair-item">
-                <span class="icon">📍</span> 위치 : 지능형SW융합대학 525호
-              </div>
-              <div class="chair-item">
-                <span class="icon">📞</span> 대표전화 : 031-229-8352
-              </div>
+      <section>
+        <h2 class="section-title">학장 소개</h2>
+        <div class="profile">
+          <div>
+            <p><strong>성명:</strong> 김대엽</p>
+            <p><strong>위치:</strong> 지능형SW융합대학 525호실</p>
+          </div>
+          <div>
+            <p><strong>소속:</strong> 정보통신학부 정보보호</p>
+            <p><strong>연락처:</strong> 031-229-8352</p>
+            <p><strong>Email:</strong> daeyoub69@suwon.ac.kr</p>
           </div>
         </div>
+      </section>
+      <div class="informbox">   
         <div class="majors">
           <div class="major">
             <a  @click="navigateTo('infoCommunication')" style="cursor: pointer">정보통신학부</a>
@@ -234,6 +216,7 @@ export default {
   },
    data() {
     return {
+      isLoggedIn: false,
       showPrivacy: false,
       showChat: false,
       activeDropdown: null,
@@ -247,6 +230,14 @@ export default {
     };
   },
   methods: {
+    login() {
+      this.navigateTo('LoginPage');
+    },
+    logout() {
+      this.isLoggedIn = false;
+      localStorage.removeItem('token');
+      alert('로그아웃 되었습니다.');
+    },
     filteredNotices() {
       return this.notices
         .filter((n) => this.selectCategory === "all_annonce" || n.category === this.selectCategory)
@@ -295,13 +286,19 @@ export default {
 * {
   font-family: 'Nanum Gothic', sans-serif;
 }
-
+.menu{
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
 .main-container {
-  background-image: url('@/assets/background.png');
+  background-color: white;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  min-height: 100vh;
+  min-height: 0;
+  height: auto;
   overflow-x: hidden;
 }
 
@@ -452,9 +449,7 @@ nav {
   text-decoration: none;
 }
 
-.searchBar {
-  margin-right: 10px;
-}
+
 
 nav a {
   margin: 0 10px;
@@ -462,12 +457,7 @@ nav a {
   text-decoration: none;
 }
 
-.login .searchBar {
-  display: flex;
-  justify-content: center;
-  gap: 5rem;
-  margin-top: 2rem;
-}
+
 
 .login {
   margin-right: 15%;
@@ -535,15 +525,31 @@ nav a {
   margin-left: 1rem ;
   margin-bottom: 2rem;
   font-weight: bold;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .intro-text {
   font-size: 20px;
   font-weight: bold;
-  color: white;
+  color: rgb(0, 0, 0);
   padding: 1rem;
   font-weight: 500;
+  line-height: 2rem;
+}
+
+.profile {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1.1rem;
+}
+
+.profile div {
+  width: 48%;
 }
 
 .stats {
@@ -561,13 +567,13 @@ nav a {
 .stat-value {
   font-size: 3rem;
   font-weight: bold;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .stat-label {
   font-size: 0.9rem;
   margin-top: 0.5rem;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 /* ✅ 공통 컨테이너 */
 .informbox {
@@ -622,10 +628,10 @@ nav a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgb(4, 13, 62);
   padding: 2rem 1rem;
   border-radius: 10px;
-  width: 230px;
+  width: 20%;
   height: 240px;
   box-sizing: border-box;
 }
@@ -635,7 +641,7 @@ nav a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgb(4, 13, 62);
   padding: 2rem 1rem;
   border-radius: 10px;
   width: 300px;
@@ -677,15 +683,7 @@ nav a {
 }
 
 
-.chatbot-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 10%; /* ✅ 기존보다 가로폭 확대 */
-  height: auto; /* ✅ 높이 자동으로 비율 유지 */
-  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
-  z-index: 10; 
-}
+
 /*하단창*/
 footer {
   background-color: #343539;
