@@ -1,5 +1,5 @@
 <template>
-  <div class="main-container">
+<div class="main-container">
     <header
       class="header"
       @mouseleave="hideAllDropdowns"
@@ -12,181 +12,155 @@
         style="padding: 1.3rem 2rem"
       />
 
-      <nav>
-        <!-- 대학 안내 -->
-        <div class="center-menu">
-          <a class="intro" @click="navigateTo('intro')" style="cursor: pointer"
-            >대학 안내</a
-          >
-          <div class="divider"></div>
-
-          <!-- 학과 안내 -->
-          <div
-            class="department-wrapper"
-            @mouseenter="activeDropdown = 'department'"
-          >
-            <a class="department" style="cursor: default">학과 안내</a>
-            <div
-              class="dropdown"
-              v-show="activeDropdown === 'department'"
-              @mouseenter="navHovered = true"
-              @mouseleave="hideAllDropdowns"
-            >
+       <div class="menu">
+        <nav>
+          <!-- 대학 안내 -->
+          <div class="center-menu">
+            <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer">대학 안내</a>
+            <div class="divider"></div>
+            <div class="department-wrapper" @mouseenter="activeDropdown = 'department'">
+              <a class="department" style="cursor: default">학과 안내</a>
               <div
-                class="department-block"
-                v-for="(dept, index) in departments"
-                :key="index"
+                class="dropdown"
+                v-show="activeDropdown === 'department'"
+                @mouseenter="navHovered = true"
+                @mouseleave="hideAllDropdowns"
               >
-                <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
-                  {{ dept.name }}
-                </h4>
-
-                <ul v-if="dept.majors.length">
-                  <li
-                    v-for="(major, idx) in dept.majors"
-                    :key="idx"
-                    @click="navigateToMajor(major)"
-                    style="cursor: pointer"
-                  >
-                    {{ major }}
-                  </li>
-                </ul>
+                <div
+                  class="department-block"
+                  v-for="(dept, index) in departments"
+                  :key="index"
+                >
+                  <h4 @click="navigateToMajor(dept.name)" style="cursor: pointer">
+                    {{ dept.name }}
+                  </h4>
+                  <ul v-if="dept.majors.length">
+                    <li
+                      v-for="(major, idx) in dept.majors"
+                      :key="idx"
+                      @click="navigateToMajor(major)"
+                      style="cursor: pointer"
+                    >
+                      {{ major }}
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div class="divider"></div>
-
-          <!-- 정보 광장 -->
-          <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
-            <a class="information" style="cursor: default">정보 광장</a>
-            <div
-              class="dropdown dropdown-info"
-              v-show="activeDropdown === 'info'"
-              @mouseenter="navHovered = true"
-              @mouseleave="hideAllDropdowns"
-            >
-              <div class="department-block">
-                <ul style="font-weight: bold">
-                  <li @click="navigateTo('schedule')">학사일정</li>
-                  <li @click="navigateTo('Club')">동아리</li>
-                  <li @click="navigateTo('lostArticle')">분실물</li>
-                </ul>
+            <div class="divider"></div>
+            <div class="department-wrapper" @mouseenter="activeDropdown = 'info'">
+              <a class="information" style="cursor: default">정보 광장</a>
+              <div
+                class="dropdown dropdown-info"
+                v-show="activeDropdown === 'info'"
+                @mouseenter="navHovered = true"
+                @mouseleave="hideAllDropdowns"
+              >
+                <div class="department-block">
+                  <ul>
+                    <li @click="navigateTo('schedulePage')">학사일정</li>
+                    <li @click="navigateTo('ClubPage')">동아리</li>
+                    <li @click="navigateTo('lostArticle')">분실물</li>
+                  </ul>
+                </div>
               </div>
             </div>
+            <div class="divider"></div>
+            <a class="announcememt" @click="navigateTo('announcePage')" style="cursor: pointer">공지</a>
           </div>
-
-          <div class="divider"></div>
-
-          <a
-            class="announcememt"
-            @click="navigateTo('announcement')"
-            style="cursor: pointer"
-            >공지</a
-          >
-        </div>
-      </nav>
+        </nav>
+      </div>
       <div class="right-menu">
         <a
+          v-if="!isLoggedIn"
           class="login"
-          @click="navigateTo('LoginPage')"
+          @click="login"
           style="cursor: pointer"
-          >login</a
-        >
-        <img
-          class="searchBar"
-          src="../../assets/SearchBarIcon.png"
-          @click="navigateTo('search')"
-          alt="SearchBar"
+        >login</a>
+
+        <a
+          v-else
+          class="login"
+          @click="logout"
           style="cursor: pointer"
-        />
+        >logout</a>
+
+        
       </div>
     </header>
-
-    <section class="info-section">
-      <div class="title-box">
-        <h1>정보통신학부</h1>
-      </div>
-
-      <div class="info-box">
-        <h2>학부 소개</h2>
-        <p>
-          수원대학교 정보통신학부는 정보통신융합(ICT) 기술의 핵심인 정보통신과
-          정보보호 분야를 깊이 있고 폭넓게 공부하고, 다양한 실습을 통하여 실무
-          역량을 갖출 수 있도록 교육함으로써 4차 산업혁명시대에 필요한 핵심 기술
-          인력을 양성합니다.
-        </p>
-        <p>
-          정보통신공학전공은 ICT와 사물인터넷(IoT) 시대에 부응하여 미래를 개척할
-          공학인을 양성하는 것을 교육 목표로, 정보통신분야에서의 전문가적 지식,
-          현장을 기반으로 실무 경험, 융합교과를 통한 창의력 배양을 실천전략으로
-          삼고 있습니다.
-        </p>
-        <p>
-          정보의 생성과 가공, 전달을 위한 정보처리, 네트워크 및 통신기술에 관한
-          전반적인 이론 습득은 물론 소프트웨어, 하드웨어 설계 능력 및 실습
-          능력을 배양하며, 다양한 통신망을 활용한 정보통신 실습으로 스마트
-          정보화 사회에 능동적으로 대처할 수 있는 창의성과 기술개발 및
-          커뮤니케이션 능력을 갖춘 고급 ICT 인력을 육성합니다.
-        </p>
-        <p>
-          주요 교과분야는 통신 및 유무선 네트워크 시스템, 멀티미디어 신호처리 및
-          시스템, IoT 임베디드 시스템 분야로 구성되어 있습니다. 특히
-          융합교과로서 로봇을 특화하여 졸업 작품 전시, 대내외 공모전 및 각종
-          경진대회 참가를 지원하고 있습니다.
-        </p>
-        <p>
-          정보보호 전공은 4차 산업혁명 시대의 다양한 서비스 및 시스템의 보안을
-          책임질 전문 보안인력 양성을 교육 목표로, 시스템 및 서비스 개론 및
-          개발, 정보보호 실무 기술, 융복합 교육 등을 통한 핵심 기술 역량을 갖춘
-          인재를 길러내고 있습니다.
-        </p>
-        <p>
-          주요 교과분야는 정보보호개론, 암호학, 접근통제, 네트워크 및 시스템
-          보안, 응용 보안 등 정보보호 관련 전 분야를 체계적으로 교육할 수 있도록
-          구성되어 있으며, SW 프로그래밍 기술 교육 및 실습을 통하여 정보보호
-          분야뿐만 아니라 ICT 시스템 및 서비스 개발 역량을 갖출 수 있도록
-          교육합니다.
-        </p>
-        <p>
-          특히, 프로젝트 중심 교육을 통하여 대내외 공모전 및 경진대회에 참여할
-          수 있도록 지도하고 있습니다.
-        </p>
-        <p>
-          졸업 후, 정보보호 관리 및 운영, 정보보호 컨설팅, 시스템 개발 등 다양한
-          분야로 진출할 수 있습니다.
-        </p>
-      </div>
-
-      <div class="info-box">
-        <h2>학과장 소개</h2>
-        <div class="chair-card">
-          <div class="chair-item">
-            <span class="icon">👤</span> 성명 : 김대엽
-          </div>
-          <div class="chair-item">
-            <span class="icon">🏫</span> 소속 : 정보통신학부 정보보호
-          </div>
-          <div class="chair-item">
-            <span class="icon">📍</span> 위치 : 지능형SW융합대학 525호실
-          </div>
-          <div class="chair-item">
-            <span class="icon">📞</span> 대표전화 : 031-229-8352
-          </div>
-          <div class="chair-item"><span class="icon">📠</span> FAX :</div>
-          <div class="chair-item">
-            <span class="icon">@</span> E-mail : daeyoub69@suwon.ac.kr
+    <section class="title-section">
+        <div class="wrap_sub_visual">
+          <div class="container center-only">
+            <p class="visual_intro"><strong>정보통신학부</strong></p>
+            <p class="subtitle a">InformationCommunication</p>
+            
           </div>
         </div>
-      </div>
+    </section>
+    <section class="info-section">
 
-      <div class="info-box">
-        <h2>전공 및 학위 과정</h2>
-        <img src="@/assets/InfoComMajor.png" alt="InfoCom" />
-      </div>
+      <section class="info-box">
+        <h2 class="section-title">학부 소개</h2>
+        <p>
+          수원대학교 정보통신학부는 정보통신융합(ICT) 기술의 핵심인 정보통신과 정보보호 분야를 깊이 있고 폭넓게 공부하고, 다양한 실습을 통하여 실무 역량을 갖출 수 있도록 교육함으로써 4차 산업혁명시대에 필요한 핵심 기술 인력을 양성합니다.
 
-      <div class="info-box">
-        <h2>교수 소개</h2>
+정보통신공학전공은 ICT와 사물인터넷(IoT) 시대에 부응하여 미래를 개척할 공학인을 양성하는 것을 교육 목표로, 정보통신분야에서의 전문가적 지식, 현장을 기반으로 실무 경험, 융합교과를 통한 창의력 배양을 실천전략으로 삼고 있습니다.
+
+정보의 생성과 가공, 전달을 위한 정보처리, 네트워크 및 통신기술에 관한 전반적인 이론 습득은 물론 소프트웨어, 하드웨어 설계 능력 및 실습 능력을 배양하며, 다양한 통신망을 활용한 정보통신 실습으로 스마트 정보화 사회에 능동적으로 대처할 수 있는 창의성과 기술개발 및 커뮤니케이션 능력을 갖춘 고급 ICT 인력을 육성합니다.
+
+주요 교과분야는 통신 및 유무선 네트워크 시스템, 멀티미디어 신호처리 및 시스템, IoT 임베디드 시스템 분야로 구성되어 있습니다. 특히 융합교과로서 로봇을 특화하여 졸업 작품 전시, 대내외 공모전 및 각종 경진대회 참가를 지원하고 있습니다.
+
+정보보호 전공은 4차 산업혁명 시대의 다양한 서비스 및 시스템의 보안을 책임질 전문 보안인력 양성을 교육 목표로, 시스템 및 서비스 개론 및 개발, 정보보호 실무 기술, 융복합 교육 등을 통한 핵심 기술 역량을 갖춘 인재를 길러내고 있습니다.
+
+주요 교과분야는 정보보호개론, 암호학, 접근통제, 네트워크 및 시스템 보안, 응용 보안 등 정보보호 관련 전 분야를 체계적으로 교육할 수 있도록 구성되어 있으며, SW 프로그래밍 기술 교육 및 실습을 통하여 정보보호 분야뿐만 아니라 ICT 시스템 및 서비스 개발 역량을 갖출 수 있도록 교육합니다.
+
+특히, 프로젝트 중심 교육을 통하여 대내외 공모전 및 경진대회에 참여할 수 있도록 지도하고 있습니다.
+
+졸업 후, 정보보호 관리 및 운영, 정보보호 컨설팅, 시스템 개발 등 다양한 분야로 진출할 수 있습니다.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="section-title">학과장 소개</h2>
+        <div class="profile">
+          <div>
+            <p><strong>성명:</strong> 김대엽</p>
+            <p><strong>위치:</strong> 지능형SW융합대학 525호실</p>
+          </div>
+          <div>
+            <p><strong>소속:</strong> 정보통신학부 정보보호</p>
+            <p><strong>연락처:</strong> 031-229-8352</p>
+            <p><strong>Email:</strong> daeyoub69@suwon.ac.kr</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">전공 및 학위 과정</h2>
+        <table>
+              <thead>
+                <tr>
+                  <th>전공</th>
+                  <th>학사과정</th>
+                  <th>석사과정</th>
+                  <th>박사과정</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(row, index) in degrees" :key="index">
+                  <td>{{ row.major }}</td>
+                  <td>{{ row.bachelor ? '○' : '' }}</td>
+                  <td>{{ row.master ? '○' : '' }}</td>
+                  <td>{{ row.phd ? '○' : '' }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+      </section>
+
+
+      <div class="infobox">
+        <h2 class="section-title">교수 소개</h2>
         <div class="professor-grid">
           <div
             class="professor-card"
@@ -208,35 +182,86 @@
       </div>
     </section>
 
-    <img class="chatbot-icon" src="@/assets/chatbot-icon.png" alt="chatbot" />
+    <img class="chatbot-icon"  src="@/assets/chatbot-icon.png" alt="chatbot" @click="showChat = !showChat"/>
+    
+    <ChatBot v-if="showChat" @close="showChat = false" />
+    <footer>
+      <div class="container">
+        <div class="wrap">
+          <div class="foot_info">
+            <div class="fnb">
+              <ul class="inGuideFnb">
+                <li>
+                  <a @click="showPrivacy = true" style="cursor: pointer">개인정보처리방침</a>
+                </li>
+              </ul>
+            </div>
+            <address>
+              18323 경기도 화성시 봉담읍 와우안길 17
+              <span>Tel : 031-220-2114</span>
+            </address>
+            <p>
+              <span>Copyright (C) THE UNIVERSITY OF SUWON.</span>
+              All rights reserved.
+            </p>
+          </div>
+          <div class="foot_sns">
+            <ul>
+              <li class="n_blog">
+                <a title="수원대학교 블로그" href="https://blog.naver.com/usw1982" target="_blank">
+                  <img src="@/assets/blog.png" />
+                </a>
+              </li>
+              <li class="facebook">
+                <a title="수원대학교 페이스북" href="https://www.facebook.com/SuwonUniv/" target="_blank">
+                  <img src="@/assets/facebook.png" />
+                </a>
+              </li>
+              <li class="instagram">
+                <a title="수원대학교 인스타그램" href="https://www.instagram.com/usw1982/" target="_blank">
+                  <img src="@/assets/insta.png" />
+                </a>
+              </li>
+              <li class="youtube">
+                <a title="수원대학교 유튜브" href="https://www.youtube.com/channel/UC4JfyRGKu5AfBjvaFMCj3cg" target="_blank">
+                  <img src="@/assets/youtube.png" />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  </footer>
+  <PrivacyPolicy v-if="showPrivacy" @close="showPrivacy = false" />
   </div>
 </template>
 
 <script>
+import ChatBot from '@/components/ChatBot.vue'
+import PrivacyPolicy from '@/components/PrivacyPolicy.vue'
 export default {
-  name: 'ClubInfo',
+  name: 'infoCommunication',
+  components: {
+    ChatBot,
+    PrivacyPolicy
+  },
   data() {
     return {
-      activeDropdown: null, // 마우스가 어디에 올라가있는지 체크
-      navHovered: false, // nav바에 마우스가 올라갔는지 boolean으로 체크함
+      degrees: [
+        { major: '정보통신', bachelor: true, master: true, phd: true },
+        { major: '정보보호', bachelor: true, master: false, phd: false },
+      ],
+       isLoggedIn: false,
+      showPrivacy: false,
       showDepartments: false,
+      showChat: false,
+      activeDropdown: null,
+      navHovered: false,
       departments: [
-        {
-          name: '컴퓨터학부',
-          majors: ['컴퓨터SW', '미디어SW'],
-        },
-        {
-          name: '정보통신학부',
-          majors: ['정보통신학과', '정보보호학과'],
-        },
-        {
-          name: '데이터과학부',
-          majors: [],
-        },
-        {
-          name: '클라우드융복합',
-          majors: [],
-        },
+        { name: '컴퓨터학부', majors: ['컴퓨터SW', '미디어SW'] },
+        { name: '정보통신학부', majors: ['정보통신학과', '정보보호학과'] },
+        { name: '데이터과학부', majors: [] },
+        { name: '클라우드융복합', majors: [] },
       ],
       professors: [
         {
@@ -251,7 +276,7 @@ export default {
         {
           name: '양수미',
           dept: '정보보호',
-          major: '정보 보호',
+          major: '정보보호',
           email: 'smyang@suwon.ac.kr',
           lab: 'IT대학 504호',
           phone: '031-229-8138',
@@ -352,31 +377,33 @@ export default {
   },
 
   methods: {
+    login() {
+      this.navigateTo('LoginPage');
+    },
+    logout() {
+      this.isLoggedIn = false;
+      localStorage.removeItem('token');
+      alert('로그아웃 되었습니다.');
+    },
     navigateTo(routeName) {
+      this.isIntro = routeName === 'infoSecurityIntro';
       this.$router.push({ name: routeName }).catch((err) => {
-        if (err.name !== 'NavigationDuplicated') {
-          //동일한 경로일x 때, 오류 무시하기
-          throw err;
-        }
+        if (err.name !== "NavigationDuplicated") throw err;
       });
     },
     navigateToMajor(majorName) {
       const routeMap = {
-        컴퓨터학부: 'computer',
-        컴퓨터SW: 'computerSW',
-        미디어SW: 'mediaSW',
-        정보통신학부: 'infoCommunication',
-        정보통신학과: 'infoCommunicationCollege',
-        정보보호학과: 'infoSecurity',
-        데이터과학부: 'dataScience',
-        클라우드융복합: 'cloud',
+        컴퓨터학부: "computerPage",
+        컴퓨터SW: "computerSW",
+        미디어SW: "mediaSW",
+        정보통신학부: "infoCommunication",
+        정보통신학과: "infoCommunicationCollege",
+        정보보호학과: "infoSecurity",
+        데이터과학부: "dataScience",
+        클라우드융복합: "CloudPage",
       };
       const route = routeMap[majorName];
-      if (route) {
-        this.navigateTo(route);
-      } else {
-        console.warn(`No route found for major: ${majorName}`);
-      }
+      if (route) this.navigateTo(route);
     },
     hideAllDropdowns() {
       this.activeDropdown = null;
@@ -391,8 +418,38 @@ export default {
   font-family: 'Nanum Gothic', sans-serif;
 }
 
-.main-container {
+
+.wrap_sub_visual {
   background-image: url('@/assets/background1.png');
+  background-size: cover;
+  background-position: center;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrap_sub_visual .container.center-only {
+  justify-content: center;
+}
+
+.visual_intro {
+  font-size: 2.2rem;
+  font-weight: 3px bold;
+  text-align: center;
+  flex: 1;
+  color: white;
+}
+
+.subtitle.a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
+  color: white;
+}
+.main-container {
+  background-color: white;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -411,7 +468,7 @@ export default {
 
 .logo {
   height: 40px;
-  margin-right: 5rem;
+  margin-right: 2rem;
   cursor: pointer;
 }
 
@@ -469,28 +526,16 @@ nav {
   /* transform: translateX(-50%); */
   top: 100%;
   width: 100vw;
-  background-color: #2c2d4f;
+  background-color: #2c2d4fee;
   display: flex;
   gap: 3rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   color: white;
-  opacity: 0.8;
+  
   border-radius: 4px;
   z-index: 1000;
   height: 120px;
-  /* position: absolute;
-  top: 100%;  header 바로 아래
-  left: 0;
-  width: 100vw;
-  background-color: #2c2d4f;
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  color: white;
-  opacity: 0.8;
-  border-radius: 4px;
-  z-index: 1000; */
+  
 }
 
 .dropdown-info {
@@ -558,22 +603,19 @@ nav {
   text-decoration: none;
 }
 
-.searchBar {
-  margin-right: 10px;
+.menu{
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 }
-
 nav a {
   margin: 0 10px;
   color: white;
   text-decoration: none;
 }
 
-.login .searchBar {
-  display: flex;
-  justify-content: center;
-  gap: 5rem;
-  margin-top: 2rem;
-}
+
 
 .login {
   margin-right: 15%;
@@ -587,61 +629,50 @@ nav a {
 
 .info-section {
   background-color: transparent;
+  padding: 4% 10% ;
+  border-radius: 5px;
+  line-height: 1.8;
+  font-weight: 500;
+
 }
 
-.title-box {
-  padding: 1rem;
-  font-size: 1.8rem;
-  font-weight: bold;
-  border-bottom: 2px solid white;
-  margin-bottom: 2rem;
+.section-title {
+  font-size: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #1b1d53;
+  display: inline-block;
 }
 
-.title-box h1 {
-  color: white;
-}
 
 .info-box {
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  color: white;
-  font-weight: bold; /* 매우 중요한 코드 */
-  font-size: 1.1rem;
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-left: 5px solid #1b1d53;
+  margin: 1rem 0;
 }
+.infobox{
+  background-color: #f5f5f5;
+  padding: 1rem;
+  
+  margin: 1rem 0;
 
-.info-box p {
-  line-height: 1.8;
-  margin-bottom: 0.8rem;
 }
-
-.info-box img {
-  display: block; /* block 요소로 만들어야 margin auto가 적용됨 */
-  margin: 1.5rem auto; /* 상하 여백 + 가로 중앙 정렬 */
-  max-width: 80%; /* 최대 가로 너비 제한 */
-  height: auto; /* 세로 비율 유지 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 그림자 효과 (선택) */
-}
-
-.info-box h2 {
-  font-size: 2rem;
-}
-
 .professor-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3개씩 배치 */
   gap: 2rem; /* 카드 간 간격 */
-  padding: 1rem;
+  
 }
 
 .professor-card a {
   color: white;
   text-decoration: underline;
-  text-underline-offset: 4px;
+  text-underline-offset: 7px;
 }
 
 .professor-card {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.596);
   border: 1px solid #ccc;
   border-radius: 6px;
   padding: 1rem;
@@ -661,26 +692,42 @@ nav a {
   margin-bottom: 0.5rem;
 }
 
-.chatbot-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-}
-.chair-card {
-  border: 2px solid #ddd;
-  padding: 1rem 1.5rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  row-gap: 0.8rem;
-  column-gap: 1.5rem;
+.profile {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1.1rem;
 }
 
-.chair-item {
+.profile div {
+  width: 48%;
+}
+
+.programs {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.programs button {
+  flex: 1;
+  margin: 0 0.5rem;
+  padding: 1rem;
+  background-color: #1b1d53;
+  color: white;
+  border: none;
   font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.programs button:hover {
+  background-color: #3a3c7d;
 }
 
 .icon {
@@ -691,6 +738,39 @@ nav a {
   margin-right: 0.6rem;
   font-size: 0.9rem;
 }
+.degree-table {
+  margin-top: 2rem;
+}
+
+.degree-table h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #14213d;
+  padding-bottom: 0.5rem;
+  color: #14213d;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+}
+
+th,
+td {
+  padding: 0.8rem;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+th {
+  background-color: #14213d;
+  color: white;
+}
+
 
 @media (max-width: 1000px) {
   .professor-grid {
@@ -702,5 +782,64 @@ nav a {
   .professor-grid {
     grid-template-columns: 1fr;
   }
+}
+/*하단창*/
+footer {
+  background-color: #343539;
+  color: #ccc;
+  padding: 1rem 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.6
+}
+
+footer .container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+footer .wrap {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2rem;
+}
+
+footer .foot_info address {
+  font-style: normal;
+  color: #ccc;
+}
+
+footer .foot_info span {
+  margin-left: 0.5rem;
+}
+
+footer .foot_info p {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #999;
+}
+
+footer .foot_sns ul {
+  list-style: none;
+  padding: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 100px;
+}
+
+footer .foot_sns li a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+footer .foot_sns li a:hover {
+  text-decoration: underline;
+}
+footer .inGuideFnb{
+  margin-bottom: 40px;
+  color: white;
 }
 </style>

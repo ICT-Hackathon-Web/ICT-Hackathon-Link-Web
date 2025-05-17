@@ -2,10 +2,11 @@
   <div class="login-wrapper">
     <div class="login-box">
       <div class="login-title">
-        <img src="..\assets\ui_img08.png" class="login-logo" />
+        <img src="@\assets\ui_img08.png" class="login-logo" />
       </div>
 
       <form @submit.prevent="handleLogin">
+        
         <div class="input_item id">
           <input type="text" id="id" v-model="id" placeholder="ID" />
         </div>
@@ -60,7 +61,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: url('../assets/background.png');
+  background-image: url('@/assets/background.png');
   background-size: cover; /* 이미지 꽉 채우기 */
   background-position: center; /* 가운데 정렬 */
   background-repeat: no-repeat;
@@ -72,7 +73,7 @@ export default {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   width: 500px;
-  height: 350px;
+  height: auto;
   text-align: center;
 }
 .login-title {
@@ -134,7 +135,7 @@ input {
   border: none;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 12%;
+  margin-top: 5%;
 }
 
 .signup-text {

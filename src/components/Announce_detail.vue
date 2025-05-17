@@ -1,6 +1,7 @@
 <template>
   <div class="main-container">
-    <header
+    <!-- ✅ 헤더 -->
+        <header
       class="header"
       @mouseleave="hideAllDropdowns"
       @mouseenter="navHovered = true"
@@ -15,7 +16,7 @@
       <nav>
         <!-- 대학 안내 -->
         <div class="center-menu">
-          <a class="intro" @click="navigateTo('intro')" style="cursor: pointer"
+          <a class="intro" @click="navigateTo('introCollege')" style="cursor: pointer"
             >대학 안내</a
           >
           <div class="divider"></div>
@@ -67,10 +68,10 @@
               @mouseleave="hideAllDropdowns"
             >
               <div class="department-block">
-                <ul style="font-weight: bold">
-                  <li>학사일정</li>
-                  <li>동아리</li>
-                  <li>분실물</li>
+                <ul>
+                  <li @click="navigateTo('schedulePage')">학사일정</li>
+                  <li @click="navigateTo('ClubPage')">동아리</li>
+                  <li @click="navigateTo('lostArticle')">분실물</li>
                 </ul>
               </div>
             </div>
@@ -80,7 +81,7 @@
 
           <a
             class="announcememt"
-            @click="navigateTo('announcement')"
+            @click="navigateTo('announcePage')"
             style="cursor: pointer"
             >공지</a
           >
@@ -88,120 +89,129 @@
       </nav>
       <div class="right-menu">
         <a
+          v-if="!isLoggedIn"
           class="login"
-          @click="navigateTo('LoginPage')"
+          @click="login"
           style="cursor: pointer"
-          >login</a
-        >
-        <img
-          class="searchBar"
-          src="../assets/SearchBarIcon.png"
-          @click="navigateTo('search')"
-          alt="SearchBar"
+        >login</a>
+
+        <a
+          v-else
+          class="login"
+          @click="logout"
           style="cursor: pointer"
-        />
+        >logout</a>
+      
       </div>
     </header>
 
-    <!-- ✅ 서브 비주얼 -->
-    <div class="wrap_sub_visual">
-      <div class="container center-only">
-        <p class="visual_intro"><strong>공지사항</strong></p>
+    <!-- ✅ 상세내용 -->
+    <div class="detail-container">
+      <h2>{{ notice.title }}</h2>
+      <p><strong>작성자:</strong> {{ notice.publisher }}</p>
+      <p><strong>작성일:</strong> {{ formatDate(notice.created_at) }}</p>
+      <div class="content">{{ notice.content }}</div>
+      <div v-if="notice.attachments">
+        <a :href="`http://localhost:5050/api/notices/${notice.notice_id}/file`" download>📎 첨부파일 다운로드</a>
       </div>
     </div>
+    <img class="chatbot-icon"  src="@/assets/chatbot-icon.png" alt="chatbot" @click="showChat = !showChat"/>
 
-    <!-- ✅ 상세 정보 -->
-    <section class="notice-detail">
-      <div class="view-info">
-        <h2 class="view-title">{{ notice.title }}</h2>
-        <div class="view-meta">
-          <span><strong>작성자</strong> {{ notice.publisher }}</span>
-          <span class="divider">|</span>
-          <span><strong>조회수</strong> {{ notice.views }}</span>
-          <span class="divider">|</span>
-          <span><strong>등록일</strong> {{ notice.created_at }}</span>
+    <ChatBot v-if="showChat" @close="showChat = false" />
+    <footer>
+      <div class="container">
+        <div class="wrap">
+          <div class="foot_info">
+            <div class="fnb">
+              <ul class="inGuideFnb">
+                <li>
+                  <a @click="showPrivacy = true" style="cursor: pointer">개인정보처리방침</a>
+                </li>
+              </ul>
+            </div>
+            <address>
+              18323 경기도 화성시 봉담읍 와우안길 17
+              <span>Tel : 031-220-2114</span>
+            </address>
+            <p>
+              <span>Copyright (C) THE UNIVERSITY OF SUWON.</span>
+              All rights reserved.
+            </p>
+          </div>
+          <div class="foot_sns">
+            <ul>
+              <li class="n_blog">
+                <a title="수원대학교 블로그" href="https://blog.naver.com/usw1982" target="_blank">
+                  <img src="@/assets/blog.png" />
+                </a>
+              </li>
+              <li class="facebook">
+                <a title="수원대학교 페이스북" href="https://www.facebook.com/SuwonUniv/" target="_blank">
+                  <img src="@/assets/facebook.png" />
+                </a>
+              </li>
+              <li class="instagram">
+                <a title="수원대학교 인스타그램" href="https://www.instagram.com/usw1982/" target="_blank">
+                  <img src="@/assets/insta.png" />
+                </a>
+              </li>
+              <li class="youtube">
+                <a title="수원대학교 유튜브" href="https://www.youtube.com/channel/UC4JfyRGKu5AfBjvaFMCj3cg" target="_blank">
+                  <img src="@/assets/youtube.png" />
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-
-      <!-- ✅ 본문 -->
-      <div class="view-content">
-        <p v-html="notice.content"></p>
-      </div>
-
-      <!-- ✅ 첨부파일 -->
-      <div class="attachments" v-if="notice.files && notice.files.length">
-        <div v-for="(file, idx) in notice.files" :key="idx" class="file-item">
-          <span class="file-icon">📎</span>
-          <span class="file-name">{{ file.name }}</span>
-          <button class="preview-btn">미리보기</button>
-        </div>
-      </div>
-
-      <!-- ✅ 이전/다음글 -->
-      <div class="nav-links">
-        <div class="nav-item">
-          <span class="arrow">⬆</span>
-          <strong>이전글</strong>
-          <span>{{ prevNotice?.title || '이전글이 없습니다.' }}</span>
-        </div>
-        <div class="nav-item">
-          <span class="arrow">⬇</span>
-          <strong>다음글</strong>
-          <span>{{ nextNotice?.title || '다음글이 없습니다.' }}</span>
-        </div>
-      </div>
-
-      <!-- ✅ 목록 버튼 -->
-      <div class="back-btn-wrapper">
-        <button class="back-btn" @click="goBack">목록</button>
-      </div>
-    </section>
+  </footer>
+  <PrivacyPolicy v-if="showPrivacy" @close="showPrivacy = false" />
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import ChatBot from '@/components/ChatBot.vue'
+import PrivacyPolicy from '@/components/PrivacyPolicy.vue'
 export default {
-  name: 'NoticeDetailPage',
+  name: "announceDetail",
+  components: {
+    ChatBot,
+    PrivacyPolicy
+  },
   data() {
     return {
-      activeDropdown: null, // 마우스가 어디에 올라가있는지 체크...
-      navHovered: false, // nav바에 마우스가 올라갔는지 boolean으로 체크함
-      showDepartments: false,
+      isLoggedIn: false,
+      notice: {},
+      showPrivacy: false,
+      showChat: false,
+      activeDropdown: null,
+      navHovered: false,
       departments: [
-        {
-          name: '컴퓨터학부',
-          majors: ['컴퓨터SW', '미디어SW'],
-        },
-        {
-          name: '정보통신학부',
-          majors: ['정보통신학과', '정보보호학과'],
-        },
-        {
-          name: '데이터과학부',
-          majors: [],
-        },
-        {
-          name: '클라우드융복합',
-          majors: [],
-        },
+        { name: '컴퓨터학부', majors: ['컴퓨터SW', '미디어SW'] },
+        { name: '정보통신학부', majors: ['정보통신학과', '정보보호학과'] },
+        { name: '데이터과학부', majors: [] },
+        { name: '클라우드융복합', majors: [] },
       ],
-      notice: {
-        notice_id: 1149893,
-        title: '배고프고 졸리고 염병천병',
-        publisher: 'ICT 306',
-        views: 41,
-        created_at: '2025.05.07',
-        updated_at: '2025.05.07',
-        content: `안녕하세요.<br><br>ㅔ홍홍홍입니다.<br>으하하하하ㅏ하ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ<br><br> ㅃㅃㅃ`,
-        files: [{ name: '첨부파일 없음' }],
-      },
-      prevNotice: {
-        title: '홍혜원팀 ICT 해커톤 최우수상 수상',
-      },
-      nextNotice: null,
     };
   },
   methods: {
+    login() {
+      this.navigateTo('LoginPage');
+    },
+    logout() {
+      this.isLoggedIn = false;
+      localStorage.removeItem('token');
+      alert('로그아웃 되었습니다.');
+    },
+        filteredNotices() {
+      return this.notices
+        .filter((n) => this.selectCategory === "all_annonce" || n.category === this.selectCategory)
+        .filter((n) => {
+          const field = this.searchColumn;
+          return n[field].toLowerCase().includes(this.searchTerm.toLowerCase());
+        });
+    },
     navigateTo(routeName) {
       this.$router.push({ name: routeName }).catch((err) => {
         if (err.name !== 'NavigationDuplicated') {
@@ -212,14 +222,15 @@ export default {
     },
     navigateToMajor(majorName) {
       const routeMap = {
-        컴퓨터학부: 'computer',
-        컴퓨터SW: 'computerSW',
-        미디어SW: 'mediaSW',
-        정보통신학부: 'infoCommunication',
-        정보통신학과: 'infoCommunicationCollege',
-        정보보호학과: 'infoSecurity',
-        데이터과학부: 'dataScience',
-        클라우드융복합: 'cloud',
+        컴퓨터학부: "computerPage",
+        컴퓨터SW: "computerSW",
+        미디어SW: "mediaSW",
+        정보통신학부: "infoCommunication",
+        정보통신학과: "infoCommunicationCollege",
+        정보보호학과: "infoSecurity",
+        데이터과학부: "dataScience",
+        클라우드융복합: "CloudPage",
+
       };
       const route = routeMap[majorName];
       if (route) {
@@ -228,32 +239,43 @@ export default {
         console.warn(`No route found for major: ${majorName}`);
       }
     },
+
     hideAllDropdowns() {
       this.activeDropdown = null;
       this.navHovered = false;
     },
-    goBack() {
-      this.$router.push({ name: 'NoticeListPage' }); // 목록 페이지 라우터명으로 수정
+
+    async fetchNotice() {
+      try {
+        const id = this.$route.params.id;
+        const res = await axios.get(`http://localhost:5050/api/notices/${id}`);
+        this.notice = res.data;
+      } catch (err) {
+        console.error("공지 상세 불러오기 실패:", err);
+      }
+    },
+    formatDate(str) {
+      const d = new Date(str);
+      return d.toLocaleDateString('ko-KR');
     },
   },
+  mounted() {
+    this.fetchNotice();
+  }
 };
 </script>
 
 <style scoped>
-.main-container {
-  background-image: url('@/assets/background1.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  min-height: 100vh;
+* {
+  font-family: 'Nanum Gothic', sans-serif;
 }
-.notice-container {
+
+.main-container {
   font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
   background-color: #f7f7f7;
   min-height: 100vh;
 }
 
-/* ✅ Header */
 .header {
   display: flex;
   justify-content: space-between;
@@ -324,28 +346,16 @@ nav {
   /* transform: translateX(-50%); */
   top: 100%;
   width: 100vw;
-  background-color: #2c2d4f;
+  background-color: #2c2d4fee;
   display: flex;
   gap: 3rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   color: white;
-  opacity: 0.8;
+  
   border-radius: 4px;
   z-index: 1000;
   height: 120px;
-  /* position: absolute;
-  top: 100%;  header 바로 아래
-  left: 0;
-  width: 100vw;
-  background-color: #2c2d4f;
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  color: white;
-  opacity: 0.8;
-  border-radius: 4px;
-  z-index: 1000; */
+  
 }
 
 .dropdown-info {
@@ -413,9 +423,7 @@ nav {
   text-decoration: none;
 }
 
-.searchBar {
-  margin-right: 10px;
-}
+
 
 nav a {
   margin: 0 10px;
@@ -423,12 +431,7 @@ nav a {
   text-decoration: none;
 }
 
-.login .searchBar {
-  display: flex;
-  justify-content: center;
-  gap: 5rem;
-  margin-top: 2rem;
-}
+
 
 .login {
   margin-right: 15%;
@@ -439,7 +442,8 @@ nav a {
 .login:hover {
   text-shadow: 0 0 5px white;
 }
-/* ✅ 서브 비주얼 */
+
+/* 서브 비주얼 */
 .wrap_sub_visual {
   background-image: url('@/assets/background1.png');
   background-size: cover;
@@ -449,9 +453,11 @@ nav a {
   align-items: center;
   justify-content: center;
 }
+
 .wrap_sub_visual .container.center-only {
   justify-content: center;
 }
+
 .visual_intro {
   font-size: 2.2rem;
   font-weight: bold;
@@ -459,104 +465,109 @@ nav a {
   flex: 1;
   color: white;
 }
-
-/* ✅ 상세 본문 */
-.notice-detail {
-  max-width: 960px;
-  margin: 3rem auto;
-  padding: 1rem;
-  background-color: white;
-  border-radius: 8px;
-}
-.view-info {
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 1rem;
-  margin-bottom: 2rem;
-}
-.view-title {
-  font-size: 1.5rem;
+.subtitle.a{
+  font-size: 1rem;
   font-weight: bold;
+  text-align: center;
+  flex: 1;
+  color: white;
+}
+
+.subtitle.b{
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
+  color: white;
+}
+
+.content {
+  color: white;
+}
+
+.detail-container {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+}
+h2 {
   margin-bottom: 1rem;
 }
-.view-meta {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  color: #555;
-  font-size: 0.95rem;
+.content {
+  margin-top: 1.5rem;
+  white-space: pre-wrap;
 }
-.view-meta .divider {
-  color: #aaa;
+.chatbot-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 10%; /* ✅ 기존보다 가로폭 확대 */
+  height: auto; /* ✅ 높이 자동으로 비율 유지 */
+  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
+  z-index: 10; 
 }
-.view-meta strong {
-  font-weight: 600;
-  margin-right: 0.2rem;
-}
-.view-content {
-  line-height: 1.7;
-  font-size: 1rem;
-  color: #333;
-}
-
-/* ✅ 첨부파일 */
-.attachments {
-  border-top: 1px solid #ddd;
-  padding-top: 1rem;
-  margin-top: 2rem;
-}
-.file-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-.file-icon {
-  font-size: 1.2rem;
-}
-.file-name {
-  font-weight: 500;
-}
-.preview-btn {
-  background-color: #2c4e33;
-  color: white;
-  border: none;
-  padding: 0.2rem 0.6rem;
-  border-radius: 10px;
-  font-size: 0.8rem;
-  cursor: pointer;
+/*하단창*/
+footer {
+  background-color: #343539;
+  color: #ccc;
+  padding: 1rem 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.6
 }
 
-/* ✅ 이전글/다음글 */
-.nav-links {
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #000;
-  margin-top: 2rem;
+footer .container {
+  max-width: 100%;
+  margin: 0 auto;
 }
-.nav-item {
+
+footer .wrap {
   display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
+  gap: 2rem;
+}
+
+footer .foot_info address {
+  font-style: normal;
+  color: #ccc;
+}
+
+footer .foot_info span {
+  margin-left: 0.5rem;
+}
+
+footer .foot_info p {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #999;
+}
+
+
+
+footer .foot_sns ul {
+  list-style: none;
+  padding: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
-  padding: 1rem 0;
-  font-size: 0.95rem;
-}
-.nav-item strong {
-  width: 60px;
-}
-.arrow {
-  font-size: 1.1rem;
+  margin-bottom: 100px;
 }
 
-/* ✅ 목록 버튼 */
-.back-btn-wrapper {
-  text-align: center;
-  margin: 2rem 0;
+footer .foot_sns li a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 0.85rem;
 }
-.back-btn {
-  background-color: #333;
+
+footer .foot_sns li a:hover {
+  text-decoration: underline;
+}
+footer .inGuideFnb{
+  margin-bottom: 40px;
   color: white;
-  padding: 0.6rem 2rem;
-  font-size: 1rem;
-  border: none;
-  cursor: pointer;
 }
 </style>
