@@ -204,10 +204,10 @@
           <div class="foot_info">
             <div class="fnb">
               <ul class="inGuideFnb">
-              <li>
-                <a @click="showPrivacy = true" style="cursor: pointer">개인정보처리방침</a>
-              </li>
-            </ul>
+                <li>
+                  <a @click="showPrivacy = true" style="cursor: pointer">개인정보처리방침</a>
+                </li>
+              </ul>
             </div>
             <address>
               18323 경기도 화성시 봉담읍 와우안길 17

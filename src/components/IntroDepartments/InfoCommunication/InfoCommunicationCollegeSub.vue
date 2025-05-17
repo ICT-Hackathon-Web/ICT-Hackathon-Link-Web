@@ -177,7 +177,7 @@
             <div class="fnb">
               <ul class="inGuideFnb">
                 <li>
-                  <a @click="navigateTo('PrivacyPolicy')" style="cursor: pointer" target="_blank">개인정보처리방침</a>
+                  <a  @click="showPrivacy = true" style="cursor: pointer" target="_blank">개인정보처리방침</a>
                 </li>
               </ul>
             </div>
