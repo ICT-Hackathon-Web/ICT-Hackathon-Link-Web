@@ -167,7 +167,7 @@ export default {
 /* 챗봇 메시지 (왼쪽 정렬) */
 .bot {
   align-self: flex-start;
-  background-color: #f1f1f1;
+  background-color: #d8d8d8;
   color: #000;
   border-bottom-left-radius: 0;
 }

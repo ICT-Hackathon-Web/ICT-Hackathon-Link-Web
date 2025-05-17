@@ -331,6 +331,7 @@ export default {
   background-repeat: no-repeat;
   background-position: center;
   min-height: 100vh;
+  flex: 1;
 }
 
 .header {
@@ -580,15 +581,6 @@ nav a {
   margin-bottom: 2rem;
 }
 
-.chatbot-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 10%; /* ✅ 기존보다 가로폭 확대 */
-  height: auto; /* ✅ 높이 자동으로 비율 유지 */
-  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
-  z-index: 10; 
-}
 
 .slider-container {
   margin-top: 11rem;
@@ -626,11 +618,12 @@ footer {
   color: #ccc;
   padding: 1rem 0.5rem;
   font-size: 0.9rem;
-  line-height: 1.6
+  line-height: 1
 }
 
 footer .container {
   max-width: 100%;
+  height: 10rem;
   margin: 0 auto;
 }
 

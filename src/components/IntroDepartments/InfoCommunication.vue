@@ -302,7 +302,7 @@ export default {
         {
           name: '양수미',
           dept: '정보보호',
-          major: '정보 보호',
+          major: '정보보호',
           email: 'smyang@suwon.ac.kr',
           lab: 'IT대학 504호',
           phone: '031-229-8138',
