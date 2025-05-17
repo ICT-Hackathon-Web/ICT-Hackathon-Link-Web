@@ -71,12 +71,19 @@
         </nav>
       </div>
       <div class="right-menu">
-        <a
+       <a
+          v-if="!isLoggedIn"
           class="login"
-          @click="navigateTo('LoginPage')"
+          @click="login"
           style="cursor: pointer"
-          >login</a
-        >
+        >login</a>
+
+        <a
+          v-else
+          class="login"
+          @click="logout"
+          style="cursor: pointer"
+        >logout</a>
         
       </div>
     </header>

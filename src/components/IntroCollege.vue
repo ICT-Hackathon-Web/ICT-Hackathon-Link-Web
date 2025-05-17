@@ -77,14 +77,14 @@
           class="login"
           @click="login"
           style="cursor: pointer"
-        >로그인</a>
+        >login</a>
 
         <a
           v-else
           class="login"
           @click="logout"
           style="cursor: pointer"
-        >로그아웃</a>
+        >logout</a>
       </div>
     </header>
     <section class="title-section">
@@ -238,14 +238,7 @@ export default {
       localStorage.removeItem('token');
       alert('로그아웃 되었습니다.');
     },
-    filteredNotices() {
-      return this.notices
-        .filter((n) => this.selectCategory === "all_annonce" || n.category === this.selectCategory)
-        .filter((n) => {
-          const field = this.searchColumn;
-          return n[field].toLowerCase().includes(this.searchTerm.toLowerCase());
-        });
-    },
+    
     navigateTo(routeName) {
       this.$router.push({ name: routeName }).catch((err) => {
         if (err.name !== 'NavigationDuplicated') {

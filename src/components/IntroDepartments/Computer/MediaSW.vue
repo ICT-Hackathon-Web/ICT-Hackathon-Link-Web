@@ -77,14 +77,14 @@
           class="login"
           @click="login"
           style="cursor: pointer"
-        >로그인</a>
+        >login</a>
 
         <a
           v-else
           class="login"
           @click="logout"
           style="cursor: pointer"
-        >로그아웃</a>>
+        >logout</a>>
         
       </div>
     </header>
