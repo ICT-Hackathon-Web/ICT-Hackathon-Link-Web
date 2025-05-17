@@ -80,7 +80,7 @@
 
           <a
             class="announcememt"
-            @click="navigateTo('announcement')"
+            @click="navigateTo('announcePage')"
             style="cursor: pointer"
             >공지</a
           >
@@ -106,92 +106,75 @@
         <div class="wrap_sub_visual">
           <div class="container center-only">
             <p class="visual_intro"><strong>정보통신학부</strong></p>
-            <p class="subtitle a">InformatioCommunication</p>
+            <p class="subtitle a">InformationCommunication</p>
             
           </div>
         </div>
     </section>
     <section class="info-section">
 
-      <div class="info-box">
-        <h2>학부 소개</h2>
+      <section class="info-box">
+        <h2 class="section-title">학부 소개</h2>
         <p>
-          수원대학교 정보통신학부는 정보통신융합(ICT) 기술의 핵심인 정보통신과
-          정보보호 분야를 깊이 있고 폭넓게 공부하고, 다양한 실습을 통하여 실무
-          역량을 갖출 수 있도록 교육함으로써 4차 산업혁명시대에 필요한 핵심 기술
-          인력을 양성합니다.
-        </p>
-        <p>
-          정보통신공학전공은 ICT와 사물인터넷(IoT) 시대에 부응하여 미래를 개척할
-          공학인을 양성하는 것을 교육 목표로, 정보통신분야에서의 전문가적 지식,
-          현장을 기반으로 실무 경험, 융합교과를 통한 창의력 배양을 실천전략으로
-          삼고 있습니다.
-        </p>
-        <p>
-          정보의 생성과 가공, 전달을 위한 정보처리, 네트워크 및 통신기술에 관한
-          전반적인 이론 습득은 물론 소프트웨어, 하드웨어 설계 능력 및 실습
-          능력을 배양하며, 다양한 통신망을 활용한 정보통신 실습으로 스마트
-          정보화 사회에 능동적으로 대처할 수 있는 창의성과 기술개발 및
-          커뮤니케이션 능력을 갖춘 고급 ICT 인력을 육성합니다.
-        </p>
-        <p>
-          주요 교과분야는 통신 및 유무선 네트워크 시스템, 멀티미디어 신호처리 및
-          시스템, IoT 임베디드 시스템 분야로 구성되어 있습니다. 특히
-          융합교과로서 로봇을 특화하여 졸업 작품 전시, 대내외 공모전 및 각종
-          경진대회 참가를 지원하고 있습니다.
-        </p>
-        <p>
-          정보보호 전공은 4차 산업혁명 시대의 다양한 서비스 및 시스템의 보안을
-          책임질 전문 보안인력 양성을 교육 목표로, 시스템 및 서비스 개론 및
-          개발, 정보보호 실무 기술, 융복합 교육 등을 통한 핵심 기술 역량을 갖춘
-          인재를 길러내고 있습니다.
-        </p>
-        <p>
-          주요 교과분야는 정보보호개론, 암호학, 접근통제, 네트워크 및 시스템
-          보안, 응용 보안 등 정보보호 관련 전 분야를 체계적으로 교육할 수 있도록
-          구성되어 있으며, SW 프로그래밍 기술 교육 및 실습을 통하여 정보보호
-          분야뿐만 아니라 ICT 시스템 및 서비스 개발 역량을 갖출 수 있도록
-          교육합니다.
-        </p>
-        <p>
-          특히, 프로젝트 중심 교육을 통하여 대내외 공모전 및 경진대회에 참여할
-          수 있도록 지도하고 있습니다.
-        </p>
-        <p>
-          졸업 후, 정보보호 관리 및 운영, 정보보호 컨설팅, 시스템 개발 등 다양한
-          분야로 진출할 수 있습니다.
-        </p>
-      </div>
+          수원대학교 정보통신학부는 정보통신융합(ICT) 기술의 핵심인 정보통신과 정보보호 분야를 깊이 있고 폭넓게 공부하고, 다양한 실습을 통하여 실무 역량을 갖출 수 있도록 교육함으로써 4차 산업혁명시대에 필요한 핵심 기술 인력을 양성합니다.
 
-      <div class="info-box">
-        <h2>학과장 소개</h2>
-        <div class="chair-card">
-          <div class="chair-item">
-            <span class="icon">👤</span> 성명 : 김대엽
+정보통신공학전공은 ICT와 사물인터넷(IoT) 시대에 부응하여 미래를 개척할 공학인을 양성하는 것을 교육 목표로, 정보통신분야에서의 전문가적 지식, 현장을 기반으로 실무 경험, 융합교과를 통한 창의력 배양을 실천전략으로 삼고 있습니다.
+
+정보의 생성과 가공, 전달을 위한 정보처리, 네트워크 및 통신기술에 관한 전반적인 이론 습득은 물론 소프트웨어, 하드웨어 설계 능력 및 실습 능력을 배양하며, 다양한 통신망을 활용한 정보통신 실습으로 스마트 정보화 사회에 능동적으로 대처할 수 있는 창의성과 기술개발 및 커뮤니케이션 능력을 갖춘 고급 ICT 인력을 육성합니다.
+
+주요 교과분야는 통신 및 유무선 네트워크 시스템, 멀티미디어 신호처리 및 시스템, IoT 임베디드 시스템 분야로 구성되어 있습니다. 특히 융합교과로서 로봇을 특화하여 졸업 작품 전시, 대내외 공모전 및 각종 경진대회 참가를 지원하고 있습니다.
+
+정보보호 전공은 4차 산업혁명 시대의 다양한 서비스 및 시스템의 보안을 책임질 전문 보안인력 양성을 교육 목표로, 시스템 및 서비스 개론 및 개발, 정보보호 실무 기술, 융복합 교육 등을 통한 핵심 기술 역량을 갖춘 인재를 길러내고 있습니다.
+
+주요 교과분야는 정보보호개론, 암호학, 접근통제, 네트워크 및 시스템 보안, 응용 보안 등 정보보호 관련 전 분야를 체계적으로 교육할 수 있도록 구성되어 있으며, SW 프로그래밍 기술 교육 및 실습을 통하여 정보보호 분야뿐만 아니라 ICT 시스템 및 서비스 개발 역량을 갖출 수 있도록 교육합니다.
+
+특히, 프로젝트 중심 교육을 통하여 대내외 공모전 및 경진대회에 참여할 수 있도록 지도하고 있습니다.
+
+졸업 후, 정보보호 관리 및 운영, 정보보호 컨설팅, 시스템 개발 등 다양한 분야로 진출할 수 있습니다.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="section-title">학과장 소개</h2>
+        <div class="profile">
+          <div>
+            <p><strong>성명:</strong> 김대엽</p>
+            <p><strong>위치:</strong> 지능형SW융합대학 525호실</p>
           </div>
-          <div class="chair-item">
-            <span class="icon">🏫</span> 소속 : 정보통신학부 정보보호
-          </div>
-          <div class="chair-item">
-            <span class="icon">📍</span> 위치 : 지능형SW융합대학 525호실
-          </div>
-          <div class="chair-item">
-            <span class="icon">📞</span> 대표전화 : 031-229-8352
-          </div>
-          <div class="chair-item"><span class="icon">📠</span> FAX :</div>
-          <div class="chair-item">
-            <span class="icon">@</span> E-mail : daeyoub69@suwon.ac.kr
+          <div>
+            <p><strong>소속:</strong> 정보통신학부 정보보호</p>
+            <p><strong>연락처:</strong> 031-229-8352</p>
+            <p><strong>Email:</strong> daeyoub69@suwon.ac.kr</p>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="info-box">
-        <h2>전공 및 학위 과정</h2>
-        <img src="@/assets/InfoComMajor.png" alt="InfoCom" />
-      </div>
+      <section>
+        <h2 class="section-title">전공 및 학위 과정</h2>
+        <table>
+              <thead>
+                <tr>
+                  <th>전공</th>
+                  <th>학사과정</th>
+                  <th>석사과정</th>
+                  <th>박사과정</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(row, index) in degrees" :key="index">
+                  <td>{{ row.major }}</td>
+                  <td>{{ row.bachelor ? '○' : '' }}</td>
+                  <td>{{ row.master ? '○' : '' }}</td>
+                  <td>{{ row.phd ? '○' : '' }}</td>
+                </tr>
+              </tbody>
+            </table>
 
-      <div class="info-box">
-        <h2>교수 소개</h2>
+      </section>
+
+
+      <div class="infobox">
+        <h2 class="section-title">교수 소개</h2>
         <div class="professor-grid">
           <div
             class="professor-card"
@@ -218,39 +201,72 @@
     <ChatBot v-if="showChat" @close="showChat = false" />
     <footer>
       <div class="container">
-      <!-- <div class="fnb">
-        <ul class="inGuideFnb"><li><a href="" title="새창" target="_blank" class="a_1">개인정보처리방침</a></li><li><a href="https://www.konkuk.ac.kr/konkuk/13291/subview.do" title="새창" target="_blank">개인정보제공내역공지</a></li><li><a href="https://www.konkuk.ac.kr/konkuk/13292/subview.do" title="새창" target="_blank">정보공개</a></li><li><a href="https://www.konkuk.ac.kr/konkuk/2263/subview.do" title="새창" target="_blank">예결산공고</a></li><li><a href="https://www.academyinfo.go.kr/pubinfo/pubinfo1600/doInit.do?schlId=0000052" title="새창" target="_blank">대학정보공시</a></li><li><a href="https://www.konkuk.ac.kr/konkuk/13293/subview.do" title="새창" target="_blank">이메일주소 무단수집거부</a></li><li><a href="https://www.konkuk.ac.kr/konkuk/2063/subview.do" title="새창" target="_blank">찾아오시는길</a></li></ul>
-      </div> -->
-      <div class="wrap">
-        <div class="foot_info">
-        <address>
-          18323 경기도 화성시 봉담읍 와우안길 17   <span>Tel :  031-220-2114</span>
-        </address>
-        <p><span>Copyright (C) THE UNIVERSITY OF SUWON. </span>All rights reserved.</p>
-        </div>
-        <div class="foot_sns">
-        <ul>
-              <li class="n_blog"><a title="수원대학교 블로그" href="https://blog.naver.com/usw1982" target="_blank"><img src="@/assets/blog.png"></a></li>
-              <li class="facebook"><a title="수원대학교 페이스북" href="https://www.facebook.com/SuwonUniv/" target="_blank"><img src="@/assets/facebook.png"></a></li>
-              <li class="instagram"><a title="수원대학교 인스타그램" href="https://www.instagram.com/usw1982/" target="_blank"><img src="@/assets/insta.png"></a></li>
-              <li class="youtube"><a title="수원대학교 유튜브" href="https://www.youtube.com/channel/UC4JfyRGKu5AfBjvaFMCj3cg" target="_blank"><img src="@/assets/youtube.png"></a></li>
-        </ul>
+        <div class="wrap">
+          <div class="foot_info">
+            <div class="fnb">
+              <ul class="inGuideFnb">
+                <li>
+                  <a @click="showPrivacy = true" style="cursor: pointer">개인정보처리방침</a>
+                </li>
+              </ul>
+            </div>
+            <address>
+              18323 경기도 화성시 봉담읍 와우안길 17
+              <span>Tel : 031-220-2114</span>
+            </address>
+            <p>
+              <span>Copyright (C) THE UNIVERSITY OF SUWON.</span>
+              All rights reserved.
+            </p>
+          </div>
+          <div class="foot_sns">
+            <ul>
+              <li class="n_blog">
+                <a title="수원대학교 블로그" href="https://blog.naver.com/usw1982" target="_blank">
+                  <img src="@/assets/blog.png" />
+                </a>
+              </li>
+              <li class="facebook">
+                <a title="수원대학교 페이스북" href="https://www.facebook.com/SuwonUniv/" target="_blank">
+                  <img src="@/assets/facebook.png" />
+                </a>
+              </li>
+              <li class="instagram">
+                <a title="수원대학교 인스타그램" href="https://www.instagram.com/usw1982/" target="_blank">
+                  <img src="@/assets/insta.png" />
+                </a>
+              </li>
+              <li class="youtube">
+                <a title="수원대학교 유튜브" href="https://www.youtube.com/channel/UC4JfyRGKu5AfBjvaFMCj3cg" target="_blank">
+                  <img src="@/assets/youtube.png" />
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-      </div>
-   </footer>
+  </footer>
+  <PrivacyPolicy v-if="showPrivacy" @close="showPrivacy = false" />
   </div>
 </template>
 
 <script>
 import ChatBot from '@/components/ChatBot.vue'
+import PrivacyPolicy from '@/components/PrivacyPolicy.vue'
 export default {
   name: 'infoCommunication',
   components: {
-    ChatBot
+    ChatBot,
+    PrivacyPolicy
   },
   data() {
     return {
+      degrees: [
+        { major: '정보통신', bachelor: true, master: true, phd: true },
+        { major: '정보보호', bachelor: true, master: false, phd: false },
+      ],
+
+      showPrivacy: false,
       showDepartments: false,
       showChat: false,
       activeDropdown: null,
@@ -274,7 +290,7 @@ export default {
         {
           name: '양수미',
           dept: '정보보호',
-          major: '정보 보호',
+          major: '정보보호',
           email: 'smyang@suwon.ac.kr',
           lab: 'IT대학 504호',
           phone: '031-229-8138',
@@ -439,7 +455,7 @@ export default {
   color: white;
 }
 .main-container {
-  background-image: url('@/assets/background1.png');
+  background-color: white;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -508,15 +524,7 @@ nav {
   background-color: white;
   opacity: 0.6;
 }
-.chatbot-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 10%; /* ✅ 기존보다 가로폭 확대 */
-  height: auto; /* ✅ 높이 자동으로 비율 유지 */
-  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
-  z-index: 10; 
-}
+
 .dropdown {
   position: absolute;
   justify-content: center;
@@ -630,49 +638,47 @@ nav a {
 
 .info-section {
   background-color: transparent;
+  padding: 4%10% ;
+  border-radius: 5px;
 }
+
+.section-title {
+  font-size: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #1b1d53;
+  display: inline-block;
+}
+
 
 .info-box {
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  color: white;
-  font-weight: bold; /* 매우 중요한 코드 */
-  font-size: 1.1rem;
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-left: 5px solid #1b1d53;
+  margin: 1rem 0;
 }
+.infobox{
+  background-color: #f5f5f5;
+  padding: 1rem;
+  
+  margin: 1rem 0;
 
-.info-box p {
-  line-height: 1.8;
-  margin-bottom: 0.8rem;
 }
-
-.info-box img {
-  display: block; /* block 요소로 만들어야 margin auto가 적용됨 */
-  margin: 1.5rem auto; /* 상하 여백 + 가로 중앙 정렬 */
-  max-width: 80%; /* 최대 가로 너비 제한 */
-  height: auto; /* 세로 비율 유지 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 그림자 효과 (선택) */
-}
-
-.info-box h2 {
-  font-size: 2rem;
-}
-
 .professor-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3개씩 배치 */
   gap: 2rem; /* 카드 간 간격 */
-  padding: 1rem;
+  
 }
 
 .professor-card a {
   color: white;
   text-decoration: underline;
-  text-underline-offset: 4px;
+  text-underline-offset: 7px;
 }
 
 .professor-card {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.596);
   border: 1px solid #ccc;
   border-radius: 6px;
   padding: 1rem;
@@ -692,19 +698,42 @@ nav a {
   margin-bottom: 0.5rem;
 }
 
-.chair-card {
-  border: 2px solid #ddd;
-  padding: 1rem 1.5rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  row-gap: 0.8rem;
-  column-gap: 1.5rem;
+.profile {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1.1rem;
 }
 
-.chair-item {
+.profile div {
+  width: 48%;
+}
+
+.programs {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.programs button {
+  flex: 1;
+  margin: 0 0.5rem;
+  padding: 1rem;
+  background-color: #1b1d53;
+  color: white;
+  border: none;
   font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.programs button:hover {
+  background-color: #3a3c7d;
 }
 
 .icon {
@@ -715,6 +744,39 @@ nav a {
   margin-right: 0.6rem;
   font-size: 0.9rem;
 }
+.degree-table {
+  margin-top: 2rem;
+}
+
+.degree-table h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #14213d;
+  padding-bottom: 0.5rem;
+  color: #14213d;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+}
+
+th,
+td {
+  padding: 0.8rem;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+th {
+  background-color: #14213d;
+  color: white;
+}
+
 
 @media (max-width: 1000px) {
   .professor-grid {
@@ -782,5 +844,8 @@ footer .foot_sns li a {
 footer .foot_sns li a:hover {
   text-decoration: underline;
 }
-
+footer .inGuideFnb{
+  margin-bottom: 40px;
+  color: white;
+}
 </style>

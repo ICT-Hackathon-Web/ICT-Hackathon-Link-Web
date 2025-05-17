@@ -1,8 +1,7 @@
-<!-- 공지 -->
 <template>
   <div class="notice-container">
-    <!-- ✅ 헤더 -->
-    <header
+       <!-- ✅ 헤더 -->
+        <header
       class="header"
       @mouseleave="hideAllDropdowns"
       @mouseenter="navHovered = true"
@@ -69,10 +68,10 @@
               @mouseleave="hideAllDropdowns"
             >
               <div class="department-block">
-                <ul style="font-weight: bold">
-                  <li>학사일정</li>
-                  <li>동아리</li>
-                  <li>분실물</li>
+                <ul>
+                  <li @click="navigateTo('schedulePage')">학사일정</li>
+                  <li @click="navigateTo('ClubPage')">동아리</li>
+                  <li @click="navigateTo('lostArticle')">분실물</li>
                 </ul>
               </div>
             </div>
@@ -82,7 +81,7 @@
 
           <a
             class="announcememt"
-            @click="navigateTo('announcement')"
+            @click="navigateTo('announcePage')"
             style="cursor: pointer"
             >공지</a
           >
@@ -93,174 +92,140 @@
           class="login"
           @click="navigateTo('LoginPage')"
           style="cursor: pointer"
-          >login</a
-        >
+          >login</a>
         <img
           class="searchBar"
-          src="../assets/SearchBarIcon.png"
+          src="@/assets/SearchBarIcon.png"
           @click="navigateTo('search')"
           alt="SearchBar"
           style="cursor: pointer"
         />
       </div>
     </header>
-    <!-- ✅ 서브 비주얼 영역 -->
-    <div class="wrap_sub_visual">
-      <div class="container center-only">
-        <p class="visual_intro"><strong>공지사항</strong></p>
+
+    <!-- ✅ 상세내용 -->
+    <div class="detail-container">
+      <h2>{{ item.title }}</h2>
+      <p><strong>작성자:</strong> {{ item.publisher }}</p>
+      <p><strong>작성일:</strong> {{ formatDate(item.created_at) }}</p>
+      <p><strong>습득 여부:</strong> {{ item.is_found ? "습득 완료" : "미습득" }}</p>
+      
+      <div class="content">
+        {{ item.description }}
+      </div>
+      <div v-if="item.has_file" style="margin-top: 1.5rem;">
+        <img :src="`http://localhost:5050/api/lost-item/${item.id}/file`" alt="첨부 이미지" style="max-width: 100%; border: 1px solid #ccc; border-radius: 4px;" />
       </div>
     </div>
+    <img class="chatbot-icon"  src="@/assets/chatbot-icon.png" alt="chatbot" @click="showChat = !showChat"/>
 
-    <!-- ✅ 공지사항 본문 -->
-    <section class="notice-section">
-      <div class="notice-header">
-        <p>
-          총 <strong>{{ filteredNotices.length }}</strong
-          >개의 게시물이 있습니다.
-        </p>
-        <div class="search-box-wrapper">
-          <select v-model="selectCategory">
-            <option value="all_annonce">통합공지</option>
-            <option value="major_annonce">학과공지</option>
-          </select>
-          <select v-model="searchColumn">
-            <option value="title">제목</option>
-            <option value="author">작성자</option>
-          </select>
-          <input type="text" v-model="searchTerm" placeholder="검색어 입력" />
-          <button @click="search">
-            <img src="../assets/SearchBarIcon.png" />
-          </button>
+    <ChatBot v-if="showChat" @close="showChat = false" />
+    <footer>
+      <div class="container">
+        <div class="wrap">
+          <div class="foot_info">
+            <div class="fnb">
+              <ul class="inGuideFnb">
+                <li>
+                  <a @click="showPrivacy = true" style="cursor: pointer">개인정보처리방침</a>
+                </li>
+              </ul>
+            </div>
+            <address>
+              18323 경기도 화성시 봉담읍 와우안길 17
+              <span>Tel : 031-220-2114</span>
+            </address>
+            <p>
+              <span>Copyright (C) THE UNIVERSITY OF SUWON.</span>
+              All rights reserved.
+            </p>
+          </div>
+          <div class="foot_sns">
+            <ul>
+              <li class="n_blog">
+                <a title="수원대학교 블로그" href="https://blog.naver.com/usw1982" target="_blank">
+                  <img src="@/assets/blog.png" />
+                </a>
+              </li>
+              <li class="facebook">
+                <a title="수원대학교 페이스북" href="https://www.facebook.com/SuwonUniv/" target="_blank">
+                  <img src="@/assets/facebook.png" />
+                </a>
+              </li>
+              <li class="instagram">
+                <a title="수원대학교 인스타그램" href="https://www.instagram.com/usw1982/" target="_blank">
+                  <img src="@/assets/insta.png" />
+                </a>
+              </li>
+              <li class="youtube">
+                <a title="수원대학교 유튜브" href="https://www.youtube.com/channel/UC4JfyRGKu5AfBjvaFMCj3cg" target="_blank">
+                  <img src="@/assets/youtube.png" />
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-
-      <table class="notice-table">
-        <thead>
-          <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-            <th>첨부</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(notice, index) in filteredNotices" :key="index">
-            <td>{{ notice.id }}</td>
-            <td>
-              <a href="">{{ notice.title }}</a>
-            </td>
-            <td>{{ notice.author }}</td>
-            <td>{{ notice.date }}</td>
-            <td>
-              <span v-if="notice.files > 0">📎 {{ notice.files }}</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+  </footer>
+  <PrivacyPolicy v-if="showPrivacy" @close="showPrivacy = false" />
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import ChatBot from '@/components/ChatBot.vue'
+import PrivacyPolicy from '@/components/PrivacyPolicy.vue'
 export default {
-  name: 'NoticePage',
+  name: "LostArticleDetail",
+  components: {
+    ChatBot,
+    PrivacyPolicy
+  },
   data() {
     return {
+      item: {},
+      showPrivacy: false,
       showChat: false,
-      activeDropdown: null, // 마우스가 어디에 올라가있는지 체크...
-      navHovered: false, // nav바에 마우스가 올라갔는지 boolean으로 체크함
-      allItems: [
-        { title: '홈페이지' },
-        { title: '캔버스' },
-        { title: '수강신청사이트' },
-        { title: '포털' },
-      ],
-      slideIndex: 0,
-      showDepartments: false,
+      activeDropdown: null,
+      navHovered: false,
       departments: [
-        {
-          name: '컴퓨터학부',
-          majors: ['컴퓨터SW', '미디어SW'],
-        },
-        {
-          name: '정보통신학부',
-          majors: ['정보통신학과', '정보보호학과'],
-        },
-        {
-          name: '데이터과학부',
-          majors: [],
-        },
-        {
-          name: '클라우드융복합',
-          majors: [],
-        },
-      ],
-      searchTerm: '',
-      searchColumn: 'title',
-      selectCategory: 'all_annonce',
-      notices: [
-        {
-          id: 48,
-          title: '배고프고 졸리고 염병천병',
-          author: 'ICT 306',
-          date: '2025.05.14',
-          views: 37,
-          files: 2,
-          category: 'major_annonce',
-        },
-        {
-          id: 47,
-          title: '홍혜원팀 ICT 해커톤 최우수상 수상',
-          author: 'dsml 개발실',
-          date: '2025.05.01',
-          views: 52,
-          files: 0,
-          category: 'all_annonce',
-        },
-        {
-          id: 46,
-          title: '화아팅',
-          author: '홍혜원원',
-          date: '2025.02.14',
-          views: 27,
-          files: 0,
-          category: 'major_annonce',
-        },
+        { name: '컴퓨터학부', majors: ['컴퓨터SW', '미디어SW'] },
+        { name: '정보통신학부', majors: ['정보통신학과', '정보보호학과'] },
+        { name: '데이터과학부', majors: [] },
+        { name: '클라우드융복합', majors: [] },
       ],
     };
   },
-  computed: {
-    visibleItems() {
-      return this.allItems.slice(this.slideIndex, this.slideIndex + 4);
-    },
-  },
   methods: {
-    filteredNotices() {
-      return this.notices
-        .filter((n) => this.selectCategory === "all_annonce" || n.category === this.selectCategory)
-        .filter((n) => {
-          const field = this.searchColumn;
-          return n[field].toLowerCase().includes(this.searchTerm.toLowerCase());
-        });
+    async fetchItem() {
+      try {
+        const id = this.$route.params.id;
+        const res = await axios.get(`http://localhost:5050/api/lost-item/${id}`);
+        this.item = res.data;
+      } catch (err) {
+        console.error("분실물 상세 불러오기 실패:", err);
+      }
+    },
+    formatDate(str) {
+      const d = new Date(str);
+      return d.toLocaleDateString('ko-KR');
     },
     navigateTo(routeName) {
-      this.$router.push({ name: routeName }).catch((err) => {
-        if (err.name !== 'NavigationDuplicated') {
-          //동일한 경로일x 때, 오류 무시하기
-          throw err;
-        }
+      this.$router.push({ name: routeName }).catch(err => {
+        if (err.name !== 'NavigationDuplicated') throw err;
       });
     },
     navigateToMajor(majorName) {
       const routeMap = {
-        컴퓨터학부: 'computer',
-        컴퓨터SW: 'computerSW',
-        미디어SW: 'mediaSW',
-        정보통신학부: 'infoCommunication',
-        정보통신학과: 'infoCommunicationCollege',
-        정보보호학과: 'infoSecurity',
-        데이터과학부: 'dataScience',
+        컴퓨터학부: "computerPage",
+        컴퓨터SW: "computerSW",
+        미디어SW: "mediaSW",
+        정보통신학부: "infoCommunication",
+        정보통신학과: "infoCommunicationCollege",
+        정보보호학과: "infoSecurity",
+        데이터과학부: "dataScience",
+        클라우드융복합: "CloudPage",
+
       };
       const route = routeMap[majorName];
       if (route) {
@@ -275,20 +240,24 @@ export default {
       this.navHovered = false;
     },
   },
+  mounted() {
+    this.fetchItem();
+  }
 };
 </script>
 
 <style scoped>
-* {
-  font-family: 'Nanum Gothic', sans-serif;
-}
 .notice-container {
   font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
   background-color: #f7f7f7;
   min-height: 100vh;
 }
 
-/* 헤더 */
+* {
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -462,7 +431,8 @@ nav a {
 .login:hover {
   text-shadow: 0 0 5px white;
 }
-/* 서브 비주얼 영역 */
+
+/* 서브 비주얼 */
 .wrap_sub_visual {
   background-image: url('@/assets/background1.png');
   background-size: cover;
@@ -472,9 +442,11 @@ nav a {
   align-items: center;
   justify-content: center;
 }
+
 .wrap_sub_visual .container.center-only {
   justify-content: center;
 }
+
 .visual_intro {
   font-size: 2.2rem;
   font-weight: bold;
@@ -483,53 +455,97 @@ nav a {
   color: white;
 }
 
-/* ✅ 공지사항 영역 */
-.notice-section {
-  max-width: 960px;
+/* ✅ 상세 보기 컨테이너 */
+.detail-container {
+  max-width: 80%;
   margin: 3rem auto;
-  padding: 1rem;
+  padding: 2rem;
   background-color: white;
   border-radius: 8px;
 }
-.notice-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+
+h2 {
+  font-size: 1.8rem;
   margin-bottom: 1rem;
 }
-.notice-header p {
-  font-size: 1rem;
+
+p {
+  margin: 0.5rem 0;
 }
-.search-box-wrapper {
+
+.content {
+  margin-top: 1.5rem;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.chatbot-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 10%; /* ✅ 기존보다 가로폭 확대 */
+  height: auto; /* ✅ 높이 자동으로 비율 유지 */
+  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
+  z-index: 10; 
+}
+/*하단창*/
+footer {
+  background-color: #343539;
+  color: #ccc;
+  padding: 1rem 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.6
+}
+
+footer .container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+footer .wrap {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2rem;
+}
+
+footer .foot_info address {
+  font-style: normal;
+  color: #ccc;
+}
+
+footer .foot_info span {
+  margin-left: 0.5rem;
+}
+
+footer .foot_info p {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #999;
+}
+
+
+
+footer .foot_sns ul {
+  list-style: none;
+  padding: 0.5rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 1rem;
+  margin-bottom: 100px;
 }
-.search-box-wrapper select,
-.search-box-wrapper input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-.notice-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.95rem;
-}
-.notice-table th,
-.notice-table td {
-  border: 1px solid #ccc;
-  padding: 0.6rem;
-  text-align: center;
-}
-.notice-table th {
-  background-color: #f4f4f4;
-  color: #1b1d53;
-}
-.notice-table td a {
-  color: #1b1d53;
+
+footer .foot_sns li a {
+  color: #ccc;
   text-decoration: none;
+  font-size: 0.85rem;
+}
+
+footer .foot_sns li a:hover {
+  text-decoration: underline;
+}
+footer .inGuideFnb{
+  margin-bottom: 40px;
+  color: white;
 }
 </style>

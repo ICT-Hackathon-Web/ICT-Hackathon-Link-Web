@@ -6,14 +6,14 @@
     </div>
 
     <div class="chat-body" >
-      <div class="messages">
+      <div class="messages" ref="messageContainer">
         <div
-            v-for="(msg, index) in messages"
-            :key="index"
-            :class="['message-bubble', msg.sender]"
-        >
-            {{ msg.text }}
-        </div>
+          v-for="(msg, index) in messages"
+          :key="index"
+          :class="['message-bubble', msg.sender]"
+          v-html="formatText(msg.text)"
+        ></div>
+
       </div>
 
       <div class="chat-input">
@@ -25,11 +25,14 @@
 </template>
 
 <script>
+import store from '@/store/store';
 import axios from 'axios';
+import { nextTick } from 'vue';
 
 export default {
-  name:'ChatBot',
-  emits: ['close'], 
+  name: 'ChatBot',
+  emits: ['close'],
+  
   data() {
     return {
       isOpen: false,
@@ -48,25 +51,43 @@ export default {
         const userText = this.input;
         this.messages.push({ sender: 'user', text: userText });
         this.input = '';
-        this.sendToServer(userText); // ✅ 여기서 자동으로 서버에 전송!
+        this.$nextTick(() => {
+          this.scrollToBottom();
+        });
+        this.sendToServer(userText);
       }
     },
     async sendToServer(userMessage) {
       try {
-        const response = await axios.post('http://localhost:5000/chat', {
+        const response = await axios.post(`${store.state.chatapiBaseUrl}/chat_api`, {
           message: userMessage,
         });
 
-        this.messages.push({ sender: 'bot', text: response.data.reply });
+        this.messages.push({ sender: 'bot', text: response.data.answer });
+        await nextTick();
+        this.scrollToBottom(); // ✅ 메시지 추가 후 스크롤
       } catch (error) {
         this.messages.push({ sender: 'bot', text: '죄송합니다. 오류가 발생했어요.' });
-        console.error('서버 통신 오류:', error);
+        await nextTick();
+        this.scrollToBottom(); // ✅ 오류 메시지도 스크롤
       }
-    }
-  },
-
+    },
+    scrollToBottom() {
+      const container = this.$refs.messageContainer;
+      if (container) {
+        container.scrollTop = container.scrollHeight;
+      }
+    },
+    formatText(text) {
+      return text
+      .replace(/\n/g, "<br>")                        // 줄바꿈
+      // .replace(/(\d+)\.\s/g, "<br><strong>$1.</strong> ")  // 번호 매기기 강조
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");   // **굵게** 처리
+    },
+  }
 };
 </script>
+
 
 <style scoped>
 * {
@@ -146,7 +167,7 @@ export default {
 /* 챗봇 메시지 (왼쪽 정렬) */
 .bot {
   align-self: flex-start;
-  background-color: #f1f1f1;
+  background-color: #d8d8d8;
   color: #000;
   border-bottom-left-radius: 0;
 }

@@ -57,7 +57,7 @@
 
             <div class="divider"></div>
 
-            <a class="announcememt" @click="navigateTo('announcement')" style="cursor: pointer">공지</a>
+            <a class="announcememt" @click="navigateTo('announcePage')" style="cursor: pointer">공지</a>
           </div>
         </nav>
 
@@ -172,40 +172,68 @@
     <ChatBot v-if="showChat" @close="showChat = false" />
     <footer>
       <div class="container">
-      <!-- <div class="fnb">
-        <ul class="inGuideFnb"><li><a href="" title="새창" target="_blank" class="a_1">개인정보처리방침</a></li><li><a href="https://www.konkuk.ac.kr/konkuk/13291/subview.do" title="새창" target="_blank">개인정보제공내역공지</a></li><li><a href="https://www.konkuk.ac.kr/konkuk/13292/subview.do" title="새창" target="_blank">정보공개</a></li><li><a href="https://www.konkuk.ac.kr/konkuk/2263/subview.do" title="새창" target="_blank">예결산공고</a></li><li><a href="https://www.academyinfo.go.kr/pubinfo/pubinfo1600/doInit.do?schlId=0000052" title="새창" target="_blank">대학정보공시</a></li><li><a href="https://www.konkuk.ac.kr/konkuk/13293/subview.do" title="새창" target="_blank">이메일주소 무단수집거부</a></li><li><a href="https://www.konkuk.ac.kr/konkuk/2063/subview.do" title="새창" target="_blank">찾아오시는길</a></li></ul>
-      </div> -->
-      <div class="wrap">
-        <div class="foot_info">
-        <address>
-          18323 경기도 화성시 봉담읍 와우안길 17   <span>Tel :  031-220-2114</span>
-        </address>
-        <p><span>Copyright (C) THE UNIVERSITY OF SUWON. </span>All rights reserved.</p>
-        </div>
-        <div class="foot_sns">
-        <ul>
-              <li class="n_blog"><a title="수원대학교 블로그" href="https://blog.naver.com/usw1982" target="_blank"><img src="@/assets/blog.png"></a></li>
-              <li class="facebook"><a title="수원대학교 페이스북" href="https://www.facebook.com/SuwonUniv/" target="_blank"><img src="@/assets/facebook.png"></a></li>
-              <li class="instagram"><a title="수원대학교 인스타그램" href="https://www.instagram.com/usw1982/" target="_blank"><img src="@/assets/insta.png"></a></li>
-              <li class="youtube"><a title="수원대학교 유튜브" href="https://www.youtube.com/channel/UC4JfyRGKu5AfBjvaFMCj3cg" target="_blank"><img src="@/assets/youtube.png"></a></li>
-        </ul>
+        <div class="wrap">
+          <div class="foot_info">
+            <div class="fnb">
+              <ul class="inGuideFnb">
+                <li>
+                  <a @click="showPrivacy = true" style="cursor: pointer">개인정보처리방침</a>
+                </li>
+              </ul>
+            </div>
+            <address>
+              18323 경기도 화성시 봉담읍 와우안길 17
+              <span>Tel : 031-220-2114</span>
+            </address>
+            <p>
+              <span>Copyright (C) THE UNIVERSITY OF SUWON.</span>
+              All rights reserved.
+            </p>
+          </div>
+          <div class="foot_sns">
+            <ul>
+              <li class="n_blog">
+                <a title="수원대학교 블로그" href="https://blog.naver.com/usw1982" target="_blank">
+                  <img src="@/assets/blog.png" />
+                </a>
+              </li>
+              <li class="facebook">
+                <a title="수원대학교 페이스북" href="https://www.facebook.com/SuwonUniv/" target="_blank">
+                  <img src="@/assets/facebook.png" />
+                </a>
+              </li>
+              <li class="instagram">
+                <a title="수원대학교 인스타그램" href="https://www.instagram.com/usw1982/" target="_blank">
+                  <img src="@/assets/insta.png" />
+                </a>
+              </li>
+              <li class="youtube">
+                <a title="수원대학교 유튜브" href="https://www.youtube.com/channel/UC4JfyRGKu5AfBjvaFMCj3cg" target="_blank">
+                  <img src="@/assets/youtube.png" />
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-      </div>
-   </footer>
+  </footer>
+  <PrivacyPolicy v-if="showPrivacy" @close="showPrivacy = false" />
   </div>
   
 </template>
 
 <script>
 import ChatBot from '@/components/ChatBot.vue'
+import PrivacyPolicy from '@/components/PrivacyPolicy.vue'
 export default {
   name: 'InfoSecurityIntro',
   components: {
-    ChatBot
+    ChatBot,
+    PrivacyPolicy
   },
   data() {
     return {
+      showPrivacy: false,
       showChat: false,
       isIntro: true,
       activeDropdown: null,
@@ -294,7 +322,8 @@ export default {
   color: white;
 }
 .main-container {
-  background-image: url('@/assets/background1.png');
+  /* background-image: url('@/assets/background1.png'); */
+  background-color: white;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -363,15 +392,7 @@ nav {
   background-color: white;
   opacity: 0.6;
 }
-.chatbot-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 10%; /* ✅ 기존보다 가로폭 확대 */
-  height: auto; /* ✅ 높이 자동으로 비율 유지 */
-  object-fit: contain; /* ✅ 이미지 전체가 보이도록 조정 */
-  z-index: 10; 
-}
+
 .dropdown {
   position: absolute;
   justify-content: center;
@@ -523,7 +544,7 @@ nav a {
 }
 
 .info-box {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgb(20, 14, 71);
   padding: 1.5rem;
   margin-bottom: 2rem;
   color: white;
@@ -671,5 +692,8 @@ footer .foot_sns li a {
 footer .foot_sns li a:hover {
   text-decoration: underline;
 }
-
+footer .inGuideFnb{
+  margin-bottom: 40px;
+  color: white;
+}
 </style>
